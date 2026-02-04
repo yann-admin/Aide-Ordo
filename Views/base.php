@@ -1,16 +1,24 @@
 <?php
-  # Declaration and incrementing of variables 
-  $titleOnglet = (isset($RenderData) ? $RenderData->getOngletText() : "En Dev");
-  $sheetCss = (isset($RenderData) ? $RenderData -> getSheetCss() : "");
-  $scriptJs = (isset($RenderData) ? $RenderData -> getScriptJs() : "");
+    # Declaration and incrementing of variables 
+    $authorMeta = (isset($HeadData) ? $HeadData -> getAuthor() : "MT-Dev: Yann MARTIN");
+    $keywordsMeta = (isset($HeadData) ? $HeadData -> getKeywords() :"");
+    $descriptionMeta = (isset($HeadData) ? $HeadData -> getDescription() : "");
+
+    $titleOnglet = (isset($RenderData) ? $RenderData->getOngletText() : "En Dev");
+    $sheetCss = (isset($RenderData) ? $RenderData -> getSheetCss() : "");
+    $scriptJs = (isset($RenderData) ? $RenderData -> getScriptJs() : "");
+
+
+
+
 ?>
 
 <!-- **********************************************************************
-**** Titre: ????????????????????????????                               ****
-**** Author: Yann Martin                                               ****
-**** Version: 1.00                                                     ****
-**** Date creation: 04/07/2025                                         ****
-**** Date modification:                                                ****
+****                    Titre: Aide-Ordo                               ****
+****                    Author: Yann Martin                            ****
+****                    Version: 1.00                                  ****
+****                    Date creation: 02/02/2026                      ****
+****                    Date modification:                             ****
 *************************************************************************** -->
 
 
@@ -21,9 +29,9 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, height=device-height">
       <!-- <meta name="viewport" content="user-scalable=1"> -->
-      <meta name="keywords" content="">
-      <meta name="description" content="">
-      <meta name="author" content="Yann MARTIN">
+      <meta name="keywords" content="<?= $keywordsMeta ?>">
+      <meta name="description" content="<?= $descriptionMeta ?>">
+      <meta name="author" content="<?= $authorMeta ?>">
       <title> <?= $titleOnglet ?> </title>
       <link rel="shortcut icon" href="App/Images/LogoChichoune50x50.png" type="image/x-icon"> 
       <!-- Link to  styles fonts -->

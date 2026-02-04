@@ -28,6 +28,9 @@
                             case 42000:
                                 $this->errorText = "Erreur de syntaxe ou violation d'accès : 1064 ".":".$e->getCode();   
                                 break;
+                            case '42S22':
+                                $this->errorText = "Erreur Colonne non trouvée : 42S22 ".":".$e->getCode();   
+                                break;   
                         };
                     }
                 /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */

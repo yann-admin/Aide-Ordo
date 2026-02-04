@@ -71,10 +71,10 @@
                                     $timestamp = time() - (4*60);
                                     if( $_SESSION['token_time'] >= $timestamp ){
                                         # Step 2.4 control value $post
-                                        // Loop for array $setting['fieldRequired']
+                                        // Loop for array $setting['regexFieldRequired']
                                         $fieldEmpty = true;
                                         $fieldRegex = true;
-                                        foreach ($setting['fieldRequired'] as $field => $regex){
+                                        foreach ($setting['regexFieldRequired'] as $field => $regex){
                                             $fieldValue = $setting["post"][$field];
                                             if( $fieldValue == '' ){ 
                                                 $fieldEmpty=false; break; 
@@ -87,7 +87,7 @@
                                         };
                                         if($fieldEmpty){
                                             if($fieldRegex){
-                                                $response=['error'=>false, 'Msg'=>''];
+                                                $response=['error'=>false, 'Msg'=>'ffff'];
                                                 return $response;
                                             }else{
                                             $response=['error'=>true, 'Msg'=>"Opération annulée! <br> Veuillez respecter le format demander pour le champ ` $field ."];

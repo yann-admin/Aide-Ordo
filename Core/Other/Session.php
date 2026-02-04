@@ -6,7 +6,7 @@
 	/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
     
 	/* ▂ ▅ ▆ █ Inclusion █ ▆ ▅ ▂ */
-        use App\Models\User\CookiesModel;
+        use App\Models\User\CookiesRememberModel;
 	/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
 
     /* ▂ ▅ ▆ █ Class █ ▆ ▅ ▂ */
@@ -68,10 +68,10 @@
                         if( isset($_COOKIE['rememberMe']) ){
                             # We get the cookie value
                             $cookieCrypted = $_COOKIE['rememberMe'];
-                            # We instantiate the CookiesModel() class 
-                            $objCookiesModel = new CookiesModel();
+                            # We instantiate the CookiesRememberModel() class 
+                            $objCookiesModel = new CookiesRememberModel();
                             $result_Cookies = $objCookiesModel -> findCookies( $cookieCrypted );
-                            $objCookiesModel -> delete($result_Cookies -> idCookies);
+                            $objCookiesModel -> delete( $result_Cookies->idCookieRemember );
                             setcookie("rememberMe", '', time() + (60*60*24), "/", $_ENV['DOMAINE'], false, true); // 1 day 
                         };
                         # Reco via https://www.php.net/manual/en/session.security.ini.php:
@@ -79,7 +79,8 @@
                         unset($_SESSION['autoRegenerateIdSession']);
                         unset($_SESSION['connected']);
                         unset($_SESSION['token']);
-                        unset($_SESSION['token_time']);   
+                        unset($_SESSION['token_time']);  
+                        unset($_SESSION['UserInformation']); 
                            
                     }
                 /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 

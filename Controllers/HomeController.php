@@ -8,8 +8,20 @@
 	/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
 
 	/* ▂ ▅ ▆ █ Inclusion █ ▆ ▅ ▂ */
-        use App\Core\RenderData\RenderData;
-        use App\Controllers\LoginaccountController;
+		# Class Form
+		// use App\Core\Form\Form;
+		// use App\Core\Form\Token;
+		// use App\Core\Form\SecurityForm;
+
+		# Class Controller & Entity & Models UserAccount
+        use App\Controllers\User\LoginAccountController;
+		use App\Entities\LoginAccount;
+		use App\Models\LoginAccountModel;
+
+		#  Class RenderData & ResponseJson & CreateDivInformation
+		use App\Core\RenderData\RenderData;
+		use App\Core\RenderData\ResponseJson;
+		use App\Core\RenderData\CreateDivInformation;
 
         # Class other
         use App\Core\Other\Session;
@@ -18,36 +30,35 @@
 	/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
 
 
-/* ▂ ▅ ▆ █ Grafcet █ ▆ ▅ ▂ */
-    /*
-        # function index()
-        # │  ╚ Step 1.0 We instantiate new object
-        # │     ╬═ $objHeadData( $author='', $keywords='', $description='',  )
-        # │     ╬═ $objArrayRenderData($titrePage='', $ongletPage='', $forms='', $scriptJs='', $sheetCss='', $responce='')    
-        # │     ╬═ $objLoginaccount()
-        # │  ╠═ ( if $_SESSION['connected'] == true )
-        # │  ║   ╚═ Step 2.1 set RenderData
-        # │  ║       ╚═ Step 2.2 We render the view
-        # │  ║  ╚═ ( else )
-        # │  ║       ╚═ Step 2.3 We root  
-        # │  ║           ╚═ Step 2.4 We set RenderData
-        # │  ║               ╚═ Step 2.5 We render the view
+    /* ▂ ▅ ▆ █ Grafcet █ ▆ ▅ ▂ */
+        /*
+            # function index()
 
+            # function loginForm()
+                ╚ Step 1.0 We instantiate new object
+                ╚ Step 2.0 We root  
+                ╚ Step 3.0 We set RenderData
+                ╚ Step 4.0 We render the view
 
-        # function disconnect()
-        # │      ╚ Step 1.0 We destroy the session
+            # function loginAccount()
+                ╚ Step 1.0 We instantiate new object
+                ╚ Step 2.0 call $objLoginaccount->verifyLoginAccount()
+                
 
-        # function rootHome()
-        # │      ╚ Step 1.0 We instantiate new object
-        # │         ╚ Step 2.0 call $objLoginaccount->constructLoginaccountForm()
-        # │             ╚ return $form;   
+            # function disconnect()
+                ╚ Step 1.0 We start the session management
+                ╚ Step 2.0 we redirect to login page
 
 
 
+            # function rootHome()
+                ╚ Step 1.0 We instantiate new object
+                ╚ Step 2.0 call $objLoginaccount->constructLoginForm()
+                ╚ return $form;
 
 
-    */
-/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
+        */
+    /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
 
 
     /* ▂ ▅ ▆ █ Class █ ▆ ▅ ▂ */
@@ -56,52 +67,80 @@
 
                 /* ▂ ▅  index()  ▅ ▂ */
                     Public function index(){
-                        # Step 1.0 We instantiate new object
-                        # @ $objHeadData( $author='', $keywords='', $description='',  )
-                        $objHeadData = new HeadData();
-                        # @ $objArrayRenderData($titrePage='', $ongletPage='', $forms='', $scriptJs='', $sheetCss='', $responce='')    
-                        $objRenderData = new RenderData(); 
-
-
+                        //$_SESSION['connected'] = true;
                         # Step 2.0 We test $_SESSION['connected']
-                        // $_SESSION['connected'] = true;
                         if(isset($_SESSION['connected']) && $_SESSION['connected'] == true){
-                            # Step 2.1 set RenderData
+                            # Step 1.0 We instantiate new object
+                            # @ $objHeadData( $author='', $keywords='', $description='',  )
+                            $objHeadData = new HeadData();
+                            # @ $objArrayRenderData($titrePage='', $ongletPage='', $forms='', $scriptJs='', $sheetCss='', $responce='')    
+                            $objRenderData = new RenderData(); 
+                            # Step 2.0 set RenderData
                             $objRenderData -> setOngletText("API-Chichoune/Home");
-                            # Step 2.2 We render the view
+                            # Step 3.0 We render the view
                             $this->render('home/index', ['HeadData' => $objHeadData, 'RenderData' => $objRenderData] );
-
                         } else {
-                            # Step 2.3 We root  
-                            $form = $this->rootHome();
-                            # Step 2.4 We set RenderData
-                            $objRenderData -> setForms($form);
-                            $objRenderData -> setOngletText("API-Chichoune/Login");
-                            $objRenderData -> setSheetCss("App/Css/formLoginAccount.css");
-                            $objRenderData -> setScriptJs("App/Js/scriptPage/formLoginAccount.js"); 
-                            # Step 2.5 We render the view
-                            $this-> render('login/login', ['HeadData' => $objHeadData, 'RenderData' => $objRenderData] );
-                            exit();                            
+                           header('location:login');                   
                         };
                     }
                 /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
 
+
+                /* ▂ ▅  loginForm()  ▅ ▂ */
+                    Public function loginForm(){
+                            # Step 1.0 We instantiate new object
+                            # @ $objHeadData( $author='', $keywords='', $description='',  )
+                            $objHeadData = new HeadData();
+                            # @ $objArrayRenderData($titrePage='', $ongletPage='', $forms='', $scriptJs='', $sheetCss='', $responce='')    
+                            $objRenderData = new RenderData();
+                            # Step 2.0 We root  
+                            $form = $this->rootHome();
+                            # Step 3.0 We set RenderData
+                            $objRenderData -> setForms($form);
+                            $objRenderData -> setOngletText("API-Chichoune/Login");
+                            $objRenderData -> setSheetCss("App/Css/formLoginAccount.css");
+                            $objRenderData -> setScriptJs("App/Js/scriptPage/formLoginAccount.js"); 
+                            # Step 4.0 We render the view
+                            $this-> render('login/login', ['HeadData' => $objHeadData, 'RenderData' => $objRenderData] );
+                    }
+                /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
+
+                /* ▂ ▅ ▆ █ loginAccount █ ▆ ▅ ▂ */
+                    public function loginAccount(){
+                        # Step 1.0 We instantiate new object
+                        # @ $LoginAccountController()
+                        $objLoginAccount = new LoginAccountController();
+                        # Step 2.0 call $objLoginaccount->verifyLoginAccount()
+                        $verify = $objLoginAccount -> verifyLoginAccount( );
+                        # Step 3.0 We test the return value
+                        if($verify === true){
+
+                        };
+
+
+
+                    }
+                /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
+
                 /* ▂ ▅  disconnect()  ▅ ▂ */
                     Public function disconnect(){
-
+                        # Step 1.0 We start the session management
+                        $objSession = new Session();
+                        $objSession -> sessionDestroy();        
+                        # Step 2.0 we redirect to login page
+                        header('location:login');
+                        exit();
                     }
                 /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
 
                 /* ▂ ▅  rootHome()  ▅ ▂ */
                     private function rootHome(){
                         # Step 1.0 We instantiate new object
-                        # @ $objLoginaccount() 
-						$objLoginaccount = new LoginaccountController();
-                        # Step 2.0 call $objLoginaccount->constructLoginaccountForm()
-                        $form = $objLoginaccount->constructLoginaccountForm( );
-
+                        # @ $LoginAccountController() 
+                        $objLoginAccount = new LoginAccountController();
+                        # Step 2.0 call $objLoginaccount->constructLoginForm()
+                        $form = $objLoginAccount -> constructFormLoginAccount( );
                         return $form;
-
                     }
                 /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
 

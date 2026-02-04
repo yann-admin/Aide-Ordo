@@ -24,7 +24,7 @@
                 /* ▂ ▅ construct █ ▆ ▅ ▂ */
                     public function __construct(){
                         try{
-                            $this -> connexion = new PDO("mysql:host=". $_ENV['SERVER_SQL'] . ":" . $_ENV['PORT_SQL'] .";dbname=" . $_ENV['BASE_SQL'], $_ENV['USER_SQL'], $_ENV['PASSWORD_SQL']);
+                            $this -> connexion = new PDO("mysql:host=" . $_ENV["SERVER_SQL"] .";dbname=" . $_ENV["BASE_SQL"], $_ENV["USER_SQL"], $_ENV["PASSWORD_SQL"]);
                             #Activation des erreurs PDO:
                             $this -> connexion -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                             #Les retours de requete seront en tableau objet par défaut:
