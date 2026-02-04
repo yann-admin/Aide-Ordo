@@ -52,15 +52,15 @@
         // ------------------------------------------   
 
         // Creation of event headphones 
-            // listenBtnRest(['false'], resetError);
-            // function listenBtnRest(ids, callback) {
-            //     // @ function module formModule.js function()
-            //     ids.forEach(id => document.getElementById(id).addEventListener('click', () => callback()));
-            // };
+            listenBtnRest(['false'], resetError);
+            function listenBtnRest(ids, callback) {
+                // @ function module formModule.js function()
+                ids.forEach(id => document.getElementById(id).addEventListener('click', (event) => callback(event)));
+            };
             let form = document.getElementById("formLogin");
             // @ function module submitForm.js function()
             form.addEventListener("submit", function (event) { handleFormSubmit(event) }, true);
-            document.addEventListener('false', function (event) {resetError(event)}, true);
+            //document.addEventListener('false', function (event) {resetError(event)}, true);
         // ------------------------------------------
 
         / DEBUG /

@@ -265,6 +265,11 @@ let regex = function regex(regex) {
             document.getElementById(divFeedBack).innerText = '';
             addClassInput(divFeedBack, false)
         });
+        Array.from(INPUTS).forEach(input => {
+            document.getElementById(input.id).value = '';
+            document.getElementById(input.id).classList.remove('is-valid');
+            document.getElementById(input.id).classList.add('is-invalid');
+        });
     };
 /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
 

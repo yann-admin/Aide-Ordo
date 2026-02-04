@@ -1,6 +1,6 @@
 <?php
   # Declaration and incrementing of variables 
-  $titleOnglet = (isset($RenderData) ? $RenderData->getOngletPage() : "En Dev");
+  $titleOnglet = (isset($RenderData) ? $RenderData->getOngletText() : "En Dev");
   $sheetCss = (isset($RenderData) ? $RenderData -> getSheetCss() : "");
   $scriptJs = (isset($RenderData) ? $RenderData -> getScriptJs() : "");
 ?>
