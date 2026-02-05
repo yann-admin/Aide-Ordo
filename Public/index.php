@@ -54,7 +54,7 @@
         
         # We load the .env file
         $dotenv = Dotenv::createImmutable(__DIR__, '../.env.' . 'development');
-       //$dotenv = Dotenv::createImmutable(__DIR__, '../.env.' . 'production');
+        //$dotenv = Dotenv::createImmutable(__DIR__, '../.env.' . 'production');
         $dotenv->load();
 
         # On instancie le routeur :

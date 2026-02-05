@@ -32,22 +32,22 @@
                         # les deux La session de l’utilisateur et de l’attaquant expirera. En d’autres termes, l’accès par l’utilisateur ou l’attaquant sera générer une erreur d’accès à la session obsolète.
                         
                         # Auto Disconnect Session
-                        if (!isset($_SESSION['autoDisconnectSession']) && (!isset($_COOKIE['rememberMe']))) {
-                            $_SESSION['autoDisconnectSession'] = time() + $timeAutoDisconnect;
-                        } else {
-                            if (time() > $_SESSION['autoDisconnectSession']) {
-                                $this->varSessionDestroy();
-                                header('location:home'); 
-                                return;
-                            }
-                        }
+                        // if (!isset($_SESSION['autoDisconnectSession']) ) {
+                        //     $_SESSION['autoDisconnectSession'] = time() + $timeAutoDisconnect;
+                        // } else {
+                        //     if (time() > $_SESSION['autoDisconnectSession']) {
+                        //         $this->varSessionDestroy();
+                        //         header('location:home'); 
+                        //         return;
+                        //     }
+                        // }
 
                         # Auto Regenerate Id Session
                         if (!isset($_SESSION['autoRegenerateIdSession'])) {
                             $_SESSION['autoRegenerateIdSession'] = time() + $timeAutoRegenerateId;
                         } else {
                             if (time() > $_SESSION['autoRegenerateIdSession']) {
-                                session_regenerate_id(true);
+                                session_regenerate_id( false );
                                 $_SESSION['autoRegenerateIdSession'] = time() + $timeAutoRegenerateId;
                             }
                         }
@@ -70,9 +70,9 @@
                             $cookieCrypted = $_COOKIE['rememberMe'];
                             # We instantiate the CookiesRememberModel() class 
                             $objCookiesModel = new CookiesRememberModel();
-                            $result_Cookies = $objCookiesModel -> findCookies( $cookieCrypted );
-                            $objCookiesModel -> delete( $result_Cookies->idCookieRemember );
-                            setcookie("rememberMe", '', time() + (60*60*24), "/", $_ENV['DOMAINE'], false, true); // 1 day 
+                            $result_Cookies = $objCookiesModel -> findByCookie( $cookieCrypted );
+                            $objCookiesModel -> deleteByCookie( $result_Cookies->idCookieRemember );
+                            setcookie("rememberMe", '', time() + (60*60*24), "/", $_ENV['DOMAINE'], true, true); // 1 day 
                         };
                         # Reco via https://www.php.net/manual/en/session.security.ini.php:
                         unset($_SESSION['autoDisconnectSession']);

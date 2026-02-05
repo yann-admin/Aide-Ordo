@@ -43,18 +43,18 @@
 			/* ▂▂▂▂▂▂▂▂▂▂▂ */
 
 			/* ▂ ▅  findId( int $id )  ▅ ▂ */
-				public function findId( int $id ) { 
-					$this -> request = $this -> connexion -> prepare( "SELECT loginaccount.* FROM loginaccount WHERE loginaccount.idLoginAccount=:idLoginAccount" );
+				public function findJoinById( int $id ) { 
+					$this -> request = $this -> connexion -> prepare( "SELECT loginaccount.*, useraccount.* FROM loginaccount, useraccount WHERE loginaccount.idLoginAccount=:idLoginAccount AND loginaccount.idUserAccount = useraccount.idUserAccount" );
 					$this -> request -> bindParam(":idLoginAccount", $id , PDO::PARAM_STR);
 					$this -> request -> execute();
-					$results = $this -> request -> fetch();
+					$results = $this -> request -> fetch(PDO::FETCH_OBJ);
 					return $results;
 				}
 			/* ▂▂▂▂▂▂▂▂▂▂▂ */
 
-			/* ▂ ▅  findJointIdentifiant( string $identifiant )  ▅ ▂ */
-				public function findJointIdentifiant( string $identifiant ) { 
-					$this -> request = $this -> connexion -> prepare( "SELECT loginaccount.*, useraccount.*  FROM loginaccount, useraccount  WHERE loginaccount.identifiant=:identifiant AND loginaccount.idUserAccount = useraccount.idUserAccount" );
+			/* ▂ ▅  findJointByIdentifiant( string $identifiant )  ▅ ▂ */
+				public function findJointByIdentifiant( string $identifiant ) { 
+					$this -> request = $this -> connexion -> prepare( "SELECT loginaccount.*, useraccount.*  FROM loginaccount, useraccount WHERE loginaccount.identifiant=:identifiant AND loginaccount.idUserAccount = useraccount.idUserAccount" );
 					$this -> request -> bindParam(":identifiant", $identifiant , PDO::PARAM_STR);
 					$this -> request -> execute();
 					$results = $this -> request -> fetch(PDO::FETCH_OBJ);
