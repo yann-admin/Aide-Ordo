@@ -49,7 +49,7 @@
     }
 
 
-    export function stopLoader(delay) {
+     export function stopLoader(delay) {
         setTimeout(() => {
             currentStep = 0;
             DIV_STATUS.innerHTML = '';

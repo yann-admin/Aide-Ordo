@@ -16,6 +16,7 @@ const FORMS_OTHER = document.querySelectorAll('.other');
 const INPUTS = document.querySelectorAll('input');
 const INPUTS_REQUIRED = document.querySelectorAll('[required]');
 const INVALID_FEEDBACK = document.querySelectorAll('.invalid-feedback');
+
 if (MODE_DEV) console.clear();
 
 // const DIV_ERROR = document.getElementById('responce');
@@ -39,12 +40,38 @@ if (MODE_DEV) console.clear();
 let regex = function regex(regex) {
     switch (regex){
         case 'text-1':
-            return /[A-Za-z\d]+/i;
+            return /^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+/i;
         case 'password':
-            return /[A-Za-z\d\/@$!%*?&#]+/i;
+            return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\/@$!%*?&#])[A-Za-z\d\/@$!%*?&#]{10,11}$/;
+        case 'email':
+            return /[-A-Za-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-A-Za-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[A-Za-z0-9](?:[-A-Za-z0-9]*[A-Za-z0-9])?\.)+[A-Za-z0-9](?:[-A-Za-z0-9]*[A-Za-z0-9])?/i;
     }; 
+
+
 };
 /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
+
+
+
+export function showPassword(id) {
+    let field = document.getElementById(id);
+    let input = document.getElementById(id.replace('-eye', ''));
+
+    if (input.type === 'password') {
+        input.type = 'text';
+        field.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+        return;
+    } else {
+        input.type = 'password';
+        field.innerHTML = '<i class="fa-solid fa-eye"></i>';
+        return;
+    };
+};
+
+
+
+
+
 
 /* ▂ ▅  initForms  ▅ ▂ */
     export function initForms() {
@@ -128,9 +155,10 @@ let regex = function regex(regex) {
         // if fiel.tagName=BODY return because error
         if (field.tagName == 'BODY') { return; };
 
-        let touch = event.key;//String.fromCharCode(event.charCode);  
-        let touch2 = String.fromCharCode(event.charCode);
-        let regexControl = regex(field.getAttribute('regex'));
+        let touch = event.key;//String.fromCharCode(event.charCode);  attributes[7].value
+        // let touch2 = String.fromCharCode(event.charCode);
+        // let regexControl = regex(field.getAttribute('regex'));
+        let regexControl = field.attributes.pattern.value;
         let divFeedBack = 'feedback-' + field.id;
         let validity = field.validity.valid;
         // If field is valide then raz class is-invalid
@@ -140,26 +168,26 @@ let regex = function regex(regex) {
         };
         // !!!! NE FONCTIONNE PAS SUR MOBILE
         // If regex doesn't match
-        if (!regexControl.test(touch)) {
-            document.getElementById(divFeedBack).innerText = 'L\'uilisation du caractère \' ' + touch + ' \' n\'est pas autorisé';
-            addClassInput(field.id, 'invalid');
-            disabledBtnSubmit(false);
-        } else {
-            document.getElementById(divFeedBack).innerText = '';
-            addClassInput(field.id, 'remove'); 
-            disabledBtnSubmit(true);
-        };
-
-        // let fault = touch.match(regexControl);
-        // if (!fault) {
+        // if (!regexControl.test(touch)) {
         //     document.getElementById(divFeedBack).innerText = 'L\'uilisation du caractère \' ' + touch + ' \' n\'est pas autorisé';
-        //     addClassInput(field.id, 'invalid')
+        //     addClassInput(field.id, 'invalid');
         //     disabledBtnSubmit(false);
         // } else {
         //     document.getElementById(divFeedBack).innerText = '';
-        //     addClassInput(field.id, 'remove')  
+        //     addClassInput(field.id, 'remove'); 
         //     disabledBtnSubmit(true);
         // };
+
+        let fault = touch.match(regexControl);
+        if (!fault) {
+            document.getElementById(divFeedBack).innerText = 'L\'uilisation du caractère \' ' + touch + ' \' n\'est pas autorisé';
+            addClassInput(field.id, 'invalid')
+            disabledBtnSubmit(false);
+        } else {
+            document.getElementById(divFeedBack).innerText = '';
+            addClassInput(field.id, 'remove')  
+            disabledBtnSubmit(true);
+        };
 
         
         / DEBUG /

@@ -272,7 +272,7 @@
                         # Method to prevent form submission when submitted by a robot
                             public function addAntiRobot($value):self{
                                 # Added to form elements
-                                $this -> formElements .= "<input type='hidden' name='antirobot' id='antirobot' controle='type0' value='$value' >";
+                                $this -> formElements .= "<input type='hidden' function='data-security' name='antirobot' id='antirobot' value='$value' >";
                                 return $this;
                             }
                     /* ▂ ▂ ▂ ▂ ▂ ▂ ▂ */
@@ -283,7 +283,7 @@
                             # A token is instantiated each time the form is loaded.
                             Token::createdToken();
                             # Added to form elements
-                            $this -> formElements .= "<input type='hidden' name='token' id='token' value='" . trim($_SESSION['token']) ."' >";
+                            $this -> formElements .= "<input type='hidden' function='data-security' name='token' id='token' value='" . trim($_SESSION['token']) ."' >";
                             // $this -> formElements .= "<input type='hidden' name='token_time' id='token_time' value='" . trim($_SESSION['token_time']) ."' >";
                             return $this;
                         }

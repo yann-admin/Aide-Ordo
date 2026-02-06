@@ -52,6 +52,7 @@
       <!-- ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ -->
 
       <!-- ▂ ▅ ▆ █ SCRIPTS JS/MODULES █ ▆ ▅ ▂ -->
+      <script src=""> </script>
       <script type="module" src=<?= $scriptJs ?>></script>
       <!-- ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂  -->
 

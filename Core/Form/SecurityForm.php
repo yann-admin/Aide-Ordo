@@ -1,10 +1,8 @@
 <?php
     /* ▂ ▅ ▆ █ Information █ ▆ ▅ ▂ */
-        /*Un contrôleur nommé HomeController est créé. Comme il s'agit d'une déclaration de classe, il est important de spécifier le "namespace". 
-        Ce contrôleur hérite du contrôleur parent défini précédemment, pour bénéficier de ses paramètres.
-        Une méthode publique appelée "index()" est déclarée pour l'instant, elle affiche simplement une chaîne de caractères.
-        Le routeur cible ce contrôleur et sa méthode "index()" pour répondre à l'action de l'utilisateur via l'URL. 
-        */
+
+	/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
+
     /* ▂ ▅ ▆ █ NameSpace █ ▆ ▅ ▂ */
         namespace App\Core\Form;
 	/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
@@ -13,12 +11,42 @@
 
 	/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
 
+ 
+    /* ▂ ▅ ▆ █ Grafcet █ ▆ ▅ ▂ */
+        /*
+            # Class SecurityForm
+                ╚ function encode_XssTrim( array $posts )
+                ╚ function decode_XssTrim( array $posts )  
+                ╚ function SecurityForm( array $setting )  
+
+            # encode_XssTrim( array $posts )
+                - We create an empty array $postEncode
+                - Loop for array $posts
+                - We encode XSS & Trim each value of $posts and we stock in $postEncode
+                - We return the array $postEncode
+
+            # decode_XssTrim( array $posts 
+                - We create an empty array $postDecode
+                - Loop for array $posts
+                - We decode XSS & Trim each value of $posts and we stock in $postDecode
+                - We return the array $postDecode
+
+            # function SecurityForm( array $setting )
+                1.0 Control method
+                    2.1 Control anti-robot  
+                    2.2 Control token
+                    2.3 Control token_time ( 4min )
+                    2.4 Control value $post
+                        2.4.1 Control empty field
+                        2.4.2 Control regex pattern 
+                1.1 Return response
+        */
+    /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
+
     /* ▂ ▅ ▆ █ Class █ ▆ ▅ ▂ */
         class SecurityForm{
             /* ▂ ▅ ▆ █ Attributs ▅ ▂ */
-            # 
-            // private $formError_;
-            // private $formErrorMsg_;
+
             /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
 
             /* ▂ ▅ ▆ █ Methodes █ ▆ ▅ ▂ */
@@ -44,21 +72,7 @@
                     }
                 /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
 
-
-                /* ▂ ▅ ▆ █ SecurityForm( ) ▅ ▂ */
-                    /* ▂ ▅ ▆ █ Grafcet █ ▆ ▅ ▂ */
-                        /*
-                        # grafcet SecurityForm( $setting )
-                            ╚ Step 1.0 $post Cleanup
-                                ╬═ return array        
-                                ╚ Step 2.0 Security form
-                                    ╚ Step 2.1 control method
-                                        ╚ Step 2.2 control antibot
-                                            ╚ Step 2.3 control token
-                                                ╚ Step 2.4 control token_time ( 4min )
-                                                    ╚ Step 2.5 control value $post
-                        */
-                    /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
+                /* ▂ ▅ ▆ █ SecurityForm( array $setting ):array ▅ ▂ */
                     public static function SecurityForm( array $setting ):array{
                         $response=['error'=>true, 'Msg'=>'error'];
                         # Step 2.0 control method
