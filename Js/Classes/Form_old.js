@@ -21,7 +21,7 @@ export default class Form {
     errorMsg_ = null;
     buttons_ = null;
     inputsSecurity_ = null;
-
+    elements_ = null;
         
     constructor(form) {
         this.id_ = form[0].id;
@@ -51,6 +51,9 @@ export default class Form {
         this.pictoInfo_ = this.arrayPictoInfo();
         this.inputsSecurity_ = this.arrayInputsSecurity();
         this.pictoEye_ = this.arrayPictoEye();
+
+        this.elements_ = Array.from(document.querySelectorAll(`#${this.id_} *`));
+  
     };
         
     arrayFormInputs() {

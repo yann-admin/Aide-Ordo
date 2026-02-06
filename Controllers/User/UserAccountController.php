@@ -134,7 +134,7 @@
 				$pattern_userName = $pattern["text"];
 				$pattern_userFirstName = $pattern["text"];
 				$pattern_userEmail = $pattern["email"];
-				$pattern_userRecoveryCode = $pattern["text"];
+				$pattern_userRecoveryCode = $pattern["textarea"];
 				$pattern_userAccess = $pattern["number"];
 				$pattern_idLoginAccount = $pattern["number"];
 				$pattern_identifiant = $pattern["identifiant"];
@@ -147,7 +147,7 @@
 							# We build the form
 							$form -> addDivContainerFormOpen( [ 'name'=>'divForm-LoginaccountForm', 'id'=>'divForm-LoginaccountForm', 'class'=>'col-10 col-sm-5 col-lg-3 mb-3 py-3 text-center container-form-login' ] );
 							/* @startForm( 'comment', [list of attributs] ) */
-							$form -> startForm( 'startForm', [ 'name'=>'LoginaccountForm', 'id'=>$idForm, 'action'=>$action, 'method'=>$method, 'enctype'=>'multipart/form-data', 'class'=>'justify-content-center row needs-validation', 'novalidate'=>'' ] );
+							$form -> startForm( 'startForm', [ 'name'=>'LoginaccountForm', 'id'=>$idForm, 'action'=>$action, 'method'=>$method, 'enctype'=>'multipart/form-data', 'class'=>'justify-content-center row validate', ] );
 
 							/* ▂ ▅ ▆ █  Header form  █ ▆ ▅ ▂ */
 								/* @addDivOpen( 'comment', [ list of attributs ] ) */
@@ -181,7 +181,7 @@
 										/* @addDivOpen( 'comment', [ list of attributs ] ) */
 										$form -> addDivOpen( '',  ['class'=>'form-floating is-invalid'] );
 											/* @addInput( 'comment', [ list of attributs ] ) */
-											$form -> addInput('', [ 'type'=>'text', 'name'=>'userName', 'id'=>'userName', 'placeholder'=>'', 'minLength'=>'1', 'maxLength'=>'50', 'required'=>'required', 'pattern'=>$pattern_userName, 'regex'=>$regex_userName, 'value'=>$userNameValue, 'autofocus'=>'', 'class'=>'form-control ']);
+											$form -> addInput('', [ 'type'=>'text', 'name'=>'userName', 'id'=>'userName', 'placeholder'=>'', 'minLength'=>'1', 'maxLength'=>'50', 'required'=>'required', 'pattern'=>$pattern_userName, 'regex'=>$regex_userName, 'value'=>$userNameValue, 'autofocus'=>'', 'class'=>'form-control']);
 											/* @addLabel( 'comment', 'text', [ list of attributs ] ) */
 											$form -> addLabel( '', 'Votre nom', [ 'id'=>'inputLabel-userName', 'for'=>'userName', 'class'=>'' ]);
 										/* @addDivClose( 'comment' ) */
@@ -197,7 +197,7 @@
 									$form -> addDivInputGroupFormFloatingClose( '' );
 									/*-------- Tooltip ----------- */
 									/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
-									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-userName', 'href'=>'#', 'class'=>'pictoInfo ', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$tooltip_userName ]);
+									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-userName', 'href'=>'#', 'class'=>'pictoInfo', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$tooltip_userName ]);
 									/*---------------------------- */
 								/* @addDivClose( 'comment' ) */
 								$form -> addDivClose( '' );
@@ -216,7 +216,7 @@
 										/* @addDivOpen( 'comment', [ list of attributs ] ) */
 										$form -> addDivOpen( '',  ['class'=>'form-floating is-invalid'] );
 											/* @addInput( 'comment', [ list of attributs ] ) */
-											$form -> addInput('', [ 'type'=>'text', 'name'=>'userFirstName', 'id'=>'userFirstName', 'placeholder'=>'', 'minLength'=>'1', 'maxLength'=>'50', 'required'=>'required', 'pattern'=>$pattern_userFirstName, 'regex'=>$regex_userFirstName, 'value'=>$userFirstNameValue, 'class'=>'form-control ']);
+											$form -> addInput('', [ 'type'=>'text', 'name'=>'userFirstName', 'id'=>'userFirstName', 'placeholder'=>'', 'minLength'=>'1', 'maxLength'=>'50', 'required'=>'required', 'pattern'=>$pattern_userFirstName, 'regex'=>$regex_userFirstName, 'value'=>$userFirstNameValue, 'class'=>'form-control']);
 											/* @addLabel( 'comment', 'text', [ list of attributs ] ) */
 											$form -> addLabel( '', 'Votre Prénom', [ 'id'=>'inputLabel-userFirstName', 'for'=>'userFirstName', 'class'=>'' ]);
 										/* @addDivClose( 'comment' ) */
@@ -232,7 +232,7 @@
 									$form -> addDivInputGroupFormFloatingClose( '' );
 									/*-------- Tooltip ----------- */
 									/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
-									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-userFirstName', 'href'=>'#', 'class'=>'pictoInfo ', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$tooltip_userFirstName ]);
+									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-userFirstName', 'href'=>'#', 'class'=>'pictoInfo', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$tooltip_userFirstName ]);
 									/*---------------------------- */
 								/* @addDivClose( 'comment' ) */
 								$form -> addDivClose( '' );
@@ -251,7 +251,7 @@
 										/* @addDivOpen( 'comment', [ list of attributs ] ) */
 										$form -> addDivOpen( '',  ['class'=>'form-floating is-invalid'] );
 											/* @addInput( 'comment', [ list of attributs ] ) */
-											$form -> addInput('', [ 'type'=>'email', 'name'=>'userEmail', 'id'=>'userEmail', 'placeholder'=>'', 'minLength'=>'1', 'maxLength'=>'50', 'required'=>'required', 'pattern'=>$pattern_userEmail, 'regex'=>$regex_userEmail, 'value'=>$userEmailValue, 'class'=>'form-control ']);
+											$form -> addInput('', [ 'type'=>'email', 'name'=>'userEmail', 'id'=>'userEmail', 'placeholder'=>'', 'minLength'=>'1', 'maxLength'=>'50', 'required'=>'required', 'pattern'=>$pattern_userEmail, 'regex'=>$regex_userEmail, 'value'=>$userEmailValue, 'class'=>'form-control']);
 											/* @addLabel( 'comment', 'text', [ list of attributs ] ) */
 											$form -> addLabel( '', 'Votre email', [ 'id'=>'inputLabel-userEmail', 'for'=>'userEmail', 'class'=>'' ]);
 										/* @addDivClose( 'comment' ) */
@@ -267,7 +267,7 @@
 									$form -> addDivInputGroupFormFloatingClose( '' );
 									/*-------- Tooltip ----------- */
 									/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
-									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-userEmail', 'href'=>'#', 'class'=>'pictoInfo ', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$tooltip_userEmail ]);
+									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-userEmail', 'href'=>'#', 'class'=>'pictoInfo', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$tooltip_userEmail ]);
 									/*---------------------------- */
 								/* @addDivClose( 'comment' ) */
 								$form -> addDivClose( '' );
@@ -302,7 +302,7 @@
 									$form -> addDivInputGroupFormFloatingClose( '' );
 									/*-------- Tooltip ----------- */
 									/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
-									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-userRecoveryCode', 'href'=>'#', 'class'=>'pictoInfo ', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$tooltip_userRecoveryCode ]);
+									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-userRecoveryCode', 'href'=>'#', 'class'=>'pictoInfo', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$tooltip_userRecoveryCode ]);
 									/*---------------------------- */
 								/* @addDivClose( 'comment' ) */
 								$form -> addDivClose( '' );
@@ -315,13 +315,13 @@
 									$form -> addDivInputGroupFormFloatingOpen( '',  ['class'=>'input-group align-content-center has-validation'] );
 										/*-------- Picto input ----------- */
 										/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
-										$form -> addSpan( '', '<i class="fa-solid fa-fingerprint"></i>', [ 'id'=>'pictoInput-identifiant', 'href'=>'#', 'class'=>'input-group-text ' ]);
+										$form -> addSpan( '', '<i class="fa-solid fa-fingerprint"></i>', [ 'id'=>'pictoInput-identifiant', 'href'=>'#', 'class'=>'input-group-text' ]);
 										/*---------------------------- */
 										/*-------- input ----------- */
 										/* @addDivOpen( 'comment', [ list of attributs ] ) */
 										$form -> addDivOpen( '',  ['class'=>'form-floating is-invalid'] );
 											/* @addInput( 'comment', [ list of attributs ] ) */
-											$form -> addInput('', [ 'type'=>'text', 'name'=>'identifiant', 'id'=>'identifiant', 'placeholder'=>'', 'minLength'=>'1', 'maxLength'=>'65535', 'required'=>'required', 'pattern'=>$pattern_identifiant, 'regex'=>$regex_identifiant, 'value'=>$identifiantValue, 'class'=>'form-control ']);
+											$form -> addInput('', [ 'type'=>'text', 'name'=>'identifiant', 'id'=>'identifiant', 'placeholder'=>'', 'minLength'=>'8', 'maxLength'=>'10', 'required'=>'required', 'pattern'=>$pattern_identifiant, 'regex'=>$regex_identifiant, 'value'=>$identifiantValue, 'class'=>'form-control ']);
 											/* @addLabel( 'comment', 'text', [ list of attributs ] ) */
 											$form -> addLabel( '', 'Votre identifiant', [ 'id'=>'inputLabel-identifiant', 'for'=>'identifiant', 'class'=>'' ]);
 										/* @addDivClose( 'comment' ) */
@@ -337,7 +337,7 @@
 									$form -> addDivInputGroupFormFloatingClose( '' );
 									/*-------- Tooltip ----------- */
 									/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
-									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-identifiant', 'href'=>'#', 'class'=>'pictoInfo ', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$tooltip_identifiant ]);
+									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-identifiant', 'href'=>'#', 'class'=>'pictoInfo', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$tooltip_identifiant ]);
 									/*---------------------------- */
 								/* @addDivClose( 'comment' ) */
 								$form -> addDivClose( '' );
@@ -350,13 +350,13 @@
 									$form -> addDivInputGroupFormFloatingOpen( '',  ['class'=>'input-group align-content-center has-validation'] );
 										/*-------- Picto input ----------- */
 										/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
-										$form -> addSpan( '', '<i class="fa-solid fa-lock"></i>', [ 'id'=>'pictoInput-password', 'href'=>'#', 'class'=>'input-group-text ' ]);
+										$form -> addSpan( '', '<i class="fa-solid fa-lock"></i>', [ 'id'=>'pictoInput-password', 'href'=>'#', 'class'=>'input-group-text' ]);
 										/*---------------------------- */
 										/*-------- input ----------- */
 										/* @addDivOpen( 'comment', [ list of attributs ] ) */
 										$form -> addDivOpen( '',  ['class'=>'form-floating is-invalid'] );
 											/* @addInput( 'comment', [ list of attributs ] ) */
-											$form -> addInput('', [ 'type'=>'password', 'name'=>'password', 'id'=>'password', 'placeholder'=>'', 'minLength'=>'1', 'maxLength'=>'65535', 'required'=>'required', 'pattern'=>$pattern_password, 'regex'=>$regex_password, 'value'=>$passwordValue, 'class'=>'form-control ']);
+											$form -> addInput('', [ 'type'=>'password', 'name'=>'password', 'id'=>'password', 'placeholder'=>'', 'minLength'=>'10', 'maxLength'=>'10', 'required'=>'required', 'pattern'=>$pattern_password, 'regex'=>$regex_password, 'value'=>$passwordValue, 'class'=>'form-control']);
 											/* @addLabel( 'comment', 'text', [ list of attributs ] ) */
 											$form -> addLabel( '', 'Votre mot de passe', [ 'id'=>'inputLabel-password', 'for'=>'password', 'class'=>'' ]);
 										/* @addDivClose( 'comment' ) */
@@ -364,7 +364,7 @@
 										/*---------------------------- */
 										/*-------- Picto eye -----------*/
 										/* @addSpan( 'comment', 'i or img', [ list of attributs ] )  */
-										$form -> addSpan( '', '<i class="fa-solid fa-eye"></i>', [ 'id'=>'password-eye', 'href'=>'#', 'class'=>'input-group-text picto-eye' ]);
+										$form -> addSpan( '', '<i class="fa-solid fa-eye"></i>', [ 'id'=>'password-eye', 'href'=>'#', 'class'=>'input-group-text pictoEye' ]);
 										/*---------------------------- */
 										/*-------- FeedBack ----------- */
 										/* @addDivOpen( 'comment', [ list of attributs ] ) */
@@ -376,7 +376,7 @@
 									$form -> addDivInputGroupFormFloatingClose( '' );
 									/*-------- Tooltip ----------- */
 									/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
-									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-password', 'href'=>'#', 'class'=>'pictoInfo ', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$tooltip_password ]);
+									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-password', 'href'=>'#', 'class'=>'pictoInfo', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$tooltip_password ]);
 									/*---------------------------- */
 								/* @addDivClose( 'comment' ) */
 								$form -> addDivClose( '' );
@@ -403,7 +403,7 @@
 										/*---------------------------- */
 										/*-------- Picto eye -----------*/
 										/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) </i> */
-										$form -> addSpan( '', '<i class="fa-solid fa-eye"></i>', [ 'id'=>'password-verification-eye', 'href'=>'#', 'class'=>'input-group-text picto-eye ' ]);
+										$form -> addSpan( '', '<i class="fa-solid fa-eye"></i>', [ 'id'=>'password-verification-eye', 'href'=>'#', 'class'=>'input-group-text pictoEye' ]);
 										/*---------------------------- */
 										/*-------- FeedBack ----------- */
 										/* @addDivOpen( 'comment', [ list of attributs ] ) */
@@ -415,7 +415,7 @@
 									$form -> addDivInputGroupFormFloatingClose( '' );
 									/*-------- Tooltip ----------- */
 									/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
-									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-password', 'href'=>'#', 'class'=>'pictoInfo ', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$tooltip_password ]);
+									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-password', 'href'=>'#', 'class'=>'pictoInfo', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$tooltip_password ]);
 									/*---------------------------- */
 								/* @addDivClose( 'comment' ) */
 								$form -> addDivClose( '' );

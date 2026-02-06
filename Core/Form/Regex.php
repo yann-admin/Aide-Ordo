@@ -51,8 +51,8 @@
                 /* ▂ ▅ ▅ ▅ ▆ ▆ ▆ █ █ █ Tooltip █ █ █ ▆ ▆ ▆ ▅ ▅ ▅ ▂ */
                 public function readTooltip( ):self{
                     $this -> tooltip = [
-                        'identifiant' => 'Votre identifiant doit comporter entre 3 et 16 caractères et peut inclure des lettres, des chiffres, des tirets bas (_) et des tirets (-).',
-                        'password' => 'Votre mot de passe doit comporter entre 10 et 11 caractères, inclure au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial parmi / @ $ ! % * ? & #.',
+                        'identifiant' => 'Votre identifiant doit comporter entre 8 et 10 caractères, inclure au moins une lettre majuscule, une lettre minuscule. Il peut inclure des lettres, des chiffres, des tirets bas (_) et des tirets (-).',
+                        'password' => 'Votre mot de passe doit comporter entre 10 et 10 caractères, inclure au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial parmi / @ $ ! % * ? & #.',
                         'email' => 'Veuillez entrer une adresse e-mail valide au format exemple : user@example.com',
                         'text' => 'Ce champ ne peut contenir que des lettres, des espaces, des tirets et des apostrophes.',
                         'textarea' => 'Ce champ peut contenir des lettres, des chiffres, des espaces et les signes de ponctuation suivants : . , ; : ! ? ( ) " \' -',
@@ -73,8 +73,8 @@
                 /* ▂ ▅ ▅ ▅ ▆ ▆ ▆ █ █ █ pregMatch █ █ █ ▆ ▆ ▆ ▅ ▅ ▅ ▂ */
                     public function readPregMatch( ):self{
                         $this -> pregMatch = [
-                            'identifiant' => "/^[A-Za-z0-9_-]{3,16}$/",
-                            'password' => "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\/@$!%*?&#])[A-Za-z\d\/@$!%*?&#]{10,11}$/",
+                            'identifiant' => "/^[A-Za-z0-9À-ÖØ-öø-ÿ_-]{8,10}$/",
+                            'password' => "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\/@$!%*?&#])[A-Za-zÀ-ÖØ-öø-ÿ\d\/@$!%*?&#]{10,10}$/",
                             'email' => "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/",
                             'text' => "/^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+$/",
                             'textarea' => "/^[A-Za-zÀ-ÖØ-öø-ÿ0-9\s.,;:!?()\"'- ]+$/",
@@ -95,11 +95,11 @@
                 /* ▂ ▅ ▅ ▅ ▆ ▆ ▆ █ █ █ Pattern █ █ █ ▆ ▆ ▆ ▅ ▅ ▅ ▂ */
                     public function readPattern( ):self{
                         $this->pattern=[
-                            'identifiant' => '[A-Za-z0-9_\-]{3,16}',
-                            'password' => "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\/@$!%*?&#])[A-Za-z\d\/@$!%*?&#]{10,11}",
-                            'email' => "[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$",
-                            'text' => "^[A-Za-z_\s\-]{2,}$",
-                            'textarea' => "^[A-Za-zÀ-ÖØ-öø-ÿ0-9\s.,;:!?()\"'-]+$",
+                            'identifiant' => '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-zÀ-ÖØ-öø-ÿ\d]{8,10}$', # TEST OK
+                            'password' => "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\/@$!%*?&#])[A-Za-zÀ-ÖØ-öø-ÿ\d\/@$!%*?&#]{10,10}$", # TEST OK
+                            'email' => "[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$", # TEST OK
+                            'text' => "^[A-Za-zÀ-ÖØ-öø-ÿ_\s\-']{2,}$", # TEST OK
+                            'textarea' => "^[A-Za-z0-9À-ÖØ-öø-ÿ_\s\/\@\$\!\%\*\?\&\#\.\,\;\:\!\?\(\)\"'\-\[\]]{2,}$", # TEST OK
                             'date' => "^\d{4}-\d{2}-\d{2}$",
                             'datetime-local' => "^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$", 
                             'time' => "^\d{2}:\d{2}$",
