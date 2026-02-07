@@ -15,9 +15,10 @@
 		use App\Core\Form\SecurityForm;
 
 		# Class Entity & Models UserAccount
-		// use App\Entities\UserAccount;
-		// use App\Models\UserAccountModel;
-
+		use App\Entities\User\UserAccount;
+		use App\Models\User\UserAccountModel;
+		use App\Entities\User\LoginAccount;
+		use App\Models\User\LoginAccountModel;
 		#  Class RenderData & ResponseJson & CreateDivInformation
 		use App\Core\RenderData\RenderData;
 		use App\Core\RenderData\ResponseJson;
@@ -29,17 +30,17 @@
 		# $objUserAccount = new UserAccountController();
 		# $objUserAccountModel = new UserAccountModel();
 		/*Comment:  */
-		# $useraccount -> setIdUserAccount($_POST['IdUserAccount']);
+		# $userAccount -> setIdUserAccount($_POST['IdUserAccount']);
 		/*Comment:  */
-		# $useraccount -> setUserName($_POST['UserName']);
+		# $userAccount -> setUserName($_POST['UserName']);
 		/*Comment:  */
-		# $useraccount -> setUserFirstName($_POST['UserFirstName']);
+		# $userAccount -> setUserFirstName($_POST['UserFirstName']);
 		/*Comment:  */
-		# $useraccount -> setUserEmail($_POST['UserEmail']);
+		# $userAccount -> setUserEmail($_POST['UserEmail']);
 		/*Comment:  */
-		# $useraccount -> setUserRecoveryCode($_POST['UserRecoveryCode']);
+		# $userAccount -> setUserRecoveryCode($_POST['UserRecoveryCode']);
 		/*Comment:  */
-		# $useraccount -> setUserAccess($_POST['UserAccess']);
+		# $userAccount -> setUserAccess($_POST['UserAccess']);
 	/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
 
 	/* ▂ ▅ ▆ █ Class █ ▆ ▅ ▂ */
@@ -55,10 +56,10 @@
 				# @ param string $mode : 'create' or 'update' to adapt the form to the context
 				public static function constructFormAddAccount( string $mode ){
 					/* ▂ ▅ ▆ █ Information █ ▆ ▅ ▂ */
-						/* Files form : loginaccount via constructor_Forms.php VERSION: 3.0.0*/ 
+						/* Files form : useraccount via constructor_Forms.php VERSION: 3.0.0*/ 
 					/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
 
-					/* ▂ ▅ ▆ █ Formulaire pour la table: - loginaccount - █ ▆ ▅ ▂ */
+					/* ▂ ▅ ▆ █ Formulaire pour la table: - useraccount - █ ▆ ▅ ▂ */
 						/* ▂   Regex   ▂ */
 							$objRegex = new Regex();
 							$regex = $objRegex -> readRegex() -> getReadRegex();
@@ -69,79 +70,35 @@
 						/* ▂   Pattern   ▂ */
 							$pattern = $objRegex -> readPattern() -> getReadPattern();
 						/* ▂ ▂ ▂ ▂ ▂ ▂ ▂ */
+					/* ▂   Variables   ▂ */
+					# Declaration of variables
+						$action = 'App/Public/index.php?controller=home&action=addAccount';
+						$method = 'POST';
+						$idForm = 'formAddAccount';
+						$textBtn1 = 'Créer le compte';
+						$textBtn2 = 'Effacer';
+						$idUserAccountValue = "";
+						$userNameValue = "zzzzz";
+						$userFirstNameValue = "zzzzzzzzzzz";
+						$userEmailValue = "yann17100@gmail.com";
+						$userRecoveryCodeValue = "zzzzzzzzzzzzzzzz";
+						$userAccessValue = "";
+						$idLoginAccountValue = "";
+						$identifiantValue = "Yannoch17";
+						$passwordValue = "4550191Ym@";
+						$passwordVerifyValue = "4550191Ym@";
+						$idUserAccountValue = "";
+					/* ----------------------------*/
+					# Declaration of array input
+						$arrayInputuserName=['minLength'=>'2', 'maxLength'=>'50', 'required'=>'required', 'tooltip'=>$tooltip['text'], 'pattern'=>$pattern['text'], 'regex'=>$regex['text'], 'label'=>'Votre nom', 'value'=>$userNameValue ];
+						$arrayInputuserFirstName=['minLength'=>'2', 'maxLength'=>'50', 'required'=>'required', 'tooltip'=>$tooltip['text'], 'pattern'=>$pattern['text'], 'regex'=>$regex['text'], 'label'=>'Votre Prénom', 'value'=>$userFirstNameValue ];
+						$arrayInputuserEmail=['minLength'=>'2', 'maxLength'=>'50', 'required'=>'required', 'tooltip'=>$tooltip['email'], 'pattern'=>$pattern['email'], 'regex'=>$regex['email'], 'label'=>'Votre adresse email', 'value'=>$userEmailValue ];
+						$arrayInputuserRecoveryCode=['minLength'=>'1', 'maxLength'=>'50', 'required'=>'required', 'tooltip'=>$tooltip['text'], 'pattern'=>$pattern['text'], 'regex'=>$regex['text'], 'label'=>'Votre code de récupération', 'value'=>$userRecoveryCodeValue ];
+						$arrayInputidentifiant=['minLength'=>'8', 'maxLength'=>'10', 'required'=>'required', 'tooltip'=>$tooltip['identifiant'], 'pattern'=>$pattern['identifiant'], 'regex'=>$regex['identifiant'], 'label'=>'Votre identifiant', 'value'=>$identifiantValue ];
+						$arrayInputpassword=['minLength'=>'10', 'maxLength'=>'11', 'required'=>'required', 'tooltip'=>$tooltip['password'], 'pattern'=>$pattern['password'], 'regex'=>$regex['password'], 'label'=>'Votre mot de passe', 'value'=>$passwordValue ];
+						$arrayInputpasswordVerify=['minLength'=>'10', 'maxLength'=>'11', 'required'=>'required', 'tooltip'=>$tooltip['password'], 'pattern'=>$pattern['password'], 'regex'=>$regex['password'], 'label'=>'Vérification mot de passe', 'value'=>$passwordVerifyValue ];
 
-						// /* ▂   Variables   ▂ */
-						// # Declaration of variables
-						// 	$action = 'App/Public/index.php?controller=home&action=addLoginAccount'; 
-						// 	$method = 'POST';
-						// 	$idForm = 'formLogin';
-						// 	$textBtn1 = 'Connection';
-						// 	$textBtn2 = 'Reset';
-						// 	$userNameValue = '';
-						// 	$userFirstNameValue = '';
-						// 	$userEmailValue = '';
-						// 	$userRecoveryCodeValue = '';
-						// 	$userAccessValue = '';
-
-						// 	$identifiantValue = "YannocH17";
-						// 	$passwordValue = "4550191Ym@";
-						// 	//$x= password_hash($passwordValue, PASSWORD_BCRYPT);
-						// /* ▂ ▂ ▂ ▂ ▂ ▂ ▂ */
-		/* ▂   Variables   ▂ */
-			# Declaration of variables
-				$action = 'App/Public/index.php?controller=home&action=addLoginAccount';
-				$method = 'POST';
-				$idForm = 'formAddAccount';
-				$textBtn1 = 'Créer le compte';
-				$textBtn2 = 'Effacer';
-				$idUserAccountValue = "";
-				$userNameValue = "";
-				$userFirstNameValue = "";
-				$userEmailValue = "";
-				$userRecoveryCodeValue = "";
-				$userAccessValue = "";
-				$idLoginAccountValue = "";
-				$identifiantValue = "";
-				$passwordValue = "";
-				$idUserAccountValue = "";
-			/* ----------------------------*/
-			# Declaration of variables regex
-				$regex_idUserAccount = $regex["number"]; 
-				$regex_userName = $regex["text"];
-				$regex_userFirstName = $regex["text"];
-				$regex_userEmail = $regex["email"];
-				$regex_userRecoveryCode = $regex["text"];
-				$regex_userAccess = $regex["number"];
-				$regex_idLoginAccount = $regex["number"];
-				$regex_identifiant = $regex["identifiant"];
-				$regex_password = $regex["password"];
-				$regex_idUserAccount = $regex["number"];
-			/* ---------------------------- */
-			# Declaration of variables tooltip
-				$tooltip_idUserAccount = $tooltip["number"];
-				$tooltip_userName = $tooltip["text"];
-				$tooltip_userFirstName = $tooltip["text"];
-				$tooltip_userEmail = $tooltip["email"];
-				$tooltip_userRecoveryCode = $tooltip["text"];
-				$tooltip_userAccess = $tooltip["number"];
-				$tooltip_idLoginAccount = $tooltip["number"];
-				$tooltip_identifiant = $tooltip["identifiant"];
-				$tooltip_password = $tooltip["password"];
-				$tooltip_idUserAccount = $tooltip["number"];
-			/* ---------------------------- */
-			# Declaration of variables pattern
-				$pattern_idUserAccount = $pattern["number"];
-				$pattern_userName = $pattern["text"];
-				$pattern_userFirstName = $pattern["text"];
-				$pattern_userEmail = $pattern["email"];
-				$pattern_userRecoveryCode = $pattern["textarea"];
-				$pattern_userAccess = $pattern["number"];
-				$pattern_idLoginAccount = $pattern["number"];
-				$pattern_identifiant = $pattern["identifiant"];
-				$pattern_password = $pattern["password"];
-				$pattern_idUserAccount = $pattern["number"];
-			/* ---------------------------- */
-		/* ▂ ▂ ▂ ▂ ▂ ▂ ▂ */
+					/* ---------------------------- */
 							# # A Form is instantiated 'onsubmit="return confirm()"'=>''
 							$form = new Form();
 							# We build the form
@@ -165,7 +122,7 @@
 								$form -> addDivOpen( '',  ['id'=>'userMessage', 'class'=>''] );
 
 								/* @addDivClose( 'comment' ) */
-								$form -> addDivClose();
+								$form -> addDivClose( '' );
 							/* ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ */ 
 
 							/* ▂ ▅ ▆ █  Input group : - userName -  █ ▆ ▅ ▂ */
@@ -173,17 +130,17 @@
 								$form -> addDivOpen( '',  ['class'=>'d-flex flex-nowrap gap-2 align-items-center col-10 col-sm-10 col-lg-10 mb-2'] );
 									/* @addDivInputGroupFormFloatingOpen( 'comment', [ list of attributs ] ) */
 									$form -> addDivInputGroupFormFloatingOpen( '',  ['class'=>'input-group align-content-center has-validation'] );
-										/*-------- Picto input ----------- */
-										/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
-										$form -> addSpan( '', '<i class="fa-solid fa-user"></i>', [ 'id'=>'pictoInput-userName', 'href'=>'#', 'class'=>'input-group-text ' ]);
-										/*---------------------------- */
+										///*-------- Picto input ----------- */
+										///* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
+										//$form -> addSpan( '', '', [ 'id'=>'pictoInput-userName', 'href'=>'#', 'class'=>'input-group-text' ]);
+										///*---------------------------- */
 										/*-------- input ----------- */
 										/* @addDivOpen( 'comment', [ list of attributs ] ) */
 										$form -> addDivOpen( '',  ['class'=>'form-floating is-invalid'] );
 											/* @addInput( 'comment', [ list of attributs ] ) */
-											$form -> addInput('', [ 'type'=>'text', 'name'=>'userName', 'id'=>'userName', 'placeholder'=>'', 'minLength'=>'1', 'maxLength'=>'50', 'required'=>'required', 'pattern'=>$pattern_userName, 'regex'=>$regex_userName, 'value'=>$userNameValue, 'autofocus'=>'', 'class'=>'form-control']);
+											$form -> addInput('', [ 'type'=>'text', 'name'=>'userName', 'id'=>'userName', 'placeholder'=>'', 'minLength'=>$arrayInputuserName['minLength'], 'maxLength'=>$arrayInputuserName['maxLength'], 'required'=>$arrayInputuserName['required'], 'pattern'=>$arrayInputuserName['pattern'], 'regex'=>$arrayInputuserName['regex'], 'value'=>$arrayInputuserName['value'], 'class'=>'form-control']);
 											/* @addLabel( 'comment', 'text', [ list of attributs ] ) */
-											$form -> addLabel( '', 'Votre nom', [ 'id'=>'inputLabel-userName', 'for'=>'userName', 'class'=>'' ]);
+											$form -> addLabel( '', $arrayInputuserName['label'], [ 'id'=>'inputLabel-userName', 'for'=>'userName', 'class'=>'' ]);
 										/* @addDivClose( 'comment' ) */
 										$form -> addDivClose( '' );
 										/*---------------------------- */
@@ -197,7 +154,7 @@
 									$form -> addDivInputGroupFormFloatingClose( '' );
 									/*-------- Tooltip ----------- */
 									/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
-									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-userName', 'href'=>'#', 'class'=>'pictoInfo', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$tooltip_userName ]);
+									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-userName', 'href'=>'#', 'class'=>'pictoInfo', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$arrayInputuserName['tooltip'] ]);
 									/*---------------------------- */
 								/* @addDivClose( 'comment' ) */
 								$form -> addDivClose( '' );
@@ -208,17 +165,17 @@
 								$form -> addDivOpen( '',  ['class'=>'d-flex flex-nowrap gap-2 align-items-center col-10 col-sm-10 col-lg-10 mb-2'] );
 									/* @addDivInputGroupFormFloatingOpen( 'comment', [ list of attributs ] ) */
 									$form -> addDivInputGroupFormFloatingOpen( '',  ['class'=>'input-group align-content-center has-validation'] );
-										/*-------- Picto input ----------- */
-										/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
-										$form -> addSpan( '', '<i class="fa-regular fa-user"></i>', [ 'id'=>'pictoInput-userFirstName', 'href'=>'#', 'class'=>'input-group-text ' ]);
-										/*---------------------------- */
+										///*-------- Picto input ----------- */
+										///* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
+										//$form -> addSpan( '', '', [ 'id'=>'pictoInput-userFirstName', 'href'=>'#', 'class'=>'input-group-text' ]);
+										///*---------------------------- */
 										/*-------- input ----------- */
 										/* @addDivOpen( 'comment', [ list of attributs ] ) */
 										$form -> addDivOpen( '',  ['class'=>'form-floating is-invalid'] );
 											/* @addInput( 'comment', [ list of attributs ] ) */
-											$form -> addInput('', [ 'type'=>'text', 'name'=>'userFirstName', 'id'=>'userFirstName', 'placeholder'=>'', 'minLength'=>'1', 'maxLength'=>'50', 'required'=>'required', 'pattern'=>$pattern_userFirstName, 'regex'=>$regex_userFirstName, 'value'=>$userFirstNameValue, 'class'=>'form-control']);
+											$form -> addInput('', [ 'type'=>'text', 'name'=>'userFirstName', 'id'=>'userFirstName', 'placeholder'=>'', 'minLength'=>$arrayInputuserFirstName['minLength'], 'maxLength'=>$arrayInputuserFirstName['maxLength'], 'required'=>$arrayInputuserFirstName['required'], 'pattern'=>$arrayInputuserFirstName['pattern'], 'regex'=>$arrayInputuserFirstName['regex'], 'value'=>$arrayInputuserFirstName['value'], 'class'=>'form-control']);
 											/* @addLabel( 'comment', 'text', [ list of attributs ] ) */
-											$form -> addLabel( '', 'Votre Prénom', [ 'id'=>'inputLabel-userFirstName', 'for'=>'userFirstName', 'class'=>'' ]);
+											$form -> addLabel( '', $arrayInputuserFirstName['label'], [ 'id'=>'inputLabel-userFirstName', 'for'=>'userFirstName', 'class'=>'' ]);
 										/* @addDivClose( 'comment' ) */
 										$form -> addDivClose( '' );
 										/*---------------------------- */
@@ -232,7 +189,7 @@
 									$form -> addDivInputGroupFormFloatingClose( '' );
 									/*-------- Tooltip ----------- */
 									/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
-									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-userFirstName', 'href'=>'#', 'class'=>'pictoInfo', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$tooltip_userFirstName ]);
+									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-userFirstName', 'href'=>'#', 'class'=>'pictoInfo', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$arrayInputuserFirstName['tooltip'] ]);
 									/*---------------------------- */
 								/* @addDivClose( 'comment' ) */
 								$form -> addDivClose( '' );
@@ -243,17 +200,17 @@
 								$form -> addDivOpen( '',  ['class'=>'d-flex flex-nowrap gap-2 align-items-center col-10 col-sm-10 col-lg-10 mb-2'] );
 									/* @addDivInputGroupFormFloatingOpen( 'comment', [ list of attributs ] ) */
 									$form -> addDivInputGroupFormFloatingOpen( '',  ['class'=>'input-group align-content-center has-validation'] );
-										/*-------- Picto input ----------- */
-										/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
-										$form -> addSpan( '', '<i class="fa-solid fa-at"></i>', [ 'id'=>'pictoInput-userEmail', 'href'=>'#', 'class'=>'input-group-text ' ]);
-										/*---------------------------- */
+										///*-------- Picto input ----------- */
+										///* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
+										//$form -> addSpan( '', '', [ 'id'=>'pictoInput-userEmail', 'href'=>'#', 'class'=>'input-group-text' ]);
+										///*---------------------------- */
 										/*-------- input ----------- */
 										/* @addDivOpen( 'comment', [ list of attributs ] ) */
 										$form -> addDivOpen( '',  ['class'=>'form-floating is-invalid'] );
 											/* @addInput( 'comment', [ list of attributs ] ) */
-											$form -> addInput('', [ 'type'=>'email', 'name'=>'userEmail', 'id'=>'userEmail', 'placeholder'=>'', 'minLength'=>'1', 'maxLength'=>'50', 'required'=>'required', 'pattern'=>$pattern_userEmail, 'regex'=>$regex_userEmail, 'value'=>$userEmailValue, 'class'=>'form-control']);
+											$form -> addInput('', [ 'type'=>'text', 'name'=>'userEmail', 'id'=>'userEmail', 'placeholder'=>'', 'minLength'=>$arrayInputuserEmail['minLength'], 'maxLength'=>$arrayInputuserEmail['maxLength'], 'required'=>$arrayInputuserEmail['required'], 'pattern'=>$arrayInputuserEmail['pattern'], 'regex'=>$arrayInputuserEmail['regex'], 'value'=>$arrayInputuserEmail['value'], 'class'=>'form-control']);
 											/* @addLabel( 'comment', 'text', [ list of attributs ] ) */
-											$form -> addLabel( '', 'Votre email', [ 'id'=>'inputLabel-userEmail', 'for'=>'userEmail', 'class'=>'' ]);
+											$form -> addLabel( '', $arrayInputuserEmail['label'], [ 'id'=>'inputLabel-userEmail', 'for'=>'userEmail', 'class'=>'' ]);
 										/* @addDivClose( 'comment' ) */
 										$form -> addDivClose( '' );
 										/*---------------------------- */
@@ -267,46 +224,46 @@
 									$form -> addDivInputGroupFormFloatingClose( '' );
 									/*-------- Tooltip ----------- */
 									/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
-									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-userEmail', 'href'=>'#', 'class'=>'pictoInfo', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$tooltip_userEmail ]);
+									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-userEmail', 'href'=>'#', 'class'=>'pictoInfo', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$arrayInputuserEmail['tooltip'] ]);
 									/*---------------------------- */
 								/* @addDivClose( 'comment' ) */
 								$form -> addDivClose( '' );
 							/* ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂*/
 
-							/* ▂ ▅ ▆ █  Input group : - userRecoveryCode -  █ ▆ ▅ ▂ */
-								/* @addDivOpen( 'comment', [ list of attributs ] ) */
-								$form -> addDivOpen( '',  ['class'=>'d-flex flex-nowrap gap-2 align-items-center col-10 col-sm-10 col-lg-10 mb-2'] );
-									/* @addDivInputGroupFormFloatingOpen( 'comment', [ list of attributs ] ) */
-									$form -> addDivInputGroupFormFloatingOpen( '',  ['class'=>'input-group align-content-center has-validation'] );
-										/*-------- Picto input ----------- */
-										/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
-										$form -> addSpan( '', '<i class="fa-solid fa-key"></i>', [ 'id'=>'pictoInput-userRecoveryCode', 'href'=>'#', 'class'=>'input-group-text ' ]);
-										/*---------------------------- */
-										/*-------- input ----------- */
-										/* @addDivOpen( 'comment', [ list of attributs ] ) */
-										$form -> addDivOpen( '',  ['class'=>'form-floating is-invalid'] );
-											/* @addInput( 'comment', [ list of attributs ] ) */
-											$form -> addInput('', [ 'type'=>'text', 'name'=>'userRecoveryCode', 'id'=>'userRecoveryCode', 'placeholder'=>'', 'minLength'=>'1', 'maxLength'=>'65535', 'required'=>'required', 'pattern'=>$pattern_userRecoveryCode, 'regex'=>$regex_userRecoveryCode, 'value'=>$userRecoveryCodeValue, 'class'=>'form-control ']);
-											/* @addLabel( 'comment', 'text', [ list of attributs ] ) */
-											$form -> addLabel( '', 'Votre code de récupération', [ 'id'=>'inputLabel-userRecoveryCode', 'for'=>'userRecoveryCode', 'class'=>'' ]);
-										/* @addDivClose( 'comment' ) */
-										$form -> addDivClose( '' );
-										/*---------------------------- */
-										/*-------- FeedBack ----------- */
-										/* @addDivOpen( 'comment', [ list of attributs ] ) */
-										$form -> addDivOpen( '',  ['id'=>'feedback-userRecoveryCode', 'class'=>'invalid-feedback'] );
-										/* @addDivClose( 'comment' ) */
-										$form -> addDivClose( '' );
-										/*---------------------------- */
-									/* @addDivInputGroupFormFloatingClose( 'comment' ) */
-									$form -> addDivInputGroupFormFloatingClose( '' );
-									/*-------- Tooltip ----------- */
-									/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
-									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-userRecoveryCode', 'href'=>'#', 'class'=>'pictoInfo', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$tooltip_userRecoveryCode ]);
-									/*---------------------------- */
-								/* @addDivClose( 'comment' ) */
-								$form -> addDivClose( '' );
-							/* ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂*/
+							// /* ▂ ▅ ▆ █  Input group : - userRecoveryCode -  █ ▆ ▅ ▂ */
+							// 	/* @addDivOpen( 'comment', [ list of attributs ] ) */
+							// 	$form -> addDivOpen( '',  ['class'=>'d-flex flex-nowrap gap-2 align-items-center col-10 col-sm-10 col-lg-10 mb-2'] );
+							// 		/* @addDivInputGroupFormFloatingOpen( 'comment', [ list of attributs ] ) */
+							// 		$form -> addDivInputGroupFormFloatingOpen( '',  ['class'=>'input-group align-content-center has-validation'] );
+							// 			///*-------- Picto input ----------- */
+							// 			///* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
+							// 			//$form -> addSpan( '', '', [ 'id'=>'pictoInput-userRecoveryCode', 'href'=>'#', 'class'=>'input-group-text' ]);
+							// 			///*---------------------------- */
+							// 			/*-------- input ----------- */
+							// 			/* @addDivOpen( 'comment', [ list of attributs ] ) */
+							// 			$form -> addDivOpen( '',  ['class'=>'form-floating is-invalid'] );
+							// 				/* @addInput( 'comment', [ list of attributs ] ) */
+							// 				$form -> addInput('', [ 'type'=>'text', 'name'=>'userRecoveryCode', 'id'=>'userRecoveryCode', 'placeholder'=>'', 'minLength'=>$arrayInputuserRecoveryCode['minLength'], 'maxLength'=>$arrayInputuserRecoveryCode['maxLength'], 'required'=>$arrayInputuserRecoveryCode['required'], 'pattern'=>$arrayInputuserRecoveryCode['pattern'], 'regex'=>$arrayInputuserRecoveryCode['regex'], 'value'=>$arrayInputuserRecoveryCode['value'], 'class'=>'form-control']);
+							// 				/* @addLabel( 'comment', 'text', [ list of attributs ] ) */
+							// 				$form -> addLabel( '', $arrayInputuserRecoveryCode['label'], [ 'id'=>'inputLabel-userRecoveryCode', 'for'=>'userRecoveryCode', 'class'=>'' ]);
+							// 			/* @addDivClose( 'comment' ) */
+							// 			$form -> addDivClose( '' );
+							// 			/*---------------------------- */
+							// 			/*-------- FeedBack ----------- */
+							// 			/* @addDivOpen( 'comment', [ list of attributs ] ) */
+							// 			$form -> addDivOpen( '',  ['id'=>'feedback-userRecoveryCode', 'class'=>'invalid-feedback'] );
+							// 			/* @addDivClose( 'comment' ) */
+							// 			$form -> addDivClose( '' );
+							// 			/*---------------------------- */
+							// 		/* @addDivInputGroupFormFloatingClose( 'comment' ) */
+							// 		$form -> addDivInputGroupFormFloatingClose( '' );
+							// 		/*-------- Tooltip ----------- */
+							// 		/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
+							// 		$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-userRecoveryCode', 'href'=>'#', 'class'=>'pictoInfo', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$arrayInputuserRecoveryCode['tooltip'] ]);
+							// 		/*---------------------------- */
+							// 	/* @addDivClose( 'comment' ) */
+							// 	$form -> addDivClose( '' );
+							// /* ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂*/
 
 							/* ▂ ▅ ▆ █  Input group : - identifiant -  █ ▆ ▅ ▂ */
 								/* @addDivOpen( 'comment', [ list of attributs ] ) */
@@ -315,15 +272,15 @@
 									$form -> addDivInputGroupFormFloatingOpen( '',  ['class'=>'input-group align-content-center has-validation'] );
 										/*-------- Picto input ----------- */
 										/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
-										$form -> addSpan( '', '<i class="fa-solid fa-fingerprint"></i>', [ 'id'=>'pictoInput-identifiant', 'href'=>'#', 'class'=>'input-group-text' ]);
+										# $form -> addSpan( '', '', [ 'id'=>'pictoInput-identifiant', 'href'=>'#', 'class'=>'input-group-text' ]);
 										/*---------------------------- */
 										/*-------- input ----------- */
 										/* @addDivOpen( 'comment', [ list of attributs ] ) */
 										$form -> addDivOpen( '',  ['class'=>'form-floating is-invalid'] );
 											/* @addInput( 'comment', [ list of attributs ] ) */
-											$form -> addInput('', [ 'type'=>'text', 'name'=>'identifiant', 'id'=>'identifiant', 'placeholder'=>'', 'minLength'=>'8', 'maxLength'=>'10', 'required'=>'required', 'pattern'=>$pattern_identifiant, 'regex'=>$regex_identifiant, 'value'=>$identifiantValue, 'class'=>'form-control ']);
+											$form -> addInput('', [ 'type'=>'text', 'name'=>'identifiant', 'id'=>'identifiant', 'placeholder'=>'', 'minLength'=>$arrayInputidentifiant['minLength'], 'maxLength'=>$arrayInputidentifiant['maxLength'], 'required'=>$arrayInputidentifiant['required'], 'pattern'=>$arrayInputidentifiant['pattern'], 'regex'=>$arrayInputidentifiant['regex'], 'value'=>$arrayInputidentifiant['value'], 'class'=>'form-control']);
 											/* @addLabel( 'comment', 'text', [ list of attributs ] ) */
-											$form -> addLabel( '', 'Votre identifiant', [ 'id'=>'inputLabel-identifiant', 'for'=>'identifiant', 'class'=>'' ]);
+											$form -> addLabel( '', $arrayInputidentifiant['label'], [ 'id'=>'inputLabel-identifiant', 'for'=>'identifiant', 'class'=>'' ]);
 										/* @addDivClose( 'comment' ) */
 										$form -> addDivClose( '' );
 										/*---------------------------- */
@@ -337,7 +294,7 @@
 									$form -> addDivInputGroupFormFloatingClose( '' );
 									/*-------- Tooltip ----------- */
 									/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
-									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-identifiant', 'href'=>'#', 'class'=>'pictoInfo', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$tooltip_identifiant ]);
+									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-identifiant', 'href'=>'#', 'class'=>'pictoInfo', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$arrayInputidentifiant['tooltip'] ]);
 									/*---------------------------- */
 								/* @addDivClose( 'comment' ) */
 								$form -> addDivClose( '' );
@@ -348,22 +305,22 @@
 								$form -> addDivOpen( '',  ['class'=>'d-flex flex-nowrap gap-2 align-items-center col-10 col-sm-10 col-lg-10 mb-2'] );
 									/* @addDivInputGroupFormFloatingOpen( 'comment', [ list of attributs ] ) */
 									$form -> addDivInputGroupFormFloatingOpen( '',  ['class'=>'input-group align-content-center has-validation'] );
-										/*-------- Picto input ----------- */
-										/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
-										$form -> addSpan( '', '<i class="fa-solid fa-lock"></i>', [ 'id'=>'pictoInput-password', 'href'=>'#', 'class'=>'input-group-text' ]);
-										/*---------------------------- */
+										///*-------- Picto input ----------- */
+										///* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
+										//$form -> addSpan( '', '', [ 'id'=>'pictoInput-password', 'href'=>'#', 'class'=>'input-group-text' ]);
+										///*---------------------------- */
 										/*-------- input ----------- */
 										/* @addDivOpen( 'comment', [ list of attributs ] ) */
 										$form -> addDivOpen( '',  ['class'=>'form-floating is-invalid'] );
 											/* @addInput( 'comment', [ list of attributs ] ) */
-											$form -> addInput('', [ 'type'=>'password', 'name'=>'password', 'id'=>'password', 'placeholder'=>'', 'minLength'=>'10', 'maxLength'=>'10', 'required'=>'required', 'pattern'=>$pattern_password, 'regex'=>$regex_password, 'value'=>$passwordValue, 'class'=>'form-control']);
+											$form -> addInput('', [ 'type'=>'text', 'name'=>'password', 'id'=>'password', 'placeholder'=>'', 'minLength'=>$arrayInputpassword['minLength'], 'maxLength'=>$arrayInputpassword['maxLength'], 'required'=>$arrayInputpassword['required'], 'pattern'=>$arrayInputpassword['pattern'], 'regex'=>$arrayInputpassword['regex'], 'value'=>$arrayInputpassword['value'], 'class'=>'form-control' ]);
 											/* @addLabel( 'comment', 'text', [ list of attributs ] ) */
-											$form -> addLabel( '', 'Votre mot de passe', [ 'id'=>'inputLabel-password', 'for'=>'password', 'class'=>'' ]);
+											$form -> addLabel( '', $arrayInputpassword['label'], [ 'id'=>'inputLabel-password', 'for'=>'password', 'class'=>'' ]);
 										/* @addDivClose( 'comment' ) */
 										$form -> addDivClose( '' );
 										/*---------------------------- */
 										/*-------- Picto eye -----------*/
-										/* @addSpan( 'comment', 'i or img', [ list of attributs ] )  */
+										/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) </i> */
 										$form -> addSpan( '', '<i class="fa-solid fa-eye"></i>', [ 'id'=>'password-eye', 'href'=>'#', 'class'=>'input-group-text pictoEye' ]);
 										/*---------------------------- */
 										/*-------- FeedBack ----------- */
@@ -376,7 +333,7 @@
 									$form -> addDivInputGroupFormFloatingClose( '' );
 									/*-------- Tooltip ----------- */
 									/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
-									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-password', 'href'=>'#', 'class'=>'pictoInfo', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$tooltip_password ]);
+									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-password', 'href'=>'#', 'class'=>'pictoInfo', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$arrayInputpassword['tooltip'] ]);
 									/*---------------------------- */
 								/* @addDivClose( 'comment' ) */
 								$form -> addDivClose( '' );
@@ -387,15 +344,15 @@
 								$form -> addDivOpen( '',  ['class'=>'d-flex flex-nowrap gap-2 align-items-center col-10 col-sm-10 col-lg-10 mb-2'] );
 									/* @addDivInputGroupFormFloatingOpen( 'comment', [ list of attributs ] ) */
 									$form -> addDivInputGroupFormFloatingOpen( '',  ['class'=>'input-group align-content-center has-validation'] );
-										/*-------- Picto input ----------- */
-										/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
-										$form -> addSpan( '', '<i class="fa-solid fa-lock"></i>', [ 'id'=>'pictoInput-password-verification', 'href'=>'#', 'class'=>'input-group-text ' ]);
-										/*---------------------------- */
+										// /*-------- Picto input ----------- */
+										// /* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
+										// $form -> addSpan( '', '<i class="fa-solid fa-lock"></i>', [ 'id'=>'pictoInput-password-verification', 'href'=>'#', 'class'=>'input-group-text ' ]);
+										// /*---------------------------- */
 										/*-------- input ----------- */
 										/* @addDivOpen( 'comment', [ list of attributs ] ) */
 										$form -> addDivOpen( '',  ['class'=>'form-floating is-invalid'] );
 											/* @addInput( 'comment', [ list of attributs ] ) */
-											$form -> addInput('', [ 'type'=>'password', 'name'=>'password-verification', 'id'=>'password-verification', 'placeholder'=>'', 'minLength'=>'1', 'maxLength'=>'65535', 'required'=>'required', 'pattern'=>$pattern_password, 'regex'=>$regex_password, 'value'=>$passwordValue, 'class'=>'form-control ']);
+											$form -> addInput('', [ 'type'=>'password', 'name'=>'password-verification', 'id'=>'password-verification', 'placeholder'=>'', 'minLength'=>$arrayInputpasswordVerify['minLength'], 'maxLength'=>$arrayInputpasswordVerify['maxLength'], 'required'=>'required', 'pattern'=>$arrayInputpasswordVerify['pattern'], 'regex'=>$arrayInputpasswordVerify['regex'], 'value'=>$arrayInputpasswordVerify['value'], 'class'=>'form-control ']);
 											/* @addLabel( 'comment', 'text', [ list of attributs ] ) */
 											$form -> addLabel( '', 'Votre mot de passe', [ 'id'=>'inputLabel-password-verification', 'for'=>'password-verification', 'class'=>'' ]);
 										/* @addDivClose( 'comment' ) */
@@ -415,12 +372,11 @@
 									$form -> addDivInputGroupFormFloatingClose( '' );
 									/*-------- Tooltip ----------- */
 									/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
-									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-password', 'href'=>'#', 'class'=>'pictoInfo', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$tooltip_password ]);
+									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-password', 'href'=>'#', 'class'=>'pictoInfo', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$arrayInputpassword['tooltip'] ]);
 									/*---------------------------- */
 								/* @addDivClose( 'comment' ) */
 								$form -> addDivClose( '' );
 							/* ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂*/
-
 
 							/* ▂ ▅ ▆ █  Anti robot  █ ▆ ▅ ▂ */
 								/* @addAntiRobot( 'value' ) */
@@ -461,6 +417,7 @@
 
 				}
 			/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
+
 			/* ▂ ▅ ▆ █ index █ ▆ ▅ ▂ */
 				public function indexUseraccount(){
 	
@@ -470,7 +427,106 @@
 
 			/* ▂ ▅ ▆ █ add █ ▆ ▅ ▂ */
 				public function addUseraccount(){
-	
+					# Step 1.0 We define variables
+					$otherMsgError = false;
+					# Step 2.0 Instantiate object
+					$objSecurityForm = new SecurityForm();
+					$objRegex = new Regex();
+					$pregMatch = $objRegex -> readPregMatch() -> getReadPregMatch();
+					# Step 3.0 We retrieve the $POST values ​​from the request
+					$post=json_decode(file_get_contents('php://input'), true);
+					# Step 4.0 SecurityForm()
+					# Step 4.1 We encode XSS & Trim	$post Cleanup
+					$postEncode = $objSecurityForm -> encode_XssTrim( $post );					
+					# Step 4.2 created regex pattern list
+					$regexFieldRequired=['userName'=>$pregMatch['text'], 'userFirstName'=>$pregMatch['text'], 'userEmail'=>$pregMatch['email'], 'identifiant'=>$pregMatch['identifiant'], 'password'=>$pregMatch['password'] ];  
+					# Step 4.3 created setting array                         
+					$setting = ['method'=>'POST', 'post'=>$postEncode, 'regexFieldRequired'=> $regexFieldRequired ]; 
+					# Step 4.4 We call the function SecurityForm( $setting )
+					$responseSecurityForm = $objSecurityForm -> SecurityForm( $setting ); 
+					# Step 5.0 We verify $responseSecurityForm::array  
+					# Step 5.1 If ! $responseSecurityForm['error']
+					if( ! $responseSecurityForm['error'] ){
+					
+					# Step 5.1 We cretate code recovery 
+					$postEncode['userRecoveryCode'] = '';
+					for ($i=0; $i < 5 ; $i++) { 
+						$postEncode['userRecoveryCode'] .= rand(0,9);
+					};
+					$postEncode['userAccess'] = 1;
+					$postEncode['password'] = password_hash($postEncode['password'], PASSWORD_BCRYPT);	
+
+						/* ▂ ▅  Code   ▅ ▂ */
+							# Step 5.2 We instantiate new object
+							$objUserAccountModel = new UserAccountModel();
+							$objUserAccount = new UserAccount();
+							$objLoginAccount = new LoginAccount();
+							# Step 5.3 We verify if the email exist in database with the function getUserAccountByEmail( $email )
+							# @ duplicateCheck( $ColumnName, $Value )
+							$responseDuplicateCheck = $objUserAccountModel -> duplicateCheck( 'userEmail', $postEncode['userEmail'] );
+							if( $responseDuplicateCheck ){
+									$otherMsgError = true;
+									# @ objUserInformation($type='', $textInfo='')
+									$objCreateDivInformation = new CreateDivInformation('', 'Cette adresse email est déjà utilisée' );
+							}else{
+									# Step 5.4 We write $postEncode['']
+									# Step 5.5 We hydrate the object $objUserAccount with the function hydrate( $arrayData )
+									$objUserAccount -> hydrate( $postEncode );
+									$objLoginAccount -> hydrate( $postEncode );
+									# Step 5.6 We create a new user account in database with the function createUserAccount( $objUserAccount )
+									$error = $objUserAccountModel -> createJoint( $objUserAccount, $objLoginAccount );
+									if( $error ){
+										$otherMsgError = true;
+										# @ objUserInformation($type='', $textInfo='')
+										$objCreateDivInformation = new CreateDivInformation('', 'Une erreur est survenue lors de la création de votre compte' );
+									}else{
+
+									};
+							};
+
+
+						/* ▂▂▂▂▂▂▂▂▂▂▂ */
+					};
+			# $objUserAccountModel = new UserAccountModel();
+			# $objUserAccount = new UserAccount();
+					/* ▂ ▅  Bloc Response Fetch ▅ ▂ */
+						# Step 20 We construct the variable $response
+						if( $responseSecurityForm['error'] ){
+								# We construct the variable $response
+								# @ objUserInformation($type='', $textInfo='')
+								$objCreateDivInformation = new CreateDivInformation('', $responseSecurityForm['Msg'] );
+								# We construct the variable $response
+								# @ objResponseJson($status='', $divtInfo='', $data='', $redirect='')
+								$objResponseJson = new ResponseJson(false, $objCreateDivInformation -> getDanger(),'','');   
+
+						}elseif( $otherMsgError ){
+
+								# We construct the variable $response
+								# @ objResponseJson($status='', $divtInfo='', $data='', $redirect='')
+								$objResponseJson = new ResponseJson(false, $objCreateDivInformation -> getDanger(),'',''); 
+
+						}else{
+								# We construct the variable $response
+								# @ objUserInformation($type='', $textInfo='')
+								$objCreateDivInformation = new CreateDivInformation('', 'Votre compte a été créé avec succès' );
+								# @ objResponseJson($status='', $divtInfo='', $data='', $redirect='')
+								$objResponseJson = new ResponseJson(true, $objCreateDivInformation -> getSuccess(), '' , '' );                                              
+						};
+
+
+						$response = $objResponseJson -> getResponse();
+						echo(($response));
+						// return ;
+					/* ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂  */ 
+
+
+
+
+
+
+
+
+
 	
 				}
 			/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 

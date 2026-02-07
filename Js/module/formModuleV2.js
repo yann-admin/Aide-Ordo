@@ -4,7 +4,7 @@ MEMO:
 */
 
 /* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ Import  ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */
-import { OBJ_FORM } from "../scriptPage/formCreateAccount.js";
+import { OBJ_FORM, SUBMITBTN } from "../scriptPage/formCreateAccount.js";
 /* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ Import  ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */
 
 /* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ Export  ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */
@@ -13,22 +13,22 @@ import { OBJ_FORM } from "../scriptPage/formCreateAccount.js";
 
 /* ▂ ▅ ▆ █ Grafcet █ ▆ ▅ ▂ 
 
-    Step 1 ▂ ▅ ▆ █ INIT FORM █ ▆ ▅ ▂
+    Function 1 ▂ ▅ ▆ █ INIT FORM █ ▆ ▅ ▂
         ╚ Step 1 We add attribute novalidate to form to disable browser validation and use our custom validation
 
-    Step 2 ▂ ▅ ▆ █ DISABLED BTN SUBMIT █ ▆ ▅ ▂
+    Function 2 ▂ ▅ ▆ █ DISABLED BTN SUBMIT █ ▆ ▅ ▂
         ╚ Step 1 We disabled submit button if form is not valid
 
-    Step 3 ▂ ▅ ▆ █ RESET FORM █ ▆ ▅ ▂
+    Function 3 ▂ ▅ ▆ █ RESET FORM █ ▆ ▅ ▂
         ╚ Step 1 Loop in obj_form.inputs_ and reset value
         ╚ Step 2 Loop in obj_form.pictoEye_ and reset <i></i>
 
-    Step 4 ▂ ▅ ▆ █ TOGGLE PASSWORD VISIBILITY █ ▆ ▅ ▂
+    Function 4 ▂ ▅ ▆ █ TOGGLE PASSWORD VISIBILITY █ ▆ ▅ ▂
         ╚ Step 1 We test if field form is input or field form classList does not include "validate" => return 
         ╚ Step 2 We search error.validity
         ╚ Step 3 We Show error.message
 
-    Step 5 ▂ ▅ ▆ █ VALIDITY FIELD █ ▆ ▅ ▂
+    Function 5 ▂ ▅ ▆ █ VALIDITY FIELD █ ▆ ▅ ▂
         ╚ Step 1 We test type of field => return     
         ╚ Step 2 We statement variable validity of field
         ╚ Step 3 We test validity, if valid => return
@@ -44,15 +44,20 @@ import { OBJ_FORM } from "../scriptPage/formCreateAccount.js";
         ╚ Step 13 We return error type and message unknownError
         
 
-    Step 7 ▂ ▅ ▆ █ SHOW ERROR █ ▆ ▅ ▂
+    Function 7 ▂ ▅ ▆ █ SHOW ERROR █ ▆ ▅ ▂
         ╚ Step 1 We add class is-invalid to field
         ╚ Step 2 We search element with class .invalid-feedback in field parentNode
         ╚ Step 3 We add error.message in element with class .invalid-feedback
 
-    Step 8 ▂ ▅ ▆ █ RESET ERROR █ ▆ ▅ ▂
+    Function 8 ▂ ▅ ▆ █ RESET ERROR █ ▆ ▅ ▂
         ╚ Step 1 We reset error message and style of field
         ╚ Step 2 We search element with class .invalid-feedback in field parentNode
         ╚ Step 3 We reset error message in element with class .invalid-feedback
+
+    function 9 ▂ ▅ ▆ █ LOOP INPUT VALIDITY █ ▆ ▅ ▂
+        ╚ Step 1 We statement variable lengthInput with number of input in form
+        ╚ Step 2 Loop in obj_form.inputs_ and if input is not valid => lengthInput++
+        ╚ Step 3 If lengthInput == 0 => submitBtn.disabled = false else submitBtn.disabled = true
 
 */
 
@@ -60,20 +65,23 @@ import { OBJ_FORM } from "../scriptPage/formCreateAccount.js";
 const MODE_DEV = true;
 const HEADER_CONSOLE_LOG = "↓↓↓↓↓↓↓↓↓↓ formModuleV2.js   ↓↓↓↓↓↓↓↓↓";
 const FOOTER_CONSOLE_LOG = "↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑";
+var inhibitSubmit = false;
 /* ▂▂▂▂▂▂▂▂▂▂▂▂▂ */
 
-
-/* Step function 1 ▂ ▅ ▆ █ INIT FORM █ ▆ ▅ ▂ */
+if (MODE_DEV) console.log(HEADER_CONSOLE_LOG);
+/* Function 1 ▂ ▅ ▆ █ INIT FORM █ ▆ ▅ ▂ */
 export function initForm(form) {
     // /* Loop over them and prevent submission form class .needs-validation */
-    // form[0].addEventListener('submit', function (event) {
-    //     if (!form[0].checkValidity()) {
-    //         event.preventDefault();
-    //         event.stopPropagation();
-    //     } else {
-    //         form[0].classList.add('was-validated');
-    //     };
-    // }, false);
+    form[0].addEventListener('submit', function (event) {
+        if (!form[0].checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        } else {
+            //form[0].classList.add('was-validated');
+        };
+    }, false);
+
+
     /* Add attribute novalidate to form */
     /* Step 1 We add attribute novalidate to form to disable browser validation and use our custom validation */
     for (let i = 0; i < form.length; i++) {
@@ -82,7 +90,7 @@ export function initForm(form) {
 
 };
 
-/* Step function 2 ▂ ▅ ▆ █ DISABLED BTN SUBMIT █ ▆ ▅ ▂ */
+/* Function 2 ▂ ▅ ▆ █ DISABLED BTN SUBMIT █ ▆ ▅ ▂ */
 export function disabledBtnSubmit(form, submitBtn) {
     /* Step 1 We disabled submit button if form is not valid */
         if (form[0].getAttribute('novalidate')=='novalidate' ) {
@@ -93,7 +101,7 @@ export function disabledBtnSubmit(form, submitBtn) {
 
 };
 
-/* Step function 3 ▂ ▅ ▆ █ RESET FORM █ ▆ ▅ ▂ */
+/* Function 3 ▂ ▅ ▆ █ RESET FORM █ ▆ ▅ ▂ */
 export function resetForm(obj_form) {
     var input = obj_form.inputs_;
     var pictoEye = obj_form.pictoEye_;
@@ -109,6 +117,8 @@ export function resetForm(obj_form) {
             else if (input.type === "radio" || input.type === "checkbox") {
                 input.checked = false;
             };
+            input.classList.remove('is-invalid');
+            input.classList.remove('is-valid');
         };
     });
     /* Step 2 Loop in obj_form.pictoEye_ and reset <i></i> */
@@ -116,9 +126,15 @@ export function resetForm(obj_form) {
         element.innerHTML = '<i class="fa-solid fa-eye"></i>';
         element.style.color = "#212529";
     });
+    /* Step 3 We reset error message and style of field */
+    Array.from(OBJ_FORM.feedback_).forEach(element => {
+        element.innerHTML = '';
+        element.classList.remove('is-invalid');
+        element.classList.remove('is-valid');
+    });
 };
 
-/* Step function 4 ▂ ▅ ▆ █ TOGGLE PASSWORD VISIBILITY █ ▆ ▅ ▂ */
+/* Function 4 ▂ ▅ ▆ █ TOGGLE PASSWORD VISIBILITY █ ▆ ▅ ▂ */
 export function togglePasswordVisibility(event) {
     var target = event.currentTarget;
     var input = target.parentNode.querySelector('input');
@@ -133,23 +149,25 @@ export function togglePasswordVisibility(event) {
     };
 };
 
-/* Step function 5 ▂ ▅ ▆ █ VALIDITY FIELD █ ▆ ▅ ▂ */
+/* Function 5 ▂ ▅ ▆ █ VALIDITY FIELD █ ▆ ▅ ▂ */
 export function validityField(e) {
     let field = e.target; 
+    if(field.form==null){return;};
     /* Step 1 We test if field form is input or field form classList does not include "validate" => return */
     if ( !field.form.className.includes('validate') ) { return; };
 
-      
     /* Step 2 We search error.validity  */
     let error = haserror(field);
     /* Step 3 We Show error.message  */
     if (error) {
         showerror(field, error.message); 
     } else {
-        resetErrorField(field)
+        /* Step 3 if no error we reset error message and style of field */
+        resetErrorField(field);        
     };
 
-
+    /* Step 4 We call function read input required and disabled submit button if form is not valid */
+    loopInputValidity(); 
 
     //if (MODE_DEV) console.clear();
     if (MODE_DEV) console.log(HEADER_CONSOLE_LOG); 
@@ -157,7 +175,7 @@ export function validityField(e) {
     if (MODE_DEV) console.log(FOOTER_CONSOLE_LOG);    
 };
 
-/* Step function 6 ▂ ▅ ▆ █ HAS ERROR █ ▆ ▅ ▂ */
+/* Function 6 ▂ ▅ ▆ █ HAS ERROR █ ▆ ▅ ▂ */
 var haserror = function (field) {
     /* Step 1 We test type of field => return */
     if (field.disabled || field.type === 'file' || field.type === 'reset' || field.type === 'submit' || field.type === 'button') { return; };
@@ -169,7 +187,7 @@ var haserror = function (field) {
     if (validity.valid) { return; };
 
     /* Step 4 We test validity.valueMissing => return error type and message */
-    if (validity.valueMissing) { return { type: 'valueMissing', message: 'Veuillez remplir le champ ' + field.name + ' s\'il vous plaît' }; };
+    if (validity.valueMissing) { return { type: 'valueMissing', message: 'Veuillez remplir le champ s\'il vous plaît' }; };
     /* Step 5 We test validity.typeMismatch => return error type and message */
     if (validity.typeMismatch) {
         if (field.type === 'email'){
@@ -184,26 +202,26 @@ var haserror = function (field) {
         if (field.hasAttribute('title') && field.getAttribute('title') != "") {
             return { type: 'patternMismatch', message: field.getAttribute('title') };
         } else {
-            return {pattern:field.pattern , type: 'patternMismatch', message: 'Veuillez respecter le format du champ ' + field.name + ' s\'il vous plaît' };
+            return {pattern:field.pattern , type: 'patternMismatch', message: 'Veuillez respecter le format du champ s\'il vous plaît' };
         };
     };
     /* Step 7 We test validity.tooLong => return error type and message */
-    if (validity.tooLong) { return { type: 'tooLong', message: 'Le champ ' + field.name + ' doit comporter au maximum ' + field.maxLength + ' caractères.' + ' Vous utilisez actuellement ' + field.value.length + ' caractères.' }; }
+    if (validity.tooLong) { return { type: 'tooLong', message: 'Le champ doit comporter au maximum ' + field.maxLength + ' caractères.' + ' Vous utilisez actuellement ' + field.value.length + ' caractères.' }; }
     /* Step 8 We test validity.tooShort => return error type and message */
-    if (validity.tooShort) { return { type: 'tooShort', message: 'Le champ ' + field.name + ' doit comporter au minimum ' + field.minLength + ' caractères.' + ' Vous utilisez actuellement ' + field.value.length + ' caractères.' }; }
+    if (validity.tooShort) { return { type: 'tooShort', message: 'Le champ doit comporter au minimum ' + field.minLength + ' caractères.' + ' Vous utilisez actuellement ' + field.value.length + ' caractères.' }; }
     /* Step 9 We test validity.badInput => return error type and message */
-    if (validity.badInput) { return { type: 'badInput', message: 'Veuillez entrer un nombre valide pour le champ ' + field.name + ' s\'il vous plaît' }; }
+    if (validity.badInput) { return { type: 'badInput', message: 'Veuillez entrer un nombre valide pour le champ s\'il vous plaît' }; }
     /* Step 10 We test validity.stepMismatch => return error type and message */
-    if (validity.stepMismatch) { return { type: 'stepMismatch', message: 'Veuillez entrer une valeur avec un pas ' + field.step +' pour le champ ' + field.name + ' s\'il vous plaît' }; }
+    if (validity.stepMismatch) { return { type: 'stepMismatch', message: 'Veuillez entrer une valeur avec un pas ' + field.step +' pour le champ s\'il vous plaît' }; }
     /*  Step 11 WE test validity.rangeOverflow => return error type and message */
-    if (validity.rangeOverflow) { return { type: 'rangeOverflow', message: 'Veuillez entrer une valeur inférieure ou égale à ' + field.max + ' pour le champ ' + field.name + ' s\'il vous plaît' }; }
+    if (validity.rangeOverflow) { return { type: 'rangeOverflow', message: 'Veuillez entrer une valeur inférieure ou égale à ' + field.max + ' pour le champ s\'il vous plaît' }; }
     /* Step 12 We test validity.rangeUnderflow => return error type and message */
-    if (validity.rangeUnderflow) { return { type: 'rangeUnderflow', message: 'Veuillez entrer une valeur supérieure ou égale à ' + field.min + ' pour le champ ' + field.name + ' s\'il vous plaît' }; }
+    if (validity.rangeUnderflow) { return { type: 'rangeUnderflow', message: 'Veuillez entrer une valeur supérieure ou égale à ' + field.min + ' pour le champ s\'il vous plaît' }; }
     /* Step 13 We return error type and message unknownError */
     return { type: 'unknownError', message: 'Le champ ' + field.name + ' est invalide.' };
 };
 
-/* Step function 7 ▂ ▅ ▆ █ SHOW ERROR █ ▆ ▅ ▂ */
+/* Function 7 ▂ ▅ ▆ █ SHOW ERROR █ ▆ ▅ ▂ */
 function showerror(field, error) {
     /* We search element with class .invalid-feedback in field parentNode */
     Array.from(OBJ_FORM.feedback_).forEach(element =>  {
@@ -217,7 +235,8 @@ function showerror(field, error) {
     field.classList.add('is-invalid');
     field.classList.remove('is-valid');
 };
-/* Step function 8 ▂ ▅ ▆ █ RESET ERROR █ ▆ ▅ ▂ */
+
+/* Function 8 ▂ ▅ ▆ █ RESET ERROR █ ▆ ▅ ▂ */
 function resetErrorField(field) {
     /* We search element with class .invalid-feedback in field parentNode */
     Array.from(OBJ_FORM.feedback_).forEach(element =>  {
@@ -232,6 +251,45 @@ function resetErrorField(field) {
     field.classList.add('is-valid');
 };
 
+/* Function 9 ▂ ▅ ▆ █ LOOP INPUT VALIDITY █ ▆ ▅ ▂ */
+function loopInputValidity( ) {
+    let lengthInput = OBJ_FORM.inputs_.length;
+    console.log("lengthInput: " + lengthInput);
+    Array.from(OBJ_FORM.inputs_).forEach(input => {
+        if (input.hasAttribute('function') && input.getAttribute('function') == "data-security") {
+            lengthInput--;
+        } else {
+            if (input.validity.valid) { lengthInput--; };
+        };
+    });
+    if (lengthInput == 0 && !inhibitSubmit) { SUBMITBTN.disabled = false; } else { SUBMITBTN.disabled = true; };  
+if (MODE_DEV) console.log("lengthInput: " + lengthInput);
+};
+
+/* Function 10 ▂ ▅ ▆ █ COMPARE VALUE █ ▆ ▅ ▂ */
+export function compareValue() {
+    let field1 = document.getElementById('password');
+    let field2 = document.getElementById('password-verification');
+    /* Step 1 We test value field1 == field2 */
+    let div =document.getElementById('userMessage');
+    if ((field1.value != field2.value) && (field1.value != "" && field2.value != "")) {
+        /* Step 2 We Show error.message  */
+        div.innerHTML = '<p class="alert alert-warning mb-2 p-0" role="alert"> Les mots de passe ne correspondent pas </p>';
+        field1.classList.add('is-invalid');
+        field1.classList.remove('is-valid');
+        field2.classList.add('is-invalid');
+        field2.classList.remove('is-valid');
+        inhibitSubmit = true;
+    } else {
+        /* Step 3 if no error we reset error message and style of field */
+        div.innerHTML = '';
+        field1.classList.remove('is-invalid');
+        field1.classList.add('is-valid');
+        field2.classList.remove('is-invalid');
+        field2.classList.add('is-valid');
+        inhibitSubmit = false;
+    };
+};
 
 
-
+if (MODE_DEV) console.log(FOOTER_CONSOLE_LOG);

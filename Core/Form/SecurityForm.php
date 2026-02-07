@@ -104,7 +104,7 @@
                                                 $response=['error'=>false, 'Msg'=>'ffff'];
                                                 return $response;
                                             }else{
-                                            $response=['error'=>true, 'Msg'=>"Opération annulée! <br> Veuillez respecter le format demander pour le champ ` $field ."];
+                                            $response=['error'=>true, 'Msg'=>"Opération annulée! <br> Veuillez respecter le format demander pour le champ ` $field `."];
                                             return $response;
                                             };
                                         # Else 2.4

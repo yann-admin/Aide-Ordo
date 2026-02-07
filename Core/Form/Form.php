@@ -32,10 +32,10 @@
                         $att="";
                         # Read attributes and writting $att :
                         foreach($attributes as $attribute => $value){
-                            if ($attribute == 'pattern' ){
+                            if (($attribute == 'pattern')) {
                                 $att .= "$attribute = $value ";
                             }else{
-                                $att .= "$attribute = '$value' ";    
+                                $att .= "$attribute = '$value' "; 
                             };
                         };
                         return $att;

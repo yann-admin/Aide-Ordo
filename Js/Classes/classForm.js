@@ -18,7 +18,8 @@ export default class Form {
         /* Elements and filter by class Name" */
         if(this.arrayFields(this.elements_).pictoInfo.length > 0) { this.pictoInfo_ = this.arrayFields(this.elements_).pictoInfo; } else {  };
         if (this.arrayFields(this.elements_).pictoEye.length > 0) { this.pictoEye_ = this.arrayFields(this.elements_).pictoEye; } else { };
-        if (this.arrayFields(this.elements_).feedback.length > 0) { this.feedback_ = this.arrayFields(this.elements_).feedback; } else {  };
+        if (this.arrayFields(this.elements_).feedback.length > 0) { this.feedback_ = this.arrayFields(this.elements_).feedback; } else { };
+        //if(this.arrayFields(this.elements_).required.length > 0) { this.required_ = this.arrayFields(this.elements_).required; } else {  };
     };
 
     arrayFields(elements) {
@@ -35,6 +36,7 @@ export default class Form {
          
         /* loop in elements and filter by attribute function */
         arrayFields['security'] = Array.from(elements).filter(element => element.hasAttribute('function') && element.getAttribute('function') == "data-security");
+       // arrayFields['required'] = Array.from(elements).filter(element => element.hasAttribute('required') && element.getAttribute('required') == "required");
         /* loop in elements and filter by class Name" */
         arrayFields['pictoInfo'] = Array.from(elements).filter(element => element.className.includes('pictoInfo'));
         arrayFields['pictoEye'] = Array.from(elements).filter(element => element.className.includes('pictoEye'));

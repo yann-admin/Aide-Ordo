@@ -211,7 +211,18 @@
             }
 
 
+            /* ▂ ▅  addAccount()  ▅ ▂ */
+            function addAccount(){
+                # Step 1.0 We instantiate new object
+                # @ $objHeadData( $author='', $keywords='', $description='',  )
+                $objHeadData = new HeadData();
+                # @ $objArrayRenderData($titrePage='', $ongletPage='', $forms='', $scriptJs='', $sheetCss='', $responce='')    
+                $objRenderData = new RenderData();
+                # @ $LoginAccountController()
+                $objUserAccount = new UserAccountController();
+                $form = $objUserAccount -> addUseraccount();
 
+            }
 
 
         };

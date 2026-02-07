@@ -10,7 +10,7 @@
 
 
 
-if( $level == 0 ){ return $Menu; };
+//if( $level == 0 ){ return $Menu; };
 
 /* Level 0 is user not connected */
 /* Level 1 is user connected */
@@ -32,7 +32,7 @@ if( $level == 0 ){ return $Menu; };
 /* ▂ ▂ ▂ ▂ ▂ ▂ ▂ */ 
 
 
-if( $level >= 1 ){
+if( $level >= 0 ){
     /* ▂ ▅ ▆ █ Whrite  li_1 ( Model menu ): █ ▆ ▅ ▂ */
         $item = '';
         $text = 'Home';
