@@ -37,10 +37,10 @@
 			public function __construct( $author='', $keywords='', $description='',  ){
 				$this -> author_ = "MT-Dev: Yann MARTIN";
 				$this -> keywords_ = "Aide ordonnancement, Assistance ordonnancement, Support ordonnancement, ordonnancement, MT-Dev, Yann MARTIN";
-				$this -> description_ = "Plateforme d'assistance et de support pour les utilisateurs de ordonnancement, développée par MT-Dev.";
+				$this -> description_ = "Plateforme d'assistance et de support pour les utilisateurs de ordonnancement";
 
 			}
-		/* ▂▂▂▂▂▂▂▂▂▂▂ */
+
 
 		/* ▂ ▅  hydrate()  ▅ ▂ */
 			/* @ hydrate($donnees) */
@@ -52,7 +52,19 @@
 					};
 				}
 			}
-		/* ▂▂▂▂▂▂▂▂▂▂▂ */
+
+		/* ▂ ▅  read()  ▅ ▂ */
+			/* @ read($donnees) */
+			public function read($donnees){
+				$arrayRead = array();
+				foreach($donnees as $attribut){
+					$methode = 'get'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribut)));
+					if (is_callable(array($this, $methode))){
+						$arrayRead[$attribut] = $this->$methode();
+					};
+				}
+				return $arrayRead;
+			}
 
 		/* ▂ ▅  Setters  ▅ ▂ */
 			/* Traitement faille XSS htmlspecialchars() 'Cette fonction retourne une chaîne avec ces Conversions réalisées.' */
@@ -60,7 +72,7 @@
 			public function setAuthor($modifAuthor){ $this -> author_ = htmlspecialchars(trim($modifAuthor), ENT_QUOTES); return $this; }
 			public function setKeywords($modifKeywords){ $this -> keywords_ = htmlspecialchars(trim($modifKeywords), ENT_QUOTES); return $this; }
 			public function setDescription($modifDescription){ $this -> description_ = htmlspecialchars(trim($modifDescription), ENT_QUOTES); return $this; }
-		/* ▂▂▂▂▂▂▂▂▂▂▂ */
+
 
 		/* ▂ ▅  Getters  ▅ ▂ */
 			/* Traitement lecture htmlspecialchars_decode() 'Convertir des entités HTML spéciales en caractères'  */
@@ -68,7 +80,7 @@
 			public function getAuthor(){ return htmlspecialchars_decode($this -> author_, ENT_COMPAT); }
 			public function getKeywords(){ return htmlspecialchars_decode($this -> keywords_, ENT_COMPAT); }
 			public function getDescription(){ return htmlspecialchars_decode($this -> description_, ENT_COMPAT); }
-		/* ▂▂▂▂▂▂▂▂▂▂▂ */
+
 
 	};
 	/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */

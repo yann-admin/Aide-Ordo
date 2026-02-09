@@ -1,13 +1,5 @@
 <?php
-    # Declaration and incrementing of variables 
-    $authorMeta = (isset($HeadData) ? $HeadData -> getAuthor() : "MT-Dev: Yann MARTIN");
-    $keywordsMeta = (isset($HeadData) ? $HeadData -> getKeywords() :"");
-    $descriptionMeta = (isset($HeadData) ? $HeadData -> getDescription() : "");
-
-    $titleOnglet = (isset($RenderData) ? $RenderData->getOngletText() : "En Dev");
-    $sheetCss = (isset($RenderData) ? $RenderData -> getSheetCss() : "");
-    $scriptJs = (isset($RenderData) ? $RenderData -> getScriptJs() : "");
-
+    # Declaration and incrementing of variables sheet base.php in the folder Views
 
 
 
@@ -133,7 +125,7 @@ xxl => ≥1400px
       
         <!-- ▂ ▅ ▆ █   MAIN  █ ▆ ▅ ▂ -->
         <main class="container-fluid align-content-center p-0">
-            <div class="d-flex justify-content-center mb-2">        
+            <div class="d-flex justify-content-center mb-2 row">        
                     <!-- Affichage dynamique de la variable $content -->
                     <?= $content ?> 
             </div>
@@ -143,16 +135,16 @@ xxl => ≥1400px
         <!-- ▂ ▅ ▆ █   FOOTER  █ ▆ ▅ ▂ -->
         <footer class="container-fluid align-content-center">
                 <div class="d-flex flex-row">
-                    <div class="col">
+                    <div class="col d-flex  justify-content-center align-items-center colLeftFooter">
                         <img class='img-fluid logoMt' src="App/Icons/LogoMT.png" alt="Logo de l'entreprise MT Sofware Development">
                     </div>
 
-                    <div class="col-8">
-                    Variable width content
+                    <div class="col-8 d-flex justify-content-center align-items-center colMiddleFooter">
+                    <?= nl2br($footerText) ?>
                     </div>
 
-                    <div class="col-2">
-                    3 of 3
+                    <div class="col-2 d-flex justify-content-center align-items-center colRightFooter">
+                    
                     </div>
                 </div>     
         </footer>

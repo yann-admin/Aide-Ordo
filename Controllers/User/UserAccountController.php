@@ -75,8 +75,8 @@
 						$action = 'App/Public/index.php?controller=home&action=addAccount';
 						$method = 'POST';
 						$idForm = 'formAddAccount';
-						$textBtn1 = 'Créer le compte';
-						$textBtn2 = 'Effacer';
+						$textBtnSubmit = 'Connection <i class="fa-solid fa-paper-plane"></i>';
+						$textBtnBack = 'Home <i class="fa-solid fa-house"></i>';
 						$idUserAccountValue = "";
 						$userNameValue = "zzzzz";
 						$userFirstNameValue = "zzzzzzzzzzz";
@@ -352,19 +352,19 @@
 										/* @addDivOpen( 'comment', [ list of attributs ] ) */
 										$form -> addDivOpen( '',  ['class'=>'form-floating is-invalid'] );
 											/* @addInput( 'comment', [ list of attributs ] ) */
-											$form -> addInput('', [ 'type'=>'password', 'name'=>'password-verification', 'id'=>'password-verification', 'placeholder'=>'', 'minLength'=>$arrayInputpasswordVerify['minLength'], 'maxLength'=>$arrayInputpasswordVerify['maxLength'], 'required'=>'required', 'pattern'=>$arrayInputpasswordVerify['pattern'], 'regex'=>$arrayInputpasswordVerify['regex'], 'value'=>$arrayInputpasswordVerify['value'], 'class'=>'form-control ']);
+											$form -> addInput('', [ 'type'=>'password', 'name'=>'confirmPassword', 'id'=>'confirmPassword', 'placeholder'=>'', 'minLength'=>$arrayInputpasswordVerify['minLength'], 'maxLength'=>$arrayInputpasswordVerify['maxLength'], 'required'=>'required', 'pattern'=>$arrayInputpasswordVerify['pattern'], 'regex'=>$arrayInputpasswordVerify['regex'], 'value'=>$arrayInputpasswordVerify['value'], 'class'=>'form-control ']);
 											/* @addLabel( 'comment', 'text', [ list of attributs ] ) */
-											$form -> addLabel( '', 'Votre mot de passe', [ 'id'=>'inputLabel-password-verification', 'for'=>'password-verification', 'class'=>'' ]);
+											$form -> addLabel( '', $arrayInputpasswordVerify['label'], [ 'id'=>'inputLabel-confirmPassword', 'for'=>'confirmPassword', 'class'=>'' ]);
 										/* @addDivClose( 'comment' ) */
 										$form -> addDivClose( '' );
 										/*---------------------------- */
 										/*-------- Picto eye -----------*/
 										/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) </i> */
-										$form -> addSpan( '', '<i class="fa-solid fa-eye"></i>', [ 'id'=>'password-verification-eye', 'href'=>'#', 'class'=>'input-group-text pictoEye' ]);
+										$form -> addSpan( '', '<i class="fa-solid fa-eye"></i>', [ 'id'=>'confirmPassword-eye', 'href'=>'#', 'class'=>'input-group-text pictoEye' ]);
 										/*---------------------------- */
 										/*-------- FeedBack ----------- */
 										/* @addDivOpen( 'comment', [ list of attributs ] ) */
-										$form -> addDivOpen( '',  ['id'=>'feedback-password-verification', 'class'=>'invalid-feedback'] );
+										$form -> addDivOpen( '',  ['id'=>'feedback-confirmPassword', 'class'=>'invalid-feedback'] );
 										/* @addDivClose( 'comment' ) */
 										$form -> addDivClose( '' );
 										/*---------------------------- */
@@ -394,9 +394,9 @@
 									/* @addDivOpen( 'comment', [ list of attributs ] ) */
 									$form -> addDivOpen( '',  ['class'=>'col d-flex justify-content-evenly'] );
 										/* @addBtn( 'comment', 'textBtn',[ list of attributs ] ) */
-										$form -> addBtn( '', $textBtn1, [ 'type'=>'submit', 'name'=>'true', 'id'=>'true','value'=>'true', 'class'=>'btn btn-primary' ] );
+										$form -> addBtn( '', $textBtnSubmit, [ 'type'=>'submit', 'name'=>'submit', 'id'=>'submit','value'=>'submit', 'class'=>'btn btn-primary' ] );
 										/* @addBtn( 'comment', 'textBtn',[ list of attributs ] ) */
-										$form -> addBtn( '', $textBtn2, [ 'type'=>'button', 'name'=>'false', 'id'=>'false', 'value'=>'false', 'class'=>'btn btn-danger' ] );
+										$form -> addBtn( '', $textBtnBack, [ 'type'=>'button', 'name'=>'back', 'id'=>'back', 'data-url'=>'home', 'value'=>'back', 'class'=>'btn btn-danger' ] );
 									/* @addDivClose( 'comment' ) */
 									$form -> addDivClose();
 								/* @addDivClose( 'comment' ) */
@@ -428,7 +428,8 @@
 			/* ▂ ▅ ▆ █ add █ ▆ ▅ ▂ */
 				public function addUseraccount(){
 					# Step 1.0 We define variables
-					$otherMsgError = false;
+					$error = 0;
+					$messageErrorProcess = "";
 					# Step 2.0 Instantiate object
 					$objSecurityForm = new SecurityForm();
 					$objRegex = new Regex();
@@ -448,107 +449,108 @@
 					# Step 5.1 If ! $responseSecurityForm['error']
 					if( ! $responseSecurityForm['error'] ){
 					
-					# Step 5.1 We cretate code recovery 
-					$postEncode['userRecoveryCode'] = '';
-					for ($i=0; $i < 5 ; $i++) { 
-						$postEncode['userRecoveryCode'] .= rand(0,9);
-					};
-					$postEncode['userAccess'] = 1;
-					$postEncode['password'] = password_hash($postEncode['password'], PASSWORD_BCRYPT);	
-
-						/* ▂ ▅  Code   ▅ ▂ */
-							# Step 5.2 We instantiate new object
-							$objUserAccountModel = new UserAccountModel();
-							$objUserAccount = new UserAccount();
-							$objLoginAccount = new LoginAccount();
-							# Step 5.3 We verify if the email exist in database with the function getUserAccountByEmail( $email )
-							# @ duplicateCheck( $ColumnName, $Value )
-							$responseDuplicateCheck = $objUserAccountModel -> duplicateCheck( 'userEmail', $postEncode['userEmail'] );
-							if( $responseDuplicateCheck ){
-									$otherMsgError = true;
-									# @ objUserInformation($type='', $textInfo='')
-									$objCreateDivInformation = new CreateDivInformation('', 'Cette adresse email est déjà utilisée' );
-							}else{
-									# Step 5.4 We write $postEncode['']
-									# Step 5.5 We hydrate the object $objUserAccount with the function hydrate( $arrayData )
-									$objUserAccount -> hydrate( $postEncode );
-									$objLoginAccount -> hydrate( $postEncode );
-									# Step 5.6 We create a new user account in database with the function createUserAccount( $objUserAccount )
-									$error = $objUserAccountModel -> createJoint( $objUserAccount, $objLoginAccount );
-									if( $error ){
-										$otherMsgError = true;
-										# @ objUserInformation($type='', $textInfo='')
-										$objCreateDivInformation = new CreateDivInformation('', 'Une erreur est survenue lors de la création de votre compte' );
-									}else{
-
-									};
-							};
-
-
-						/* ▂▂▂▂▂▂▂▂▂▂▂ */
-					};
-			# $objUserAccountModel = new UserAccountModel();
-			# $objUserAccount = new UserAccount();
-					/* ▂ ▅  Bloc Response Fetch ▅ ▂ */
-						# Step 20 We construct the variable $response
-						if( $responseSecurityForm['error'] ){
-								# We construct the variable $response
-								# @ objUserInformation($type='', $textInfo='')
-								$objCreateDivInformation = new CreateDivInformation('', $responseSecurityForm['Msg'] );
-								# We construct the variable $response
-								# @ objResponseJson($status='', $divtInfo='', $data='', $redirect='')
-								$objResponseJson = new ResponseJson(false, $objCreateDivInformation -> getDanger(),'','');   
-
-						}elseif( $otherMsgError ){
-
-								# We construct the variable $response
-								# @ objResponseJson($status='', $divtInfo='', $data='', $redirect='')
-								$objResponseJson = new ResponseJson(false, $objCreateDivInformation -> getDanger(),'',''); 
-
-						}else{
-								# We construct the variable $response
-								# @ objUserInformation($type='', $textInfo='')
-								$objCreateDivInformation = new CreateDivInformation('', 'Votre compte a été créé avec succès' );
-								# @ objResponseJson($status='', $divtInfo='', $data='', $redirect='')
-								$objResponseJson = new ResponseJson(true, $objCreateDivInformation -> getSuccess(), '' , '' );                                              
+						# Step 5.1 We cretate code recovery 
+						$postEncode['userRecoveryCode'] = '';
+						for ($i=0; $i < 5 ; $i++) { 
+							$postEncode['userRecoveryCode'] .= rand(0,9);
 						};
+						$postEncode['userAccess'] = 1;
+						$postEncode['password'] = password_hash($postEncode['password'], PASSWORD_BCRYPT);	
 
+							/* ▂ ▅  Code   ▅ ▂ */
+								# Step 5.2 We instantiate new object
+								$objUserAccountModel = new UserAccountModel();
+								$objUserAccount = new UserAccount();
+								$objLoginAccount = new LoginAccount();
+								# Step 5.3 We verify if the email exist in database with the function getUserAccountByEmail( $email )
+								# @ duplicateCheck( $ColumnName, $Value )
+								$responseDuplicateCheck = $objUserAccountModel -> duplicateCheck( 'userEmail', $postEncode['userEmail'] );
+								if( $responseDuplicateCheck ){
+										$error = 2;
+										$messageErrorProcess = 'Cette adresse email est déjà utilisée' ;
+										goto endProcess;
+								}else{
+										# Step 5.4 We write $postEncode['']
+										# Step 5.5 We hydrate the object $objUserAccount with the function hydrate( $arrayData )
+										$objUserAccount -> hydrate( $postEncode );
+										$objLoginAccount -> hydrate( $postEncode );
+										# Step 5.6 We create a new user account in database with the function createUserAccount( $objUserAccount )
+										$errorPdo = $objUserAccountModel -> createJoint( $objUserAccount, $objLoginAccount );
+										if( $errorPdo ){
+											$error = 1;
+											$messageErrorProcess = 'Une erreur est survenue lors de la création de votre compte' ;
+											goto endProcess;
+										}else{
+											$error = 0;
+											$messageErrorProcess = 'Votre compte a été créé avec succès' ;
+											goto endProcess;
+										};
+								};
+							/* ▂▂▂▂▂▂▂▂▂▂▂ */
 
-						$response = $objResponseJson -> getResponse();
-						echo(($response));
-						// return ;
+					}else{
+						# Step 5.1 else $responseSecurityForm['error']
+						$error = 1;
+						$messageErrorProcess = $responseSecurityForm['Msg'];
+					};
+endProcess:
+					$objResponseJson = new ResponseJson();
+					$objCreateDivInformation = new CreateDivInformation();
+					$objCreateDivInformation->setTextInfo( $messageErrorProcess );
+					# @ objUserInformation($textInfo='')
+					# @ objResponseJson($status='', $divtInfo='', $data='', $redirect='')
+					switch($error){
+						case 0: 
+						# no error form security and no error in process
+							# We hydrate the object $objResponseJson
+							$objResponseJson->hydrate( array('status_'=>true, 
+															'divInfo_'=>$objCreateDivInformation->getSuccess(), 
+															'data_'=>'', 
+															'redirect_'=>'' ) );
+						break;
+						case 1:
+						 # error form security or error in process
+							# We hydrate the object $objResponseJson
+							$objResponseJson->hydrate( array('status_'=>false, 
+															'divInfo_'=>$objCreateDivInformation->getDanger(), 
+															'data_'=>'', 
+															'redirect_'=>'' ) );
+						break;
+						case 2:
+						 # error duplicate email
+							# We hydrate the object $objResponseJson
+							$objResponseJson->hydrate( array('status_'=>false, 
+															'divInfo_'=>$objCreateDivInformation->getDanger(), 
+															'data_'=>'', 
+															'redirect_'=>'' ) );
+						break;
+					};
+
+					/* ▂ ▅  Bloc Response Fetch ▅ ▂ */
+						echo(($objResponseJson -> getResponse()));
 					/* ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂  */ 
 
-
-
-
-
-
-
-
-
-	
 				}
-			/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
+
 
 			/* ▂ ▅ ▆ █ update █ ▆ ▅ ▂ */
 				public function updateUseraccount($id){
 	
 				}
-			/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
+
 
 			/* ▂ ▅ ▆ █ show █ ▆ ▅ ▂ */
 				public function showUseraccount($id){
 	
 				}
-			/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
+
 
 			/* ▂ ▅ ▆ █ delete █ ▆ ▅ ▂ */
 				public function deleteUseraccount($id){
 	
 				}
-			/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
+
 
 		};
-	/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
+
 ?>

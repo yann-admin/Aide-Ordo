@@ -59,7 +59,7 @@
                         };
                         return $postEncode;
                     }
-                /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
+
 
                 /* ▂ ▅ ▆ █ decode_XssTrim( array $posts):array ▅ ▂ */
                     public static function decode_XssTrim( array $posts ):array{
@@ -70,7 +70,7 @@
                         };
                         return $postDecode;
                     }
-                /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
+ 
 
                 /* ▂ ▅ ▆ █ SecurityForm( array $setting ):array ▅ ▂ */
                     public static function SecurityForm( array $setting ):array{
@@ -143,9 +143,7 @@
                         # End 2.0
                         /* ---------------------------------------------------- */
                     }
-                /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
 
-            /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
         };
-    /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */  
+
 ?>

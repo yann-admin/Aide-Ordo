@@ -113,10 +113,21 @@ footer{
     bottom: 0;
     background-color: var(--Footer_Background);
     height: 5em; /* doit être égale au padding-bottom du body */
+    .colLeftFooter{
+        background-color: var(--Footer_Background);
+    }
+
+    .colMiddleFooter{
+        background-color: var(--Footer_Background);
+        font-size: 1em;
+        color: var(--Footer_Text_Color);
+    }
+
+    .colRightFooter{
+        background-color: var(--Footer_Background);
+    }
 
 }
-
-
 
 /* .styled {
   border: 0;

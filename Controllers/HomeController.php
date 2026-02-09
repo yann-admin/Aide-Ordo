@@ -28,11 +28,11 @@
         # Class other
         use App\Core\Other\Session;
         use App\Core\Other\HeadData;
+        use App\Core\Other\FooterData;
 
 	/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
 
-
-    /* ▂ ▅ ▆ █ Grafcet █ ▆ ▅ ▂ */
+        /* ▂ ▅ ▆ █ Grafcet █ ▆ ▅ ▂ */
         /*
             # Class HomeController
                 ╚ function index()
@@ -87,42 +87,42 @@
             /* ▂ ▅  index()  ▅ ▂ */
             Public function index(){
                 # Step 1.0 We instantiate new object
-                # @ $objHeadData( $author='', $keywords='', $description='',  )
                 $objHeadData = new HeadData();
-                # @ $objArrayRenderData($titrePage='', $ongletPage='', $forms='', $scriptJs='', $sheetCss='', $responce='')    
-                $objRenderData = new RenderData();   
+                $objFooterData = new FooterData();
+                $objRenderData = new RenderData(); 
                 # Step 2.0 We test $cookieMatch
-                $cookieMatch =false;                   
-                $cookieMatch = $this -> testRememenberMe();                        
+                $cookieMatch = $this->testRememenberMe();
+                # Step 3.0 We test $_SESSION['connected']
                 if (! $cookieMatch ) {
-                    # Step 3.0 We test $_SESSION['connected']
+                    # Step 3.1 set RenderData
                     if(isset($_SESSION['connected']) && $_SESSION['connected'] == true){
-                        # Step 3.1 set RenderData
-                        $objRenderData -> setOngletText("API-Chichoune/Home");
-                        $objRenderData -> setOther( "Bonjour " . $_SESSION["UserInformation"]["userFirstName"] );
+                        $objRenderData->hydrate([
+                            'ongletText_' => "Accueil - Chichoune Api",
+                            'other_' => "Bonjour et Bienvenue " . $_SESSION["UserInformation"]["userFirstName"] . " ",
+                        ]);
                         # Step 3.2 We render the view
-                        $this->render('home/index', ['HeadData' => $objHeadData, 'RenderData' => $objRenderData] );
-                    } else {
+                        $this->render('home/index', ['HeadData' => $objHeadData, 'RenderData' => $objRenderData, 'FooterData' => $objFooterData] );
+                    }else{
                         # Step 3.0 else user not connected
-                        header('location:login');             
+                        header('location:login');
+                        exit(); 
                     };
                 }else{
                     # Step 2.1 else cookie exist and match, we set the session and render the view
-                    $objRenderData -> setOngletText("API-Chichoune/Home");
-                    $objRenderData -> setOther( "Bonjour " . $_SESSION["UserInformation"]["userFirstName"] . ", ravie de vous revoir");    
-                    # Step 2.2 We render the view
-                    $this->render('home/index', ['HeadData' => $objHeadData, 'RenderData' => $objRenderData] ); 
+                    $objRenderData->hydrate([
+                        'ongletText_' => "Accueil - Chichoune Api",
+                        'other_' => "Bonjour et Bienvenue " . $_SESSION["UserInformation"]["userFirstName"] . " ",
+                    ]);
+                    # Step 3.2 We render the view
+                    $this->render('home/index', ['HeadData' => $objHeadData, 'RenderData' => $objRenderData, 'FooterData' => $objFooterData] );
                 };
-
             }
 
-
-            /* ▂ ▅  loginForm()  ▅ ▂ */
+            /* ▂ ▅  testRememenberMe()  ▅ ▂ */
             private function testRememenberMe(){
                 $cookieMatch =false;
                 if((isset($_COOKIE['rememberMe'])) && (!empty($_COOKIE['rememberMe'])) ){
                 # Step 1.0 We instantiate new object
-                # @ $objLoginAccount = new LoginAccountController();
                 $objLoginAccount = new LoginAccountController();
                 # Step 2.0 call $objLoginaccount->verifyCookieRememberMe( string $cookieCrypted )
                 $cookieMatch = $objLoginAccount -> verifyCookieRememberMe( $_COOKIE['rememberMe'] );
@@ -134,37 +134,34 @@
                 };
             }
 
-
             /* ▂ ▅  loginForm()  ▅ ▂ */
-            Public function loginForm(){
-                    // $cookieMatch = $this -> testRememenberMe();
-                    // if ( ! $cookieMatch ) {};
-                        # Step 1.0 We instantiate new object
-                        # @ $objHeadData( $author='', $keywords='', $description='',  )
-                        $objHeadData = new HeadData();
-                        # @ $objArrayRenderData($titrePage='', $ongletPage='', $forms='', $scriptJs='', $sheetCss='', $responce='')    
-                        $objRenderData = new RenderData();
-                        # Step 2.0 We root  
-                        $form = $this->rootHome();
-                        # Step 3.0 We set RenderData
-                        $objRenderData -> setForms($form);
-                        $objRenderData -> setOngletText("API-Chichoune/Login");
-                        $objRenderData -> setSheetCss("App/Css/formLoginAccount.css");
-                        $objRenderData -> setScriptJs("App/Js/scriptPage/formLoginAccount.js"); 
-                        # Step 4.0 We render the view
-                        $this-> render('login/login', ['HeadData' => $objHeadData, 'RenderData' => $objRenderData] ); 
+            public function loginForm(){
+                # Step 1.0 We instantiate new object
+                $objHeadData = new HeadData();    
+                $objFooterData = new FooterData();
+                $objRenderData = new RenderData();
+                $objLoginAccount = new LoginAccountController();
+                # Step 2.0 We root  
+                $form = $objLoginAccount -> constructFormLoginAccount( );
+                # Step 3.0 We set RenderData
+                $objRenderData->hydrate([
+                    'forms_' => $form,
+                    'ongletText_' => "Login - Chichoune Api",
+                    'sheetCss_' => "App/Css/formLoginAccount.css",
+                    'scriptJs_' => "App/Js/scriptPage/form-V3.js",
+                    'other_' => "Bienvenue sur la plateforme d'assistance et de support de l'ordonnancement. \n Veuillez vous connecter pour accéder à votre espace personnalisé ou créer un compte si vous n'en avez pas encore.",
+                ]);
+                # Step 4.0 We render the view
+                $this-> render('login/login', ['HeadData' => $objHeadData, 'RenderData' => $objRenderData, 'FooterData' => $objFooterData] ); 
             }
-
 
             /* ▂ ▅ ▆ █ loginAccount █ ▆ ▅ ▂ */
             public function loginAccount(){
                 # Step 1.0 We instantiate new object
-                # @ $LoginAccountController()
                 $objLoginAccount = new LoginAccountController();
                 # Step 2.0 call $objLoginaccount->verifyLoginAccount()
                 $objLoginAccount -> verifyLoginAccount( );
             }
-
 
             /* ▂ ▅  disconnect()  ▅ ▂ */
             Public function disconnect(){
@@ -176,55 +173,32 @@
                 exit();
             }
 
-
-            /* ▂ ▅  rootHome()  ▅ ▂ */
-            private function rootHome(){
-                # Step 1.0 We instantiate new object
-                # @ $LoginAccountController() 
-                $objLoginAccount = new LoginAccountController();
-                # Step 2.0 call $objLoginaccount->constructLoginForm()
-                $form = $objLoginAccount -> constructFormLoginAccount( );
-                return $form;
-            }
-
-
             /* ▂ ▅  createAccount()  ▅ ▂ */
             function createAccount(){
                 # Step 1.0 We instantiate new object
-                # @ $objHeadData( $author='', $keywords='', $description='',  )
                 $objHeadData = new HeadData();
-                # @ $objArrayRenderData($titrePage='', $ongletPage='', $forms='', $scriptJs='', $sheetCss='', $responce='')    
+                $objFooterData = new FooterData();
                 $objRenderData = new RenderData();
-                # @ $LoginAccountController()
                 $objUserAccount = new UserAccountController();
                 $form = $objUserAccount -> constructFormAddAccount( 'create' );
-
-
                 # Step 3.0 We set RenderData
-                $objRenderData -> setForms($form);
-                $objRenderData -> setOngletText("API-Chichoune/Create Account");
-                $objRenderData -> setSheetCss("App/Css/formCreateAccount.css");
-                $objRenderData -> setScriptJs("App/Js/scriptPage/formCreateAccount.js"); 
+                $objRenderData->hydrate([
+                    'forms_' => $form,
+                    'ongletText_' => "API-Chichoune/Create Account",
+                    'sheetCss_' => "App/Css/formCreateAccount.css",
+                    'scriptJs_' => "App/Js/scriptPage/form-V3.js",
+                ]);
                 # Step 4.0 We render the view
-                $this-> render('createAccount/createAccount', ['HeadData' => $objHeadData, 'RenderData' => $objRenderData] ); 
+                $this-> render('login/login', ['HeadData' => $objHeadData, 'RenderData' => $objRenderData, 'FooterData' => $objFooterData] ); 
 
             }
-
 
             /* ▂ ▅  addAccount()  ▅ ▂ */
             function addAccount(){
                 # Step 1.0 We instantiate new object
-                # @ $objHeadData( $author='', $keywords='', $description='',  )
-                $objHeadData = new HeadData();
-                # @ $objArrayRenderData($titrePage='', $ongletPage='', $forms='', $scriptJs='', $sheetCss='', $responce='')    
-                $objRenderData = new RenderData();
-                # @ $LoginAccountController()
                 $objUserAccount = new UserAccountController();
-                $form = $objUserAccount -> addUseraccount();
-
+                $objUserAccount -> addUseraccount();
             }
-
-
         };
- 
+
 ?>

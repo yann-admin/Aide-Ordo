@@ -30,21 +30,34 @@
 						$this -> divInfo_ = $divInfo;
 						$this -> data_ =  $data;
 						$this -> redirect_ = $redirect;
-
-                        $responseJson = ["status"=>$status, "divInfo"=>$divInfo, "data"=>$data, "redirect"=>$redirect];
-                        $this -> responseJson_ = json_encode( $responseJson, JSON_UNESCAPED_SLASHES  );
-
 					}
-				/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
 
-                /*▂ ▅ ▆ █ Setters █ ▆ ▅ ▂ */
-                /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
+                /* ▂ ▅  hydrate()  ▅ ▂ */
+                    /* @ hydrate($donnees) */
+                    public function hydrate($donnees){
+                        foreach ($donnees as $attribut => $valeur){
+                            $methode = 'set'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribut)));
+                            if (is_callable(array($this, $methode))){
+                                $this->$methode($valeur);
+                            };
+                        }
+                    }
+
+                /* ▂ ▅  Setters  ▅ ▂ */
+                    private function setStatus($status){ $this -> status_ = $status; }
+                    private function setDivInfo($divInfo){ $this -> divInfo_ = $divInfo; }
+                    private function setData($data){ $this -> data_ = $data; }
+                    private function setRedirect($redirect){ $this -> redirect_ = $redirect; }
+
 
                 /* ▂ ▅ ▆ █ Getters █ ▆ ▅ ▂ */
-                    public function getResponse(){ return $this -> responseJson_; }
-                /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
+                    public function getResponse(){ 
+                        $responseJson = [ "status"=>$this->status_, "divInfo"=>$this -> divInfo_, "data"=>$this -> data_, "redirect"=>$this -> redirect_ ];
+                        return json_encode($responseJson, JSON_UNESCAPED_SLASHES);
+                    }
+
                 
-            /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
+
         };
-    /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */  
+
 ?>

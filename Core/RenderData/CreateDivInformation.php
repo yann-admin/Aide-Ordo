@@ -14,7 +14,6 @@
     /* ▂ ▅ ▆ █ Class █ ▆ ▅ ▂ */
         class CreateDivInformation {
             /* ▂ ▅ Attributs ▅ ▂ */
-				private $type_;
                 private $textInfo_ ;
                 private $resulat_ ;
             /* ▂▂▂▂▂▂▂▂▂▂▂ */
@@ -23,13 +22,13 @@
 
 			    /*▂ ▅ ▆ █ construct █ ▆ ▅ ▂ */
 				    # @ objUserInformation($type='', $textInfo='')
-					public function __construct($type='', $textInfo=''){
-						$this -> type_ = $type;
+					public function __construct($textInfo=''){
 						$this -> textInfo_ = $textInfo;
 					}
                 /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
 
                 /*▂ ▅ ▆ █ Setters █ ▆ ▅ ▂ */
+                    public function setTextInfo($textInfo){ $this -> textInfo_ = $textInfo; }
                /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
 
                 /* ▂ ▅ ▆ █ Getters █ ▆ ▅ ▂ */
@@ -57,7 +56,7 @@
                         return $this -> resulat_;
                     }
 
-                    public function getWarnning(){ 
+                    public function getWarning(){ 
                         $this -> resulat_='';
                         $this -> resulat_='<p class="alert alert-warning mb-2 p-0" role="alert">'. $this -> textInfo_ . '</p>';
                         return $this -> resulat_;

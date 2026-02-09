@@ -14,29 +14,29 @@
 	/* ▂ ▅ ▆ █ Class █ ▆ ▅ ▂ */
 	class FooterData{
 		/* ▂ ▅ Attributs ▅ ▂ */
-			protected $x_;
-			protected $y_;
+			protected $textFooter_;
+			protected $otherFooter_;
 		/* ▂▂▂▂▂▂▂▂▂▂▂ */
 
 		/* ▂ ▅  copy and paste in the code  ▅ ▂ */
 			# $objFooterDataModel = new FooterDataModel();
 			# $objFooterData = new FooterData();
-			# -  $objFooterData -> setX($_POST['X']);
-			# -  $objFooterData -> setY($_POST['Y']);
+			# -  $objFooterData -> setTextFooter($_POST['TextFooter']);
+			# -  $objFooterData -> setOtherFooter($_POST['OtherFooter']);
 
-			# -  $objFooterData -> getX();
-			# -  $objFooterData -> getY();
+			# -  $objFooterData -> getTextFooter();
+			# -  $objFooterData -> getOtherFooter();
 
 		/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
 
 		/* ▂ ▅  construct  ▅ ▂ */
-			/* @ $objFooterData( $x='', $y='',  ) */
-			public function __construct( $x='', $y='',  ){
-				$this -> x_ = $x;
-				$this -> y_ = $y;
+			/* @ $objFooterData( $textFooter='', $otherFooter='',  ) */
+			public function __construct( $textFooter='', $otherFooter='',  ){
+				$this -> textFooter_ = "Développée par MT-Dev";
+				$this -> otherFooter_ = $otherFooter;
 
 			}
-		/* ▂▂▂▂▂▂▂▂▂▂▂ */
+
 
 		/* ▂ ▅  hydrate()  ▅ ▂ */
 			/* @ hydrate($donnees) */
@@ -48,22 +48,34 @@
 					};
 				}
 			}
-		/* ▂▂▂▂▂▂▂▂▂▂▂ */
+
+			/* ▂ ▅  read()  ▅ ▂ */
+			/* @ read($donnees) */
+			public function read($donnees){
+				$arrayRead = array();
+				foreach($donnees as $attribut){
+					$methode = 'get'.str_replace(' ', '', ucwords(str_replace('_', ' ', $attribut)));
+					if (is_callable(array($this, $methode))){
+						$arrayRead[$attribut] = $this->$methode();
+					};
+				}
+				return $arrayRead;
+			}
 
 		/* ▂ ▅  Setters  ▅ ▂ */
 			/* Traitement faille XSS htmlspecialchars() 'Cette fonction retourne une chaîne avec ces Conversions réalisées.' */
 			/* ENT_QUOTES => Convertira les deux citations doubles et simples. */
-			public function setX($modifX){ $this -> x_ = htmlspecialchars(trim($modifX), ENT_QUOTES); return $this; }
-			public function setY($modifY){ $this -> y_ = htmlspecialchars(trim($modifY), ENT_QUOTES); return $this; }
-		/* ▂▂▂▂▂▂▂▂▂▂▂ */
+			public function setTextFooter($modifTextFooter){ $this -> textFooter_ = htmlspecialchars(trim($modifTextFooter), ENT_QUOTES); return $this; }
+			public function setOtherFooter($modifOtherFooter){ $this -> otherFooter_ = htmlspecialchars(trim($modifOtherFooter), ENT_QUOTES); return $this; }
+
 
 		/* ▂ ▅  Getters  ▅ ▂ */
 			/* Traitement lecture htmlspecialchars_decode() 'Convertir des entités HTML spéciales en caractères'  */
 			/* ENT_COMPAT => Je vais convertir les guillemets doubles et laisser les guillemets simples intacts. */
-			public function getX(){ return htmlspecialchars_decode($this -> x_, ENT_COMPAT); }
-			public function getY(){ return htmlspecialchars_decode($this -> y_, ENT_COMPAT); }
-		/* ▂▂▂▂▂▂▂▂▂▂▂ */
+			public function getTextFooter(){ return htmlspecialchars_decode($this -> textFooter_, ENT_COMPAT); }
+			public function getOtherFooter(){ return htmlspecialchars_decode($this -> otherFooter_, ENT_COMPAT); }
+
 
 	};
-	/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
+
 ?>

@@ -126,25 +126,37 @@
 						/* ▂   Tooltip   ▂ */
 							$tooltip = $objRegex -> readTooltip() -> getReadTooltip();
 						/* ▂ ▂ ▂ ▂ ▂ ▂ ▂ */
+						/* ▂   Pattern   ▂ */
+							$pattern = $objRegex -> readPattern() -> getReadPattern();
+						/* ▂ ▂ ▂ ▂ ▂ ▂ ▂ */
 
-						/* ▂   Variables   ▂ */
-						# Declaration of variables
-							$action = 'App/Public/index.php?controller=home&action=loginAccount'; 
+						/* ▂ ▅ ▆ █  Variables  █ ▆ ▅ ▂ */
+							# Declaration of variables
+							$action = 'App/Public/index.php?controller=home&action=loginAccount';
 							$method = 'POST';
 							$idForm = 'formLogin';
-							$textBtn1 = 'Connection';
-							$textBtn2 = 'Reset';
+							$textBtnSubmit = 'Connection <i class="fa-solid fa-paper-plane"></i>';
+							$textBtnBack = 'Home <i class="fa-solid fa-house"></i>';
+							$idLoginAccountValue = "";
 							$identifiantValue = "YannocH17";
 							$passwordValue = "4550191Ym@";
-							//$x= password_hash($passwordValue, PASSWORD_BCRYPT);
-						/* ▂ ▂ ▂ ▂ ▂ ▂ ▂ */
+								//$x= password_hash($passwordValue, PASSWORD_BCRYPT);	
+							$idUserAccountValue = "";
+							/* ----------------------------*/
+							# Declaration of array input
+							//$arrayInputidLoginAccount=['minLength'=>'1', 'maxLength'=>'', 'required'=>'required', 'tooltip'=>$tooltip[' '], 'pattern'=>$pattern[' '], 'regex'=>$regex[' '], 'label'=>'', 'value'=>$idLoginAccountValue ];
+							$arrayInputidentifiant=['minLength'=>'8', 'maxLength'=>'10', 'required'=>'required', 'tooltip'=>$tooltip['identifiant'], 'pattern'=>$pattern['identifiant'], 'regex'=>$regex['identifiant'], 'label'=>'Votre identifiant', 'value'=>$identifiantValue ];
+							$arrayInputpassword=['minLength'=>'10', 'maxLength'=>'11', 'required'=>'required', 'tooltip'=>$tooltip['password'], 'pattern'=>$pattern['password'], 'regex'=>$regex['password'], 'label'=>'Votre mot de passe', 'value'=>$passwordValue ];
+							//$arrayInputidUserAccount=['minLength'=>'1', 'maxLength'=>'', 'required'=>'required', 'tooltip'=>$tooltip[' '], 'pattern'=>$pattern[' '], 'regex'=>$regex[' '], 'label'=>'', 'value'=>$idUserAccountValue ];
+							/* ---------------------------- */
+						/* ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ */
 
 							# # A Form is instantiated 'onsubmit="return confirm()"'=>''
 							$form = new Form();
 							# We build the form
 							$form -> addDivContainerFormOpen( [ 'name'=>'divForm-LoginaccountForm', 'id'=>'divForm-LoginaccountForm', 'class'=>'col-10 col-sm-5 col-lg-3 mb-3 py-3 text-center container-form-login' ] );
 							/* @startForm( 'comment', [list of attributs] ) */
-							$form -> startForm( 'startForm', [ 'name'=>'LoginaccountForm', 'id'=>$idForm, 'action'=>$action, 'method'=>$method, 'enctype'=>'multipart/form-data', 'class'=>'justify-content-center row needs-validation', 'novalidate'=>'' ] );
+							$form -> startForm( 'startForm', [ 'name'=>'LoginaccountForm', 'id'=>$idForm, 'action'=>$action, 'method'=>$method, 'enctype'=>'multipart/form-data', 'class'=>'justify-content-center row validate',] );
 
 							/* ▂ ▅ ▆ █  Header form  █ ▆ ▅ ▂ */
 								/* @addDivOpen( 'comment', [ list of attributs ] ) */
@@ -172,15 +184,15 @@
 									$form -> addDivInputGroupFormFloatingOpen( '',  ['class'=>'input-group align-content-center has-validation'] );
 										/*-------- Picto input ----------- */
 										/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
-										$form -> addSpan( '', '<i class="fa-solid fa-user"></i>', [ 'id'=>'pictoInput-identifiant', 'href'=>'#', 'class'=>'input-group-text ' ]);
+										$form -> addSpan( '', '<i class="fa-solid fa-user"></i>', [ 'id'=>'pictoInput-identifiant', 'href'=>'#', 'class'=>'input-group-text' ]);
 										/*---------------------------- */
 										/*-------- input ----------- */
 										/* @addDivOpen( 'comment', [ list of attributs ] ) */
 										$form -> addDivOpen( '',  ['class'=>'form-floating is-invalid'] );
 											/* @addInput( 'comment', [ list of attributs ] ) */
-											$form -> addInput('', [ 'type'=>'text', 'name'=>'identifiant', 'id'=>'identifiant', 'placeholder'=>'', 'minLength'=>'6', 'maxLength'=>'10', 'required'=>'required', 'pattern'=>$regex["identifiant"], 'regex'=>$regex["identifiant"], 'value'=>$identifiantValue, 'autofocus'=>'', 'class'=>'form-control ']);
+											$form -> addInput('', [ 'type'=>'text', 'name'=>'identifiant', 'id'=>'identifiant', 'placeholder'=>'', 'minLength'=>$arrayInputidentifiant['minLength'], 'maxLength'=>$arrayInputidentifiant['maxLength'], 'required'=>$arrayInputidentifiant['required'], 'pattern'=>$arrayInputidentifiant['pattern'], 'regex'=>$arrayInputidentifiant['regex'], 'value'=>$arrayInputidentifiant['value'], 'class'=>'form-control']);
 											/* @addLabel( 'comment', 'text', [ list of attributs ] ) */
-											$form -> addLabel( '', 'Votre Identifiant', [ 'id'=>'inputLabel-identifiant', 'for'=>'identifiant', 'class'=>'' ]);
+											$form -> addLabel( '', $arrayInputidentifiant['label'], [ 'id'=>'inputLabel-identifiant', 'for'=>'identifiant', 'class'=>'' ]);
 										/* @addDivClose( 'comment' ) */
 										$form -> addDivClose( '' );
 										/*---------------------------- */
@@ -193,7 +205,8 @@
 									/* @addDivInputGroupFormFloatingClose( 'comment' ) */
 									$form -> addDivInputGroupFormFloatingClose( '' );
 									/*-------- Tooltip ----------- */
-									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-identifiant', 'href'=>'#', 'class'=>'pictoInfo ', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$tooltip["identifiant"] ]);
+									/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
+									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-identifiant', 'href'=>'#', 'class'=>'pictoInfo', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$arrayInputidentifiant['tooltip'] ]);
 									/*---------------------------- */
 								/* @addDivClose( 'comment' ) */
 								$form -> addDivClose( '' );
@@ -206,18 +219,24 @@
 									$form -> addDivInputGroupFormFloatingOpen( '',  ['class'=>'input-group align-content-center has-validation'] );
 										/*-------- Picto input ----------- */
 										/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
-										$form -> addSpan( '', '<i class="fa-solid fa-lock"></i>', [ 'id'=>'pictoInput-password', 'href'=>'#', 'class'=>'input-group-text ' ]);
+										$form -> addSpan( '', '<i class="fa-solid fa-lock"></i>', [ 'id'=>'pictoInput-password', 'href'=>'#', 'class'=>'input-group-text' ]);
 										/*---------------------------- */
 										/*-------- input ----------- */
 										/* @addDivOpen( 'comment', [ list of attributs ] ) */
 										$form -> addDivOpen( '',  ['class'=>'form-floating is-invalid'] );
 											/* @addInput( 'comment', [ list of attributs ] ) */
-											$form -> addInput('', [ 'type'=>'text', 'name'=>'password', 'id'=>'password', 'placeholder'=>'', 'minLength'=>'10', 'maxLength'=>'10', 'required'=>'required', 'pattern'=>$regex["password"], 'regex'=>$regex["password"], 'value'=>$passwordValue, 'autofocus'=>'', 'class'=>'form-control ']);
+											$form -> addInput('', [ 'type'=>'text', 'name'=>'password', 'id'=>'password', 'placeholder'=>'', 'minLength'=>$arrayInputpassword['minLength'], 'maxLength'=>$arrayInputpassword['maxLength'], 'required'=>$arrayInputpassword['required'], 'pattern'=>$arrayInputpassword['pattern'], 'regex'=>$arrayInputpassword['regex'], 'value'=>$arrayInputpassword['value'], 'class'=>'form-control']);
 											/* @addLabel( 'comment', 'text', [ list of attributs ] ) */
-											$form -> addLabel( '', '', [ 'id'=>'inputLabel-password', 'for'=>'password', 'class'=>'' ]);
+											$form -> addLabel( '', $arrayInputpassword['label'], [ 'id'=>'inputLabel-password', 'for'=>'password', 'class'=>'' ]);
 										/* @addDivClose( 'comment' ) */
 										$form -> addDivClose( '' );
 										/*---------------------------- */
+										
+										/*-------- Picto input ----------- */
+										/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
+										$form -> addSpan( '', '<i class="fa-solid fa-eye"></i>', [ 'id'=>'password-eye', 'href'=>'#', 'class'=>'input-group-text pictoEye' ]);
+										/*---------------------------- */
+
 										/*-------- FeedBack ----------- */
 										/* @addDivOpen( 'comment', [ list of attributs ] ) */
 										$form -> addDivOpen( '',  ['id'=>'feedback-password', 'class'=>'invalid-feedback'] );
@@ -227,7 +246,8 @@
 									/* @addDivInputGroupFormFloatingClose( 'comment' ) */
 									$form -> addDivInputGroupFormFloatingClose( '' );
 									/*-------- Tooltip ----------- */
-									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-password', 'href'=>'#', 'class'=>'pictoInfo ', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$tooltip['password'] ]);
+									/* @addSpan( 'comment', 'i or img', [ list of attributs ] ) */
+									$form -> addSpan( '', '<i class="fa-solid fa-circle-info"></i>', [ 'id'=>'addon-password', 'href'=>'#', 'class'=>'pictoInfo', 'data-bs-toggle'=>'tooltip', 'data-bs-placement'=>'left', 'data-bs-html'=>'true', 'data-bs-custom-class'=>'custom-tooltip', 'data-bs-title'=>$arrayInputpassword['tooltip'] ]);
 									/*---------------------------- */
 								/* @addDivClose( 'comment' ) */
 								$form -> addDivClose( '' );
@@ -285,9 +305,11 @@
 									/* @addDivOpen( 'comment', [ list of attributs ] ) */
 									$form -> addDivOpen( '',  ['class'=>'col d-flex justify-content-evenly'] );
 										/* @addBtn( 'comment', 'textBtn',[ list of attributs ] ) */
-										$form -> addBtn( '', $textBtn1, [ 'type'=>'submit', 'name'=>'true', 'id'=>'true','value'=>'true', 'class'=>'btn btn-primary' ] );
+										$form -> addBtn( '', $textBtnSubmit, [ 'type'=>'submit', 'name'=>'submit', 'id'=>'submit','value'=>'submit', 'class'=>'btn btn-primary' ] );
 										/* @addBtn( 'comment', 'textBtn',[ list of attributs ] ) */
-										$form -> addBtn( '', $textBtn2, [ 'type'=>'button', 'name'=>'false', 'id'=>'false', 'value'=>'false', 'class'=>'btn btn-danger' ] );
+										$form -> addBtn( '', $textBtnBack, [ 'type'=>'button', 'name'=>'back', 'id'=>'back', 'data-url'=>'home', 'value'=>'back', 'class'=>'btn btn-danger' ] );
+										/* @addBtn( 'comment', 'textBtn',[ list of attributs ] ) */
+										//$form -> addBtn( '', '<i class="fa-solid fa-broom"></i>', [ 'type'=>'button', 'name'=>'clear', 'id'=>'clear', 'value'=>'Reset', 'class'=>'btn btn-danger' ] );										
 									/* @addDivClose( 'comment' ) */
 									$form -> addDivClose();
 								/* @addDivClose( 'comment' ) */
@@ -310,9 +332,9 @@
 			/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
 
 			/* ▂ ▅ ▆ █ verifyLoginAccount( ) █ ▆ ▅ ▂ */
-				public function verifyLoginAccount(){
+				public function verifyLoginAccount_old(){
 					# Step 1.0 We define variables
-					$otherMsgError = false;
+					$error=0;
 					$endDateCookie = 60*60*24; // 1 day
 					# Step 2.0 Instantiate object
 					$objSecurityForm = new SecurityForm();
@@ -357,7 +379,7 @@
 									);
 									# Step 5.8 We check if the "Remember Me" checkbox is checked
 									if (! isset($_COOKIE['rememberMe'])){
-										if( isset( $postEncode['check-RememberMe'] ) && $postEncode['check-RememberMe'] === 'true' ){
+										if( isset( $postEncode['check-RememberMe'] ) && $postEncode['check-RememberMe'] === 'on' ){
 											# Step 5.8.1 We instantiate the CookiesRememberModel() & CookiesRemember() class
 											$objCookiesRememberModel = new CookiesRememberModel();
 											$objCookiesRemember = new CookiesRemember();
@@ -437,6 +459,153 @@
 
 				}
 			/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
+
+
+
+			/* ▂ ▅ ▆ █ verifyLoginAccount( ) █ ▆ ▅ ▂ */
+				public function verifyLoginAccount(){
+					# Step 1.0 We define variables
+					$error = 0;
+					$messageErrorProcess = "";
+					$endDateCookie = 60*60*24; // 1 day
+					# Step 2.0 Instantiate object
+					$objSecurityForm = new SecurityForm();
+					$objRegex = new Regex();
+					$pregMatch = $objRegex -> readPregMatch() -> getReadPregMatch();
+
+					# Step 3.0 We retrieve the $POST values ​​from the request
+					$post=json_decode(file_get_contents('php://input'), true);
+					# Step 4.0 SecurityForm()
+					# Step 4.1 We encode XSS & Trim	$post Cleanup
+					$postEncode = $objSecurityForm -> encode_XssTrim( $post );
+					# Step 4.2 created regex pattern list
+					$regexFieldRequired=['identifiant'=>$pregMatch['identifiant'], 'password'=>$pregMatch['password'] ];  
+					# Step 4.3 created setting array                         
+					$setting = ['method'=>'POST', 'post'=>$postEncode, 'regexFieldRequired'=> $regexFieldRequired ]; 
+					# Step 4.4 We call the function SecurityForm( $setting )
+					$responseSecurityForm = $objSecurityForm -> SecurityForm( $setting ); 
+					# Step 5.0 We verify $responseSecurityForm::array  
+					# Step 5.1 If ! $responseSecurityForm['error']
+					if( ! $responseSecurityForm['error'] ){
+						/* ▂ ▅  Code   ▅ ▂ */
+							# Step 5.2 We instantiate new object
+							$objLoginAccountModel = new LoginAccountModel();
+							# Step 5.3 We call $objLoginAccountModel->findJointIdentifiant( string $identifiant ) useraccount & loginaccount
+							$loginAccountData = $objLoginAccountModel -> findJointByIdentifiant( $postEncode['identifiant'] );
+							# Step 5.4 We verify if $loginAccountData exists
+							if( $loginAccountData ){
+								# Step 5.5 We verify the password
+								if( password_verify( $postEncode['password'], $loginAccountData -> password ) ){
+									# Step 5.6 We regenerate the session ID to prevent session fixation attacks
+									session_regenerate_id(false);
+									# Step 5.7 We store user information in the session
+									$_SESSION['connected'] = "true";
+									$_SESSION['UserInformation'] = array( 
+										'idLoginAccount' => $loginAccountData -> idLoginAccount,
+										'idUserAccount' => $loginAccountData -> idUserAccount,
+										'userName' => $loginAccountData -> userName,
+										'userFirstName' => $loginAccountData -> userFirstName,
+										'userEmail' => $loginAccountData -> userEmail,
+										'userAccess' => $loginAccountData -> userAccess
+									);
+									# Step 5.8 We check if the "Remember Me" checkbox is checked
+									if (! isset($_COOKIE['rememberMe'])){
+										if( isset( $postEncode['check-RememberMe'] ) && $postEncode['check-RememberMe'] === 'on' ){
+											# Step 5.8.1 We instantiate the CookiesRememberModel() & CookiesRemember() class
+											$objCookiesRememberModel = new CookiesRememberModel();
+											$objCookiesRemember = new CookiesRemember();
+											# Step 5.8.2 We generate a unique key for the user
+											$randomKey = Key::createNewRandomKey();
+											# Step 5.8.3 write the cookie in the database with the user ID and the generated key
+											$cookie = array('ip' => $_SERVER['REMOTE_ADDR'],'idUserAccount' => $loginAccountData -> idUserAccount, 'idLoginAccount' => $loginAccountData -> idLoginAccount, 'endDate' => time() + ($endDateCookie) );
+											# Step 5.8.4 We encrypt the cookie data using the generated key
+											$cookieCrypted = Crypto::encrypt(json_encode($cookie), $randomKey);
+											# Step 5.8.5 We store the generated key in the database associated with the user ID
+											setcookie("rememberMe", $cookieCrypted, time() + ($endDateCookie), "/", $_ENV['DOMAINE'], true, true); // 1 day
+											# Step 5.8.6 We hydrate the Cookies object
+											$objCookiesRemember	-> hydrate( array( 
+												'adressIp' => $_SERVER['REMOTE_ADDR'],
+												'idUserAccount' => $loginAccountData -> idUserAccount ,
+												'cookies' => $cookieCrypted,
+												'randomKey' => $randomKey->saveToAsciiSafeString()
+											) );
+											# Step 5.8.7 We insert the cookie in the database
+											$errorPdo = $objCookiesRememberModel -> create( $objCookiesRemember );
+											if(!empty($errorPdo->errorText)){
+												# Step 5.8.7 else password not correct
+												$error = 1;  
+												$messageErrorProcess = "Error PDO: ".$errorPdo->errorText;
+											};
+										};
+									}
+								}else{ 
+									# Step 5.5 else password not correct
+									$error = 1;
+									$messageErrorProcess = "Le mot de passe saisi n'est pas correct. Veuillez vérifier le password saisi s'il vous plaît.";
+									goto endProcess;
+								};
+		
+							}else{
+								# Step 5.4 else identifiant not found
+								$error = 1;
+								$messageErrorProcess = "Nous ne trouvons pas cet utilisateur. Veuillez vérifier l'identifiant saisi s'il vous plaît." ;
+								goto endProcess;
+							};
+						/* ▂▂▂▂▂▂▂▂▂▂▂ */
+					}else{
+						# Step 5.1 else $responseSecurityForm['error']
+						$error = 1;
+						$messageErrorProcess = $responseSecurityForm['Msg'];
+					};
+
+					endProcess:
+					$objResponseJson = new ResponseJson();
+					$objCreateDivInformation = new CreateDivInformation();
+					$objCreateDivInformation->setTextInfo( $messageErrorProcess );
+					# @ objUserInformation($textInfo='')
+					# @ objResponseJson($status='', $divtInfo='', $data='', $redirect='')
+					switch($error){
+						case 0: 
+						# no error form security and no error in process
+							# We hydrate the object $objResponseJson
+							$objResponseJson->hydrate( array('status_'=>true,
+															'divInfo_'=>$objCreateDivInformation->getSuccess(), 
+															'data_'=>'', 
+															'redirect_'=>'home' ) );
+						break;
+						case 1:
+						 # error form security or error in process
+							# We hydrate the object $objResponseJson
+							$objResponseJson->hydrate( array('status_'=>false, 
+															'divInfo_'=>$objCreateDivInformation->getDanger(), 
+															'data_'=>'', 
+															'redirect_'=>'') );
+						break;
+						case 2:
+
+						break;
+					};
+
+					/* ▂ ▅  Bloc Response Fetch ▅ ▂ */
+						echo(($objResponseJson -> getResponse()));
+					/* ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂  */ 
+
+
+
+				}
+			/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 			/* ▂ ▅ ▆ █ verifyCookieRememberMe( ) █ ▆ ▅ ▂ */
