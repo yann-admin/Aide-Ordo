@@ -331,136 +331,134 @@
 				}
 			/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
 
-			/* ▂ ▅ ▆ █ verifyLoginAccount( ) █ ▆ ▅ ▂ */
-				public function verifyLoginAccount_old(){
-					# Step 1.0 We define variables
-					$error=0;
-					$endDateCookie = 60*60*24; // 1 day
-					# Step 2.0 Instantiate object
-					$objSecurityForm = new SecurityForm();
-					$objRegex = new Regex();
-					$pregMatch = $objRegex -> readPregMatch() -> getReadPregMatch();
+			// /* ▂ ▅ ▆ █ verifyLoginAccount( ) █ ▆ ▅ ▂ */
+			// 	public function verifyLoginAccount_old(){
+			// 		# Step 1.0 We define variables
+			// 		$error=0;
+			// 		$endDateCookie = 60*60*24; // 1 day
+			// 		# Step 2.0 Instantiate object
+			// 		$objSecurityForm = new SecurityForm();
+			// 		$objRegex = new Regex();
+			// 		$pregMatch = $objRegex -> readPregMatch() -> getReadPregMatch();
 
-					# Step 3.0 We retrieve the $POST values ​​from the request
-					$post=json_decode(file_get_contents('php://input'), true);
-					# Step 4.0 SecurityForm()
-					# Step 4.1 We encode XSS & Trim	$post Cleanup
-					$postEncode = $objSecurityForm -> encode_XssTrim( $post );
-					# Step 4.2 created regex pattern list
-					$regexFieldRequired=['identifiant'=>$pregMatch['identifiant'], 'password'=>$pregMatch['password'] ];  
-					# Step 4.3 created setting array                         
-					$setting = ['method'=>'POST', 'post'=>$postEncode, 'regexFieldRequired'=> $regexFieldRequired ]; 
-					# Step 4.4 We call the function SecurityForm( $setting )
-					$responseSecurityForm = $objSecurityForm -> SecurityForm( $setting ); 
-					# Step 5.0 We verify $responseSecurityForm::array  
-					# Step 5.1 If ! $responseSecurityForm['error']
-					if( ! $responseSecurityForm['error'] ){
+			// 		# Step 3.0 We retrieve the $POST values ​​from the request
+			// 		$post=json_decode(file_get_contents('php://input'), true);
+			// 		# Step 4.0 SecurityForm()
+			// 		# Step 4.1 We encode XSS & Trim	$post Cleanup
+			// 		$postEncode = $objSecurityForm -> encode_XssTrim( $post );
+			// 		# Step 4.2 created regex pattern list
+			// 		$regexFieldRequired=['identifiant'=>$pregMatch['identifiant'], 'password'=>$pregMatch['password'] ];  
+			// 		# Step 4.3 created setting array                         
+			// 		$setting = ['method'=>'POST', 'post'=>$postEncode, 'regexFieldRequired'=> $regexFieldRequired ]; 
+			// 		# Step 4.4 We call the function SecurityForm( $setting )
+			// 		$responseSecurityForm = $objSecurityForm -> SecurityForm( $setting ); 
+			// 		# Step 5.0 We verify $responseSecurityForm::array  
+			// 		# Step 5.1 If ! $responseSecurityForm['error']
+			// 		if( ! $responseSecurityForm['error'] ){
 
-						/* ▂ ▅  Code   ▅ ▂ */
-							# Step 5.2 We instantiate new object
-							$objLoginAccountModel = new LoginAccountModel();
-							# Step 5.3 We call $objLoginAccountModel->findJointIdentifiant( string $identifiant ) useraccount & loginaccount
-							$loginAccountData = $objLoginAccountModel -> findJointByIdentifiant( $postEncode['identifiant'] );
-							# Step 5.4 We verify if $loginAccountData exists
-							if( $loginAccountData ){
-								# Step 5.5 We verify the password
-								if( password_verify( $postEncode['password'], $loginAccountData -> password ) ){
-									# Step 5.6 We regenerate the session ID to prevent session fixation attacks
-									session_regenerate_id(false);
-									# Step 5.7 We store user information in the session
-									$_SESSION['connected'] = "true";
-									$_SESSION['UserInformation'] = array( 
-										'idLoginAccount' => $loginAccountData -> idLoginAccount,
-										'idUserAccount' => $loginAccountData -> idUserAccount,
-										'userName' => $loginAccountData -> userName,
-										'userFirstName' => $loginAccountData -> userFirstName,
-										'userEmail' => $loginAccountData -> userEmail,
-										'userAccess' => $loginAccountData -> userAccess
-									);
-									# Step 5.8 We check if the "Remember Me" checkbox is checked
-									if (! isset($_COOKIE['rememberMe'])){
-										if( isset( $postEncode['check-RememberMe'] ) && $postEncode['check-RememberMe'] === 'on' ){
-											# Step 5.8.1 We instantiate the CookiesRememberModel() & CookiesRemember() class
-											$objCookiesRememberModel = new CookiesRememberModel();
-											$objCookiesRemember = new CookiesRemember();
-											# Step 5.8.2 We generate a unique key for the user
-											$randomKey = Key::createNewRandomKey();
-											# Step 5.8.3 write the cookie in the database with the user ID and the generated key
-											$cookie = array('ip' => $_SERVER['REMOTE_ADDR'],'idUserAccount' => $loginAccountData -> idUserAccount, 'idLoginAccount' => $loginAccountData -> idLoginAccount, 'endDate' => time() + ($endDateCookie) );
-											# Step 5.8.4 We encrypt the cookie data using the generated key
-											$cookieCrypted = Crypto::encrypt(json_encode($cookie), $randomKey);
-											# Step 5.8.5 We store the generated key in the database associated with the user ID
-											setcookie("rememberMe", $cookieCrypted, time() + ($endDateCookie), "/", $_ENV['DOMAINE'], true, true); // 1 day
-											# Step 5.8.6 We hydrate the Cookies object
-											$objCookiesRemember	-> hydrate( array( 
-												'adressIp' => $_SERVER['REMOTE_ADDR'],
-												'idUserAccount' => $loginAccountData -> idUserAccount ,
-												'cookies' => $cookieCrypted,
-												'randomKey' => $randomKey->saveToAsciiSafeString()
-											) );
-											# Step 5.8.7 We insert the cookie in the database
-											$error = $objCookiesRememberModel -> create( $objCookiesRemember );
-											if(!empty($error->errorText)){
-												# Step 5.8.7 else password not correct
-												$otherMsgError = true;     
-												# We construct the variable $response
-												# @ objUserInformation($type='', $textInfo='')
-												$objCreateDivInformation = new CreateDivInformation('', "Error PDO: ".$error->errorText);
-											};
-										};
-									};
-								}else{
-									# Step 5.5 else password not correct
-									$otherMsgError = true;     
-									# We construct the variable $response
-									# @ objUserInformation($type='', $textInfo='')
-									$objCreateDivInformation = new CreateDivInformation('', "Le mot de passe saisi n'est pas correct. Veuillez vérifier le password saisi s'il vous plaît." );
-								};
+			// 			/* ▂ ▅  Code   ▅ ▂ */
+			// 				# Step 5.2 We instantiate new object
+			// 				$objLoginAccountModel = new LoginAccountModel();
+			// 				# Step 5.3 We call $objLoginAccountModel->findJointIdentifiant( string $identifiant ) useraccount & loginaccount
+			// 				$loginAccountData = $objLoginAccountModel -> findJointByIdentifiant( $postEncode['identifiant'] );
+			// 				# Step 5.4 We verify if $loginAccountData exists
+			// 				if( $loginAccountData ){
+			// 					# Step 5.5 We verify the password
+			// 					if( password_verify( $postEncode['password'], $loginAccountData -> password ) ){
+			// 						# Step 5.6 We regenerate the session ID to prevent session fixation attacks
+			// 						session_regenerate_id(false);
+			// 						# Step 5.7 We store user information in the session
+			// 						$_SESSION['connected'] = "true";
+			// 						$_SESSION['UserInformation'] = array( 
+			// 							'idLoginAccount' => $loginAccountData -> idLoginAccount,
+			// 							'idUserAccount' => $loginAccountData -> idUserAccount,
+			// 							'userName' => $loginAccountData -> userName,
+			// 							'userFirstName' => $loginAccountData -> userFirstName,
+			// 							'userEmail' => $loginAccountData -> userEmail,
+			// 							'userAccess' => $loginAccountData -> userAccess
+			// 						);
+			// 						# Step 5.8 We check if the "Remember Me" checkbox is checked
+			// 						if (! isset($_COOKIE['rememberMe'])){
+			// 							if( isset( $postEncode['check-RememberMe'] ) && $postEncode['check-RememberMe'] === 'on' ){
+			// 								# Step 5.8.1 We instantiate the CookiesRememberModel() & CookiesRemember() class
+			// 								$objCookiesRememberModel = new CookiesRememberModel();
+			// 								$objCookiesRemember = new CookiesRemember();
+			// 								# Step 5.8.2 We generate a unique key for the user
+			// 								$randomKey = Key::createNewRandomKey();
+			// 								# Step 5.8.3 write the cookie in the database with the user ID and the generated key
+			// 								$cookie = array('ip' => $_SERVER['REMOTE_ADDR'],'idUserAccount' => $loginAccountData -> idUserAccount, 'idLoginAccount' => $loginAccountData -> idLoginAccount, 'endDate' => time() + ($endDateCookie) );
+			// 								# Step 5.8.4 We encrypt the cookie data using the generated key
+			// 								$cookieCrypted = Crypto::encrypt(json_encode($cookie), $randomKey);
+			// 								# Step 5.8.5 We store the generated key in the database associated with the user ID
+			// 								setcookie("rememberMe", $cookieCrypted, time() + ($endDateCookie), "/", $_ENV['DOMAINE'], true, true); // 1 day
+			// 								# Step 5.8.6 We hydrate the Cookies object
+			// 								$objCookiesRemember	-> hydrate( array( 
+			// 									'adressIp' => $_SERVER['REMOTE_ADDR'],
+			// 									'idUserAccount' => $loginAccountData -> idUserAccount ,
+			// 									'cookies' => $cookieCrypted,
+			// 									'randomKey' => $randomKey->saveToAsciiSafeString()
+			// 								) );
+			// 								# Step 5.8.7 We insert the cookie in the database
+			// 								$error = $objCookiesRememberModel -> create( $objCookiesRemember );
+			// 								if(!empty($error->errorText)){
+			// 									# Step 5.8.7 else password not correct
+			// 									$otherMsgError = true;     
+			// 									# We construct the variable $response
+			// 									# @ objUserInformation($type='', $textInfo='')
+			// 									$objCreateDivInformation = new CreateDivInformation('', "Error PDO: ".$error->errorText);
+			// 								};
+			// 							};
+			// 						};
+			// 					}else{
+			// 						# Step 5.5 else password not correct
+			// 						$otherMsgError = true;     
+			// 						# We construct the variable $response
+			// 						# @ objUserInformation($type='', $textInfo='')
+			// 						$objCreateDivInformation = new CreateDivInformation('', "Le mot de passe saisi n'est pas correct. Veuillez vérifier le password saisi s'il vous plaît." );
+			// 					};
 		
-							}else{
-								# Step 5.4 else identifiant not found
-								$otherMsgError = true;
-								# We construct the variable $response
-								# @ objUserInformation($type='', $textInfo='')
-								$objCreateDivInformation = new CreateDivInformation('',"Nous ne trouvons pas cet utilisateur. Veuillez vérifier l'identifiant saisi s'il vous plaît." );
-							};
-						/* ▂▂▂▂▂▂▂▂▂▂▂ */
-					};
+			// 				}else{
+			// 					# Step 5.4 else identifiant not found
+			// 					$otherMsgError = true;
+			// 					# We construct the variable $response
+			// 					# @ objUserInformation($type='', $textInfo='')
+			// 					$objCreateDivInformation = new CreateDivInformation('',"Nous ne trouvons pas cet utilisateur. Veuillez vérifier l'identifiant saisi s'il vous plaît." );
+			// 				};
+			// 			/* ▂▂▂▂▂▂▂▂▂▂▂ */
+			// 		};
 
-					/* ▂ ▅  Bloc Response Fetch ▅ ▂ */
-						# Step 20 We construct the variable $response
-						if( $responseSecurityForm['error'] ){
-								# We construct the variable $response
-								# @ objUserInformation($type='', $textInfo='')
-								$objCreateDivInformation = new CreateDivInformation('', $responseSecurityForm['Msg'] );
-								# We construct the variable $response
-								# @ objResponseJson($status='', $divtInfo='', $data='', $redirect='')
-								$objResponseJson = new ResponseJson(false, $objCreateDivInformation -> getDanger(),'','');   
+			// 		/* ▂ ▅  Bloc Response Fetch ▅ ▂ */
+			// 			# Step 20 We construct the variable $response
+			// 			if( $responseSecurityForm['error'] ){
+			// 					# We construct the variable $response
+			// 					# @ objUserInformation($type='', $textInfo='')
+			// 					$objCreateDivInformation = new CreateDivInformation('', $responseSecurityForm['Msg'] );
+			// 					# We construct the variable $response
+			// 					# @ objResponseJson($status='', $divtInfo='', $data='', $redirect='')
+			// 					$objResponseJson = new ResponseJson(false, $objCreateDivInformation -> getDanger(),'','');   
 
-						}elseif( $otherMsgError ){
+			// 			}elseif( $otherMsgError ){
 
-								# We construct the variable $response
-								# @ objResponseJson($status='', $divtInfo='', $data='', $redirect='')
-								$objResponseJson = new ResponseJson(false, $objCreateDivInformation -> getDanger(),'',''); 
+			// 					# We construct the variable $response
+			// 					# @ objResponseJson($status='', $divtInfo='', $data='', $redirect='')
+			// 					$objResponseJson = new ResponseJson(false, $objCreateDivInformation -> getDanger(),'',''); 
 
-						}else{
-								# We construct the variable $response
-								# @ objResponseJson($status='', $divtInfo='', $data='', $redirect='')
-								$objResponseJson = new ResponseJson(true, '', '', 'home' );                                              
-						};
-
-
-						$response = $objResponseJson -> getResponse();
-						echo(($response));
-						// return ;
-					/* ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂  */ 
+			// 			}else{
+			// 					# We construct the variable $response
+			// 					# @ objResponseJson($status='', $divtInfo='', $data='', $redirect='')
+			// 					$objResponseJson = new ResponseJson(true, '', '', 'home' );                                              
+			// 			};
 
 
+			// 			$response = $objResponseJson -> getResponse();
+			// 			echo(($response));
+			// 			// return ;
+			// 		/* ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂ ▂  */ 
 
-				}
-			/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
 
 
+			// 	}
+			// /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
 
 			/* ▂ ▅ ▆ █ verifyLoginAccount( ) █ ▆ ▅ ▂ */
 				public function verifyLoginAccount(){
@@ -594,19 +592,6 @@
 
 				}
 			/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 			/* ▂ ▅ ▆ █ verifyCookieRememberMe( ) █ ▆ ▅ ▂ */
 				public function verifyCookieRememberMe(){

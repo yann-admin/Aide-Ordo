@@ -19,18 +19,6 @@
 /* Level 4 is other user */
 /* Level 5 is user admin */
 
-/* ▂ ▅ ▆ █ Whrite  Diviser in Li █ ▆ ▅ ▂ */
-    $item = '';
-    $item .= "<li> <hr class='nav-item'> </li>";
-    $Menu['Diviser_Li'] = $item;
-/* ▂ ▂ ▂ ▂ ▂ ▂ ▂ */ 
-
-/* ▂ ▅ ▆ █ Whrite  Diviser in Ul █ ▆ ▅ ▂ */
-    $item = '';
-    $item .= "<li> <hr class='dropdown-divider'> </li>";
-    $Menu['Diviser_Ul'] = $item;
-/* ▂ ▂ ▂ ▂ ▂ ▂ ▂ */ 
-
 
 if( $level >= 0 ){
     /* ▂ ▅ ▆ █ Whrite  li_1 ( Model menu ): █ ▆ ▅ ▂ */
@@ -40,9 +28,40 @@ if( $level >= 0 ){
         $item = "<li class='nav-item'>" ;
         $item .= "\t<a class='nav-link active' aria-current='page' href=$href> $text </a>";
         $item .= "</li>";
-        $Menu['li_1'] = $item;
+        $Menu['li_Home'] = $item;
     /* ▂ ▂ ▂ ▂ ▂ ▂ ▂ */ 
 };
+
+if( $level == 0 ){
+    /* ▂ ▅ ▆ █ Whrite  li_1 ( Model menu ): █ ▆ ▅ ▂ */
+        $item = '';
+        $text = 'Créer un compte';
+        $href = 'create-account';#index.php
+        $item = "<li> <hr class='nav-item'>" ;
+        $item .= "\t<a class='nav-link active' aria-current='page' href=$href> $text </a>";
+        $item .= "</li>";
+        $Menu['li_create_account'] = $item;
+    /* ▂ ▂ ▂ ▂ ▂ ▂ ▂ */ 
+};
+
+
+
+if( $level >= 0 ){
+/* ▂ ▅ ▆ █ Whrite  Diviser in Ul █ ▆ ▅ ▂ */
+    $item = '';
+    $item .= "<li> <hr class='dropdown-divider'> </li>";
+    $Menu['Diviser_Ul'] = $item;
+/* ▂ ▂ ▂ ▂ ▂ ▂ ▂ */ 
+};
+
+if( $level >= 1 ){
+/* ▂ ▅ ▆ █ Whrite  Diviser in Li █ ▆ ▅ ▂ */
+    $item = '';
+    $item .= "<li> <hr class='nav-item'> </li>";
+    $Menu['Diviser_Li'] = $item;
+/* ▂ ▂ ▂ ▂ ▂ ▂ ▂ */ 
+};
+
 
 if( $level >= 1 ){ 
     /* ▂ ▅ ▆ █ Whrite  li_2 ( Model with submenu ) █ ▆ ▅ ▂ */
@@ -59,7 +78,7 @@ if( $level >= 1 ){
         // $item .=     "\t\t<li><a class='dropdown-item' href=$hrefSubMenu4> Action </a></li>";
         $item .=    "\t</ul>";
         $item .= "</li>";
-        $Menu['li_2'] = $item;
+        $Menu['li_Usine'] = $item;
     /* ▂ ▂ ▂ ▂ ▂ ▂ ▂ */ 
 };
 if( $level >= 1 ){ 
@@ -77,7 +96,7 @@ if( $level >= 1 ){
         // $item .=     "\t\t<li><a class='dropdown-item' href=$hrefSubMenu4> Action </a></li>";
         $item .=    "\t</ul>";
         $item .= "</li>";
-        $Menu['li_3'] = $item;
+        $Menu['li_Production'] = $item;
     /* ▂ ▂ ▂ ▂ ▂ ▂ ▂ */  
 };
 
@@ -96,9 +115,30 @@ if( $level >= 1 ){
         // $item .=     "\t\t<li><a class='dropdown-item' href=$hrefSubMenu4> Action </a></li>";
         $item .=    "\t</ul>";
         $item .= "</li>";
-        $Menu['li_4'] = $item;
+        $Menu['li_Topologie'] = $item;
     /* ▂ ▂ ▂ ▂ ▂ ▂ ▂ */  
 };
+
+if( $level >= 1 ){ 
+    /* ▂ ▅ ▆ █ Whrite  li_4 ( Model with submenu ) █ ▆ ▅ ▂ */
+        $item = '';
+        $text = 'Mes informations personnelles';
+        $hrefSubMenu1 = 'my-account'; 
+        $hrefSubMenu2 = '#'; $hrefSubMenu3 = '#'; $hrefSubMenu4 = '#';
+        $item = "<li class='nav-item dropdown'>" ;
+        $item .=    "\t<a class='nav-link dropdown-toggle' role='button' data-bs-toggle='dropdown' aria-expanded='false'> $text </a>";
+        $item .=    "\t<ul class='dropdown-menu dropdown-menu-dark'>";
+        $item .=        "\t\t<li><a class='dropdown-item' href=$hrefSubMenu1> Gérer </a></li>";
+        // $item .=     "\t\t<li><a class='dropdown-item' href=$hrefSubMenu2> Action </a></li>";
+        // $item .=     "\t\t<li><a class='dropdown-item' href=$hrefSubMenu3> Action </a></li>";
+        // $item .=     "\t\t<li><a class='dropdown-item' href=$hrefSubMenu4> Action </a></li>";
+        $item .=    "\t</ul>";
+        $item .= "</li>";
+        $Menu['li_My_personal_information'] = $item;
+    /* ▂ ▂ ▂ ▂ ▂ ▂ ▂ */  
+};
+
+
 
 
 if( $level >= 1 ){ 
@@ -109,7 +149,7 @@ if( $level >= 1 ){
         $item = "<li class='nav-item'>" ;
         $item .= "\t<a class='nav-link active' aria-current='page' href=$href> $text </a>";
         $item .= "</li>";
-        $Menu['li_10'] = $item;
+        $Menu['li_Disconnect'] = $item;
     /* ▂ ▂ ▂ ▂ ▂ ▂ ▂ */ 
 };
 

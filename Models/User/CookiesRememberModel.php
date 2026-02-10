@@ -65,11 +65,11 @@
 			/* ▂ ▅  create( Cookiesremember $Cookiesremember )  ▅ ▂ */
 				public function create( Cookiesremember $Cookiesremember ) { 
 					$this -> request = $this -> connexion -> prepare( "INSERT INTO cookiesremember
-					SET cookiesremember.cookies=:cookies, cookiesremember.adressIp=:adressIp, cookiesremember.randomKey=:randomKey, cookiesremember.idUserAccount=:idUserAccount  ");
+					SET cookiesremember.cookies=:cookies, cookiesremember.adressIp=:adressIp, cookiesremember.randomKey=:randomKey");
 					$this -> request -> bindValue(":cookies", $Cookiesremember -> getCookies(), PDO::PARAM_STR);
 					$this -> request -> bindValue(":adressIp", $Cookiesremember -> getAdressIp(), PDO::PARAM_STR);
 					$this -> request -> bindValue(":randomKey", $Cookiesremember -> getRandomKey(), PDO::PARAM_STR);
-					$this -> request -> bindValue(":idUserAccount", $Cookiesremember -> getIdUserAccount(), PDO::PARAM_INT);
+					//$this -> request -> bindValue(":idUserAccount", $Cookiesremember -> getIdUserAccount(), PDO::PARAM_INT);
 					$pdoDbException = $this -> executeTryCatch(); 
 					return $pdoDbException; 
 				}
@@ -78,12 +78,12 @@
 			/* ▂ ▅  update( int $id, Cookiesremember $Cookiesremember )  ▅ ▂ */
 				public function update( int $id, Cookiesremember $Cookiesremember ) { 
 					$this -> request = $this -> connexion -> prepare( "UPDATE cookiesremember
-					SET cookiesremember.cookies=:cookies, cookiesremember.adressIp=:adressIp, cookiesremember.randomKey=:randomKey, cookiesremember.idUserAccount=:idUserAccount
+					SET cookiesremember.cookies=:cookies, cookiesremember.adressIp=:adressIp, cookiesremember.randomKey=:randomKey
 					WHERE cookiesremember.idCookieRemember = :idCookieRemember");
 					$this -> request -> bindValue(":cookies", $Cookiesremember -> getCookies(), PDO::PARAM_STR);
 					$this -> request -> bindValue(":adressIp", $Cookiesremember -> getAdressIp(), PDO::PARAM_STR);
 					$this -> request -> bindValue(":randomKey", $Cookiesremember -> getRandomKey(), PDO::PARAM_STR);
-					$this -> request -> bindValue(":idUserAccount", $Cookiesremember -> getIdUserAccount(), PDO::PARAM_INT);
+					//$this -> request -> bindValue(":idUserAccount", $Cookiesremember -> getIdUserAccount(), PDO::PARAM_INT);
 					$pdoDbException = $this -> executeTryCatch(); 
 					return $pdoDbException; 
 				}

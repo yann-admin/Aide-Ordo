@@ -20,6 +20,8 @@
                     public function routes(){
                         /*Nous stockons la valeur du paramètre "controller" récupéré par la superglobale "$_GET" dans la variable "$controller". ucfirst(array_shift($_GET)):'Home'*/
                         $controller = (isset($_GET['controller']) ? ucfirst(array_shift($_GET)):'Home');
+                        $controller = str_replace("|", "\\", $controller);
+                        /* Nous allons ensuite construire le nom de la classe du contrôleur concerné. Par exemple, si l'utilisateur demande la page d'accueil, le contrôleur concerné sera "HomeController". Nous allons donc concaténer le nom du contrôleur avec le namespace de base de nos contrôleurs et le suffixe "Controller". */
                         $controller = '\\App\\Controllers\\'. $controller . 'Controller';
                         /* Nous faisons ensuite la même chose avec le paramètre "action". Sauf que dans ce cas, l'objectif étant d'exécuter la méthode du contrôleur concerné, 
                         nous ne récupérons que le nom de cette méthode. Par défaut, pour accéder à la page d'accueil, la méthode exécutée se nomme "index". */

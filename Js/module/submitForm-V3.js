@@ -63,18 +63,19 @@ export async function handleFormSubmit(event) {
             /* Step 3.4: We get response as Json */
             let response = await responsePostData.json();
             if (MODE_DEV) { console.log("Sending JSON data to:", thisUrl, objDataJsonString, responsePostData); }
-            let elementDiv = document.getElementById('userMessage');
+            //let div = response.div;
+            let elementDiv = document.getElementById(response.div);
             let status = response.status;
-            let divInfo = response.divInfo;
+            let msg = response.msg;
             let data = response.data;
             let redirect = response.redirect;
 
-            if (divInfo != '') { elementDiv.innerHTML = divInfo; } else { elementDiv.innerHTML = ''; };
+            if (msg != '') { elementDiv.innerHTML = msg; } else { elementDiv.innerHTML = ''; };
             if (status == true) { 
                 if (data != '') {  };
                 if (redirect != '') { window.location.href = redirect; };
                 
-                if(MODE_DEV) { console.log("response: ", status, divInfo, data, redirect); }
+                if(MODE_DEV) { console.log("response: ", status, div, msg, data, redirect); }
             };
 
 

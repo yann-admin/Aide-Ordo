@@ -15,7 +15,8 @@
         class ResponseJson {
             /* ▂ ▅ Attributs ▅ ▂ */
 				private $status_;
-                private $divInfo_ ;
+                private $div_ ;
+                private $msg_ ;
 				private $data_;
 				private $redirect_;
                 private $responseJson_;
@@ -25,9 +26,10 @@
 
 			    /*▂ ▅ ▆ █ construct █ ▆ ▅ ▂ */
 				    # @ objResponseJson($status='', $divtInfo='', $data='', $redirect='')
-					public function __construct($status='', $divInfo='', $data='', $redirect=''){
+					public function __construct($status='',$div= '', $msg='', $data='', $redirect=''){
 						$this -> status_ = $status;
-						$this -> divInfo_ = $divInfo;
+                        $this -> div_ = $div;
+						$this -> msg_ = $msg;
 						$this -> data_ =  $data;
 						$this -> redirect_ = $redirect;
 					}
@@ -45,14 +47,15 @@
 
                 /* ▂ ▅  Setters  ▅ ▂ */
                     private function setStatus($status){ $this -> status_ = $status; }
-                    private function setDivInfo($divInfo){ $this -> divInfo_ = $divInfo; }
+                    private function setMsg($msg){ $this -> msg_ = $msg; }
                     private function setData($data){ $this -> data_ = $data; }
                     private function setRedirect($redirect){ $this -> redirect_ = $redirect; }
+                    private function setDiv($div){ $this -> div_ = $div; }
 
 
                 /* ▂ ▅ ▆ █ Getters █ ▆ ▅ ▂ */
                     public function getResponse(){ 
-                        $responseJson = [ "status"=>$this->status_, "divInfo"=>$this -> divInfo_, "data"=>$this -> data_, "redirect"=>$this -> redirect_ ];
+                        $responseJson = [ "status"=>$this->status_, "div"=>$this -> div_, "msg"=>$this -> msg_, "data"=>$this -> data_, "redirect"=>$this -> redirect_ ];
                         return json_encode($responseJson, JSON_UNESCAPED_SLASHES);
                     }
 

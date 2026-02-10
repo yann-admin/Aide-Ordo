@@ -1,46 +1,58 @@
 <?php
-/* ▂ ▅ ▆ █ Information █ ▆ ▅ ▂ */
-    /* Fichier entities database: api_chichoune - table: useraccount via constructor_Array_DataBase_SQL.php VERSION: 3.0.0*/ 
-/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
+	/* ▂ ▅ ▆ █ Information █ ▆ ▅ ▂ */
+		/* Fichier entities database: api_chichoune - table: useraccount via constructor_Array_DataBase_SQL.php VERSION: 3.0.0*/ 
+	/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
 
-/* ▂ ▅ ▆ █ NameSpace █ ▆ ▅ ▂ */
-    namespace App\Entities\User;
-/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
+	/* ▂ ▅ ▆ █ NameSpace █ ▆ ▅ ▂ */
+		namespace App\Entities\User;
+	/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
 
-/* ▂ ▅ ▆ █ Inclusion █ ▆ ▅ ▂ */
-    use PDO;
-    use Exception;
-    # Class other
-/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
+	/* ▂ ▅ ▆ █ Inclusion █ ▆ ▅ ▂ */
+		use PDO;
+		use Exception;
+		# Class other
+	/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */ 
 
-/* ▂ ▅ ▆ █ Class █ ▆ ▅ ▂ */
-class UserAccount{
-    /* ▂ ▅ Attributs ▅ ▂ */
-    # Attributs useraccount
-        protected $idUserAccount_;
-        protected $userName_;
-        protected $userFirstName_;
-        protected $userEmail_;
-        protected $userRecoveryCode_;
-        protected $userAccess_;
-    # Attributs loginaccount
-        protected $idLoginAccount_;
-        protected $identifiant_;
-        protected $password_;
+	/* ▂ ▅ ▆ █ Class █ ▆ ▅ ▂ */
+	class UserAccount{
+		/* ▂ ▅ Attributs ▅ ▂ */
+			protected $idUserAccount_;
+			protected $userName_;
+			protected $userFirstName_;
+			protected $userEmail_;
+			protected $userRecoveryCode_;
+			protected $userAccess_;
+		/* ▂▂▂▂▂▂▂▂▂▂▂ */
 
+		/* ▂ ▅  copy and paste in the code  ▅ ▂ */
+			# $objUserAccountModel = new UserAccountModel();
+			# $objUserAccount = new UserAccount();
+			# -  $objUserAccount -> setIdUserAccount($_POST['IdUserAccount']);
+			# -  $objUserAccount -> setUserName($_POST['UserName']);
+			# -  $objUserAccount -> setUserFirstName($_POST['UserFirstName']);
+			# -  $objUserAccount -> setUserEmail($_POST['UserEmail']);
+			# -  $objUserAccount -> setUserRecoveryCode($_POST['UserRecoveryCode']);
+			# -  $objUserAccount -> setUserAccess($_POST['UserAccess']);
+
+			# -  $objUserAccount -> getIdUserAccount();
+			# -  $objUserAccount -> getUserName();
+			# -  $objUserAccount -> getUserFirstName();
+			# -  $objUserAccount -> getUserEmail();
+			# -  $objUserAccount -> getUserRecoveryCode();
+			# -  $objUserAccount -> getUserAccess();
+
+		/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
 
 		/* ▂ ▅  construct  ▅ ▂ */
 			/* @ $objUserAccount( $idUserAccount='', $userName='', $userFirstName='', $userEmail='', $userRecoveryCode='', $userAccess='',  ) */
-			public function __construct( $idUserAccount='', $userName='', $userFirstName='', $userEmail='', $userRecoveryCode='', $userAccess='', $idLoginAccount='', $identifiant='', $password=''  ){
+			public function __construct( $idUserAccount='', $userName='', $userFirstName='', $userEmail='', $userRecoveryCode='', $userAccess='',  ){
 				$this -> idUserAccount_ = $idUserAccount;
 				$this -> userName_ = $userName;
 				$this -> userFirstName_ = $userFirstName;
 				$this -> userEmail_ = $userEmail;
 				$this -> userRecoveryCode_ = $userRecoveryCode;
 				$this -> userAccess_ = $userAccess;
-				$this -> idLoginAccount_ = $idLoginAccount;
-				$this -> identifiant_ = $identifiant;
-				$this -> password_ = $password;
+
 			}
 		/* ▂▂▂▂▂▂▂▂▂▂▂ */
 
@@ -65,9 +77,6 @@ class UserAccount{
 			public function setUserEmail($modifUserEmail){ $this -> userEmail_ = htmlspecialchars(trim($modifUserEmail), ENT_QUOTES); return $this; }
 			public function setUserRecoveryCode($modifUserRecoveryCode){ $this -> userRecoveryCode_ = htmlspecialchars(trim($modifUserRecoveryCode), ENT_QUOTES); return $this; }
 			public function setUserAccess($modifUserAccess){ $this -> userAccess_ = htmlspecialchars(trim($modifUserAccess), ENT_QUOTES); return $this; }
-			public function setIdLoginAccount($modifIdLoginAccount){ $this -> idLoginAccount_ = htmlspecialchars(trim($modifIdLoginAccount), ENT_QUOTES); return $this; }
-			public function setIdentifiant($modifIdentifiant){ $this -> identifiant_ = htmlspecialchars(trim($modifIdentifiant), ENT_QUOTES); return $this; }
-			public function setPassword($modifPassword){ $this -> password_ = htmlspecialchars(trim($modifPassword), ENT_QUOTES); return $this; }
 		/* ▂▂▂▂▂▂▂▂▂▂▂ */
 
 		/* ▂ ▅  Getters  ▅ ▂ */
@@ -79,14 +88,8 @@ class UserAccount{
 			public function getUserEmail(){ return htmlspecialchars_decode($this -> userEmail_, ENT_COMPAT); }
 			public function getUserRecoveryCode(){ return htmlspecialchars_decode($this -> userRecoveryCode_, ENT_COMPAT); }
 			public function getUserAccess(){ return htmlspecialchars_decode($this -> userAccess_, ENT_COMPAT); }
-			public function getIdLoginAccount(){ return htmlspecialchars_decode($this -> idLoginAccount_, ENT_COMPAT); }
-			public function getIdentifiant(){ return htmlspecialchars_decode($this -> identifiant_, ENT_COMPAT); }
-			public function getPassword(){ return htmlspecialchars_decode($this -> password_, ENT_COMPAT); }
 		/* ▂▂▂▂▂▂▂▂▂▂▂ */
 
-
-
-
-};
-
+	};
+	/* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
 ?>

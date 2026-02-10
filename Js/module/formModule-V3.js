@@ -107,6 +107,7 @@ export function createdAddEventListener() {
                 button.addEventListener("click", listenBtnBack);
             } else if (button.name == "submit") {
                 button.addEventListener("click", listenBtnSubmit);
+                button.disabled = true;
             };
         });
     };
@@ -293,10 +294,10 @@ function compareValue() {
     let field1 = document.getElementById('password');
     let field2 = document.getElementById('confirmPassword');
     /* Step 1 We test value field1 == field2 */
-    let div =document.getElementById('userMessage');
+    let div =document.getElementById('Msg-form');
     if ((field1.value != field2.value) && (field1.value != "" && field2.value != "")) {
         /* Step 2 We Show error.message  */
-        div.innerHTML = '<p class="alert alert-warning mb-2 p-0" role="alert"> Les mots de passe ne correspondent pas </p>';
+        div.innerHTML = '<p class="alert alert-danger mb-2 p-0" role="alert"> Les mots de passe ne correspondent pas </p>';
         field1.classList.add('is-invalid');
         field1.classList.remove('is-valid');
         field2.classList.add('is-invalid');

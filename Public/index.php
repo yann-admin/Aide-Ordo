@@ -61,7 +61,7 @@
         $route = new Router();
         # On lance l'application :
         $route->routes();
-
+        error_log(E_ALL);
 
     /* ▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ */
 ?>                        

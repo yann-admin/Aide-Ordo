@@ -74,7 +74,7 @@
 
                 /* ▂ ▅ ▆ █ SecurityForm( array $setting ):array ▅ ▂ */
                     public static function SecurityForm( array $setting ):array{
-                        $response=['error'=>true, 'Msg'=>'error'];
+                        $response=['errorSecurity'=>true, 'msgErrorSecurity'=>'error'];
                         # Step 2.0 control method
                         if( $_SERVER["REQUEST_METHOD"] === $setting['method'] ){
                             # Step 2.1 control antibot
@@ -101,43 +101,43 @@
                                         };
                                         if($fieldEmpty){
                                             if($fieldRegex){
-                                                $response=['error'=>false, 'Msg'=>'ffff'];
+                                                $response=['errorSecurity'=>false, 'msgErrorSecurity'=>'ffff'];
                                                 return $response;
                                             }else{
-                                            $response=['error'=>true, 'Msg'=>"Opération annulée! <br> Veuillez respecter le format demander pour le champ ` $field `."];
+                                            $response=['errorSecurity'=>true, 'msgErrorSecurity'=>"Opération annulée! <br> Veuillez respecter le format demander pour le champ ` $field `."];
                                             return $response;
                                             };
                                         # Else 2.4
                                         }else{
-                                            $response=['error'=>true, 'Msg'=>"Opération annulée! <br> Le champ de saisie ` $field  ` est obligatoire."];
+                                            $response=['errorSecurity'=>true, 'msgErrorSecurity'=>"Opération annulée! <br> Le champ de saisie ` $field  ` est obligatoire."];
                                             return $response;
                                         };                                  
                                         # End 2.4
                                         /* ---------------------------------------------------- */
                                         # Else 2.3
                                     }else{
-                                        $response=['error'=>true, 'Msg'=>'Opération annulée! <br> Le jeton de contrôle est périmé. Veuillez actualiser la page s\'il vous plaît. <a href="home" ><i class="fa-solid fa-arrow-rotate-left"></i> </a>'];
+                                        $response=['errorSecurity'=>true, 'msgErrorSecurity'=>'Opération annulée! <br> Le jeton de contrôle est périmé. Veuillez actualiser la page s\'il vous plaît. <a href="home" ><i class="fa-solid fa-arrow-rotate-left"></i> </a>'];
                                         return $response;
                                     };
                                     # End 2.3
                                     /* ---------------------------------------------------- */
                                 # Else 2.2
                                 }else{
-                                $response=['error'=>true, 'Msg'=>'Opération annulée! <br> Les jetons de contrôle ne concorde pas.  Veuillez actualiser la page s\'il vous plaît. <a href="home"> <i class="fa-solid fa-arrow-rotate-left"></i> </a>'];
+                                $response=['errorSecurity'=>true, 'msgErrorSecurity'=>'Opération annulée! <br> Les jetons de contrôle ne concorde pas.  Veuillez actualiser la page s\'il vous plaît. <a href="home"> <i class="fa-solid fa-arrow-rotate-left"></i> </a>'];
                                 return $response;
                                 };
                                 # End 2.2
                                 /* ---------------------------------------------------- */
                             # Else 2.1
                             }else{
-                            $response=['error'=>true, 'Msg'=>'Opération annulée! <br> Nous identifions l\'envoi du formulaire par un robot. <a href="home"> <i class="fa-solid fa-arrow-rotate-left"></i> </a>'];
+                            $response=['errorSecurity'=>true, 'msgErrorSecurity'=>'Opération annulée! <br> Nous identifions l\'envoi du formulaire par un robot. <a href="home"> <i class="fa-solid fa-arrow-rotate-left"></i> </a>'];
                             return $response;
                             };
                             # End 2.1
                             /* ---------------------------------------------------- */
                         # Else 2.0
                         }else{
-                            $response=['error'=>true, 'Msg'=>'Opération annulée! <br> La méthode reçue n\'est pas conforme. Veuillez actualiser la page s\'il vous plaît.<a href="home" ><i class="fa-solid fa-arrow-rotate-left"></i> </a>'];
+                            $response=['errorSecurity'=>true, 'msgErrorSecurity'=>'Opération annulée! <br> La méthode reçue n\'est pas conforme. Veuillez actualiser la page s\'il vous plaît.<a href="home" ><i class="fa-solid fa-arrow-rotate-left"></i> </a>'];
                             return $response;
                         };
                         # End 2.0

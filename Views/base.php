@@ -103,12 +103,15 @@ xxl => ≥1400px
                                 <?php
                                 # Loading menu
                                 require "../Includes/navMenu.php";
-                                if(isset($Menu['li_1'])){ echo $Menu['li_1']; };
-                                if(isset($Menu['li_2'])){ echo $Menu['li_2']; };
-                                if(isset($Menu['li_3'])){ echo $Menu['li_3']; };
-                                if(isset($Menu['li_4'])){ echo $Menu['li_4']; };
+                                if(isset($Menu['li_Home'])){ echo $Menu['li_Home']; };
+                                if(isset($Menu['li_Usine'])){ echo $Menu['li_Usine']; };
+                                if(isset($Menu['li_Production'])){ echo $Menu['li_Production']; };
+                                if(isset($Menu['li_Topologie'])){ echo $Menu['li_Topologie']; };
                                 if(isset($Menu['Diviser_Li'])){ echo $Menu['Diviser_Li']; };
-                                if(isset($Menu['li_10'])){ echo $Menu['li_10']; };
+                                if(isset($Menu['li_My_personal_information'])){ echo $Menu['li_My_personal_information']; };
+                                if(isset($Menu['Diviser_Li'])){ echo $Menu['Diviser_Li']; };
+                                if(isset($Menu['li_Disconnect'])){ echo $Menu['li_Disconnect']; };
+                                if(isset($Menu['li_create_account'])){ echo $Menu['li_create_account']; };
                                 ?>
                             </ul>
                             <!-- <form class="d-flex mt-3" role="search">
